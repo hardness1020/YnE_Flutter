@@ -1,13 +1,13 @@
 import 'package:yne_flutter/features/activity/domain/activity.dart';
 
-class ActivityCategory {
+class ActivityLocation {
   String? id;
   String? name;
   List<Activity>? activities;
 
-  ActivityCategory({this.id, this.name, this.activities});
+  ActivityLocation({this.id, this.name, this.activities});
 
-  ActivityCategory.fromJson(Map<String, dynamic> json) {
+  ActivityLocation.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     if (json['activities'] != null) {

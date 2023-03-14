@@ -51,7 +51,7 @@ class _ActivityTabPageState extends ConsumerState<ActivityTabPage> {
             pagingController: _pagingController,
             builderDelegate: PagedChildBuilderDelegate<Activity>(
               itemBuilder: (context, item, index) => ListTile(
-                title: Text(item.name!),
+                title: Text(item.title!),
                 // onTap: () {
                 //   context.pushNamed(AppRoute.activityDetail.name, arguments: item.id!);
                 // },

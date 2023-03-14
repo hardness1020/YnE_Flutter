@@ -11,6 +11,6 @@ final fakeActivityCategoryList = [
 ];
 
 final fakeActivityList = [
-  Activity(id:'1', name:'Activity 1', categories:[fakeActivityCategoryList[0]]),
-  Activity(id:'2', name:'Activity 2', categories:[fakeActivityCategoryList[1]]),
+  Activity(id:'1', title:'Activity 1', categories:[fakeActivityCategoryList[0]]),
+  Activity(id:'2', title:'Activity 2', categories:[fakeActivityCategoryList[1]]),
 ];
