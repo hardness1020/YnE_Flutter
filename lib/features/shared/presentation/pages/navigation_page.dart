@@ -64,7 +64,7 @@ class NavigationPage extends ConsumerWidget {
         index: state,
         children: const <Widget>[
           MyHomePage(title: '1',),
-          ActivityPage(),
+          MyHomePage(title: '2',),
           MyHomePage(title: '3',),
           MyHomePage(title: '4',),
         ],
