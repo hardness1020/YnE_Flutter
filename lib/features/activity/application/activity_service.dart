@@ -34,3 +34,9 @@ final activityListProvider = FutureProvider.autoDispose((ref) async {
   final activityService = ref.read(activityServiceProvider);
   return activityService.list();
 });
+
+final activityProvider =
+    FutureProvider.autoDispose.family<Activity?, String>((ref, id) async {
+  final activityService = ref.read(activityServiceProvider);
+  return activityService.retrieve(id: id);
+});

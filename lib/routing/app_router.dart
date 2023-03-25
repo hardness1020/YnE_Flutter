@@ -6,6 +6,7 @@ import 'package:yne_flutter/features/auth/presentation/sign_in/sign_in_page.dart
 import 'package:yne_flutter/features/auth/presentation/sign_up/sign_up_page.dart';
 import 'package:yne_flutter/routing/not_found_page.dart';
 import 'package:yne_flutter/features/shared/presentation/pages/navigation_page.dart';
+import 'package:yne_flutter/features/activity/presentation/activity_detail_page.dart';
 
 enum AppRoute {
   signIn,
@@ -19,7 +20,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   // final authState = ref.watch(userStreamProvider);
 
   return GoRouter(
-    initialLocation: '/signIn',
+    // initialLocation: '/signIn',
+    initialLocation: '/',
     routes: [
       GoRoute(
           path: '/',
@@ -39,12 +41,20 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 GoRoute(
                   path: 'passwordForgetfulness',
                   name: AppRoute.passwordForgetfulness.name,
-                  builder: (context, state) => const PasswordForgetfulnessPage(),
+                  builder: (context, state) =>
+                      const PasswordForgetfulnessPage(),
                 ),
               ],
             ),
-          ]
-  )],
+            GoRoute(
+                path: 'activity/:id',
+                name: AppRoute.activityDetail.name,
+                builder: (context, state) {
+                  final activityId = state.params['id']!;
+                  return ActivityDetailPage(activityId: activityId);
+                }),
+          ])
+    ],
     errorBuilder: (context, state) => const NotFoundPage(),
     // redirect: (context, state) {
     //   if (authState.value != null) {
