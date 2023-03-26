@@ -15,18 +15,19 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     initialLocation: '/',
     routes: [
       GoRoute(
-          path: '/',
-          name: AppRoute.navigation.name,
-          builder: (context, state) => const NavigationPage(),
-          // routes: [
-          //   GoRoute(
-          //     path: 'activity/:id',
-          //     name: AppRoute.activityDetail.name,
-          //     builder: (context, state) =>
-          //         const activityDetail(activityId: state.params['id']!),
-          //   ),
-          // ]
-  )],
+        path: '/',
+        name: AppRoute.navigation.name,
+        builder: (context, state) => const NavigationPage(),
+        // routes: [
+        //   GoRoute(
+        //     path: 'activity/:id',
+        //     name: AppRoute.activityDetail.name,
+        //     builder: (context, state) =>
+        //         const activityDetail(activityID: state.params['id']!),
+        //   ),
+        // ]
+      )
+    ],
     errorBuilder: (context, state) => const NotFoundPage(),
   );
 });

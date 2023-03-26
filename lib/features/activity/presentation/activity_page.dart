@@ -18,7 +18,7 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    final activityCategoryList = ref.watch(activityCategoryListProvider);
+    final activityCategoryList = ref.watch(activityCategoryListFutureProvider);
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -64,7 +64,7 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
             body: TabBarView(
               children: catalogList.map(
                 (e) {
-                  return ActivityTabPage(categoryId: e.id!);
+                  return ActivityTabPage(categoryID: e.id!);
                 },
               ).toList(),
             ),
