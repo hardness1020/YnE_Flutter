@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
 import 'package:yne_flutter/features/shared/presentation/localization/string_hardcoded.dart';
 import 'package:yne_flutter/constants/app_sizes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,10 +20,10 @@ class ActivitiesGrid extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final activityListValue = ref.watch(activitiesSearchResultsProvider);
-    final activityListValue = ref.watch(activityListProvider);
-    return AsyncValueWidget<List<Activity>>(
-      value: activityListValue,
-      data: (activities) => activities.isEmpty
+    final activityListFutureValue = ref.watch(activityListFutureProvider);
+    return AsyncValueWidget<List<Activity>?>(
+      value: activityListFutureValue,
+      data: (activities) => activities!.isEmpty
           ? Center(
               child: Text(
                 'No activities found'.hardcoded,

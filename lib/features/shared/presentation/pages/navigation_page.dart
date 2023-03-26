@@ -8,6 +8,8 @@ import 'package:yne_flutter/features/shared/presentation/pages/navigation_state.
 // import 'package:yne_flutter/my_home_page.dart';
 import 'package:yne_flutter/features/user/presentation/user_page.dart';
 import 'package:yne_flutter/features/activity/presentation/list/activities_list_screen.dart';
+import 'package:yne_flutter/main.dart';
+import 'package:yne_flutter/my_home_page.dart';
 
 
 class NavigationPage extends ConsumerWidget {
@@ -66,7 +68,8 @@ class NavigationPage extends ConsumerWidget {
       body: IndexedStack(
         index: state,
         children: const <Widget>[
-          UserPage(),
+          // UserPage(),
+          MyHomePage(title: '1',),
           ActivitiesListScreen(),
           SignInPage(),
           // MyHomePage(title: '4',),

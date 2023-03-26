@@ -20,7 +20,7 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    final activityValue = ref.watch(activityProvider(widget.activityId));
+    final activityValue = ref.watch(activityFutureProvider(widget.activityId));
     return Scaffold(
         backgroundColor: Colors.blueAccent,
         appBar: AppBar(

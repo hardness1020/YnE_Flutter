@@ -10,9 +10,9 @@ import 'package:yne_flutter/routing/app_router.dart';
 class ActivityTabPage extends ConsumerStatefulWidget {
   const ActivityTabPage({
     super.key,
-    required this.categoryId,
+    required this.categoryID,
   });
-  final String categoryId;
+  final String categoryID;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -28,8 +28,8 @@ class _ActivityTabPageState extends ConsumerState<ActivityTabPage> {
     _pagingController.addPageRequestListener((pageKey) {
       ref
           .read(activityTabControllerProvider.notifier)
-          .fetchActivityFromCategoryId(
-              widget.categoryId, pageKey, _pagingController);
+          .fetchActivityFromCategoryID(
+              widget.categoryID, pageKey, _pagingController);
     });
     super.initState();
   }

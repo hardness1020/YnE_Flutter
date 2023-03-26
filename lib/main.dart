@@ -3,11 +3,13 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:yne_flutter/app_config.dart';
 
 import 'firebase_options.dart';
 import 'package:yne_flutter/routing/app_router.dart';
 
 void main() async {
+  kUseFakeRepos = true;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   usePathUrlStrategy();

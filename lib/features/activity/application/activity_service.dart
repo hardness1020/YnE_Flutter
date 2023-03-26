@@ -183,8 +183,8 @@ final activityUnjoinedByUserFutureProvider = FutureProvider.autoDispose
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 });
 
-final activityProvider =
-    FutureProvider.autoDispose.family<Activity?, String>((ref, id) async {
-  final activityService = ref.read(activityServiceProvider);
-  return activityService.retrieve(id: id);
-});
+// final activityProvider =
+//     FutureProvider.autoDispose.family<Activity?, String>((ref, id) async {
+//   final activityService = ref.read(activityServiceProvider);
+//   return activityService.retrieve(id: id);
+// });
