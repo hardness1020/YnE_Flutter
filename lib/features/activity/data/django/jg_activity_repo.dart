@@ -1,77 +1,123 @@
 import 'package:tuple/tuple.dart';
-import 'package:yne_flutter/api/api.dart';
 import 'package:yne_flutter/utils/delay.dart';
 
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
-import 'package:yne_flutter/utils/net_utils.dart';
+import 'package:yne_flutter/utils/in_memory_store.dart';
 
-class JgActivityRepo extends IntfActivityRepo {
+class DjangoActivityRepo extends IntfActivityRepo {
+  final InMemoryStore<List<Activity>> _activities =
+      InMemoryStore<List<Activity>>(<Activity>[]);
+
   final bool addDelay;
 
-  JgActivityRepo({this.addDelay = false});
+  DjangoActivityRepo({this.addDelay = true});
 
   @override
-  Future<List<Activity>> list() async {
-    try {
-      final responseData = await NetUtils().reqeustData(
-        method: YNEApi.activityList[0],
-        path: YNEApi.activityList[1],
-      );
-      return (responseData['results'] as List)
-          .map((e) => Activity.fromJson(e))
-          .toList();
-    } catch (e) {
-      rethrow;
-    }
+  Future<void> activityJoinedByUser(
+      {required String activityID, required String userID}) {
+    // TODO: implement activityJoinedByUser
+    throw UnimplementedError();
   }
 
   @override
-  Future<Activity> create({required Activity activity}) async {
+  Future<void> activityLikedByUser(
+      {required String activityID, required String userID}) {
+    // TODO: implement activityLikedByUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> activityUnjoinedByUser(
+      {required String activityID, required String userID}) {
+    // TODO: implement activityUnjoinedByUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> activityUnlikedByUser(
+      {required String activityID, required String userID}) {
+    // TODO: implement activityUnlikedByUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> create({required Activity activity, required String userID}) {
     // TODO: implement create
-    await delay(addDelay);
     throw UnimplementedError();
   }
 
   @override
-  Future<Activity> delete({required String id}) async {
+  Future<void> delete({required String activityID, required String userID}) {
     // TODO: implement delete
-    await delay(addDelay);
     throw UnimplementedError();
   }
 
   @override
-  Future<void> likedByUser({required String id, required String userId}) async {
-    // TODO: implement likedByUser
-    await delay(addDelay);
+  Future<Activity?> fetch({required String activityID}) {
+    // TODO: implement fetch
     throw UnimplementedError();
   }
 
   @override
-  Future<Activity> retrieve({required String id}) async {
-    // TODO: implement retrieve
-    await delay(addDelay);
+  Future<List<Activity>?> fetchList() {
+    // TODO: implement fetchList
     throw UnimplementedError();
   }
 
   @override
-  Future<void> unlikedByUser(
-      {required String id, required String userId}) async {
-    // TODO: implement unlikedByUser
-    await delay(addDelay);
+  Future<Tuple2<String, List<Activity>?>?> fetchListByCategory(
+      {required String page, required String activityCategoryID}) {
+    // TODO: implement fetchListByCategory
     throw UnimplementedError();
   }
 
   @override
-  Future<Activity> update({required Activity activity}) async {
+  Future<Tuple2<String, List<Activity>?>?> fetchListByLocation(
+      {required String page, required String activityLocationID}) {
+    // TODO: implement fetchListByLocation
+    throw UnimplementedError();
+  }
+
+  @override
+  Activity? get({required String activityID}) {
+    // TODO: implement get
+    throw UnimplementedError();
+  }
+
+  @override
+  List<Activity>? getList() {
+    // TODO: implement getList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> set({required Activity activity}) {
+    // TODO: implement set
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> setList({required List<Activity> activityList}) {
+    // TODO: implement setList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> update({required Activity activity, required String userID}) {
     // TODO: implement update
-    await delay(addDelay);
     throw UnimplementedError();
   }
 
   @override
-  Future<Tuple2<String, List<Activity>>> listFromCategory({required String page, required String categoryId}) {
-    // TODO: implement listFromCategory
+  Stream<Activity?> watch({required String activityID}) {
+    // TODO: implement watch
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<Activity>?> watchList() {
+    // TODO: implement watchList
     throw UnimplementedError();
   }
 }
