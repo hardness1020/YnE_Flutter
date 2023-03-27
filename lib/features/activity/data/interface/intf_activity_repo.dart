@@ -7,40 +7,52 @@ import 'package:yne_flutter/features/activity/data/django/jg_activity_repo.dart'
 import 'package:yne_flutter/features/activity/data/fake/fake_activity_repo.dart';
 
 abstract class IntfActivityRepo {
-  // @protected
-  // static Activity? _getActivity(List<Activity> products, String id);
-  List<Activity>? getList();
-
-  Activity? get({required String activityID});
-
-  Future<void> setList({required List<Activity> activityList});
-
-  Future<void> set({required Activity activity});
-
-  Future<List<Activity>?> fetchList();
-
-  Future<Activity?> fetch({required String activityID});
 
   Stream<List<Activity>?> watchList();
 
   Stream<Activity?> watch({required String activityID});
 
-  Future<void> create({required Activity activity, required String userID});
+  List<Activity>? getList();
 
-  Future<void> update({required Activity activity, required String userID});
+  Activity? get({required String activityID});
 
-  Future<void> delete({required String activityID, required String userID});
+  void setList({required List<Activity> activityList});
 
-  Future<void> activityLikedByUser(
+  void set({required Activity activity});
+
+  void unset({required String activityID});
+
+  Future<List<Activity>?> fetchList();
+
+  Future<Activity?> fetch({required String activityID});
+
+  Future<Activity?> create(
+      {required Activity activity, required String userID});
+
+  Future<Activity?> update(
+      {required Activity activity, required String userID});
+
+  Future<void> delete(
       {required String activityID, required String userID});
 
-  Future<void> activityUnlikedByUser(
+  // check if user has liked the activity
+  Future<bool> userHasLikedActivity(
       {required String activityID, required String userID});
 
-  Future<void> activityJoinedByUser(
+  // check if user has joined the activity
+  Future<bool> userHasJoinedActivity(
       {required String activityID, required String userID});
 
-  Future<void> activityUnjoinedByUser(
+  Future<bool> userLikeActivity(
+      {required String activityID, required String userID});
+
+  Future<bool> userUnlikeActivity(
+      {required String activityID, required String userID});
+
+  Future<bool> userJoinActivity(
+      {required String activityID, required String userID});
+
+  Future<bool> userUnjoinActivity(
       {required String activityID, required String userID});
 
   Future<Tuple2<String, List<Activity>?>?> fetchListByCategory(

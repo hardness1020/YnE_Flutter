@@ -15,6 +15,7 @@ class Activity {
   List<ActivityComment>? comments;
   List<BackendUser>? likedUsers;
   List<BackendUser>? participants;
+  
 
   Activity(
       {this.id,

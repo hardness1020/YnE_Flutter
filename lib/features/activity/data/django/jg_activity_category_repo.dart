@@ -4,33 +4,25 @@ import 'package:yne_flutter/features/activity/domain/activity_category.dart';
 
 class DjangoActivityCategoryRepo extends IntfActivityCategoryRepo {
   @override
-  Future<ActivityCategory> create(
-      {required ActivityCategory activityCategory}) async {
+  Future<void> create({required ActivityCategory activityCategory, required String userID}) {
     // TODO: implement create
     throw UnimplementedError();
   }
 
   @override
-  Future<void> delete({required String activityCategoryID}) async {
+  Future<void> delete({required String activityCategoryID, required String userID}) {
     // TODO: implement delete
     throw UnimplementedError();
   }
 
   @override
-  Future<ActivityCategory?> fetch({required String activityCategoryID}) async {
+  Future<ActivityCategory?> fetch({required String activityCategoryID}) {
     // TODO: implement fetch
     throw UnimplementedError();
   }
 
   @override
-  Future<Tuple2<String, List<ActivityCategory>>> fetchByActivity(
-      {required String page, required String activityCategoryID}) async {
-    // TODO: implement fetchByActivity
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<ActivityCategory>> fetchList() async {
+  Future<List<ActivityCategory>?> fetchList() {
     // TODO: implement fetchList
     throw UnimplementedError();
   }
@@ -42,27 +34,20 @@ class DjangoActivityCategoryRepo extends IntfActivityCategoryRepo {
   }
 
   @override
-  List<ActivityCategory> getList() {
+  List<ActivityCategory>? getList() {
     // TODO: implement getList
     throw UnimplementedError();
   }
 
   @override
-  Future<void> set({required ActivityCategory activityCategory}) async {
+  Future<void> set({required ActivityCategory activityCategory}) {
     // TODO: implement set
     throw UnimplementedError();
   }
 
   @override
-  Future<void> setList({required List<ActivityCategory> activityList}) async {
+  Future<void> setList({required List<ActivityCategory> activityCategoryList}) {
     // TODO: implement setList
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<ActivityCategory> update(
-      {required ActivityCategory activityCategory}) async {
-    // TODO: implement update
     throw UnimplementedError();
   }
 
@@ -73,8 +58,9 @@ class DjangoActivityCategoryRepo extends IntfActivityCategoryRepo {
   }
 
   @override
-  Stream<List<ActivityCategory>> watchList() {
+  Stream<List<ActivityCategory>?> watchList() {
     // TODO: implement watchList
     throw UnimplementedError();
   }
+  
 }

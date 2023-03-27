@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tuple/tuple.dart';
 
 import 'package:yne_flutter/app_config.dart';
 import 'package:yne_flutter/features/activity/data/django/jg_activity_category_repo.dart';
@@ -7,30 +6,27 @@ import 'package:yne_flutter/features/activity/data/fake/fake_activity_category_r
 import 'package:yne_flutter/features/activity/domain/activity_category.dart';
 
 abstract class IntfActivityCategoryRepo {
-  List<ActivityCategory> getList();
-
   ActivityCategory? get({required String activityCategoryID});
 
-  Future<void> setList({required List<ActivityCategory> activityList});
+  List<ActivityCategory>? getList();
 
   Future<void> set({required ActivityCategory activityCategory});
 
+  Future<void> setList({required List<ActivityCategory> activityCategoryList});
+
   Future<ActivityCategory?> fetch({required String activityCategoryID});
 
-  Future<List<ActivityCategory>> fetchList(); //async
-
-  Stream<List<ActivityCategory>> watchList();
+  Future<List<ActivityCategory>?> fetchList();
 
   Stream<ActivityCategory?> watch({required String activityCategoryID});
 
-  Future<ActivityCategory> create({required ActivityCategory activityCategory});
+  Stream<List<ActivityCategory>?> watchList();
 
-  Future<ActivityCategory> update({required ActivityCategory activityCategory});
+  Future<void> create(
+      {required ActivityCategory activityCategory, required String userID});
 
-  Future<void> delete({required String activityCategoryID});
-
-  Future<Tuple2<String, List<ActivityCategory>>> fetchByActivity(
-      {required String page, required String activityCategoryID});
+  Future<void> delete(
+      {required String activityCategoryID, required String userID});
 }
 
 final activityCategoryRepoProvider = Provider<IntfActivityCategoryRepo>((ref) {
@@ -41,12 +37,12 @@ final activityCategoryRepoProvider = Provider<IntfActivityCategoryRepo>((ref) {
 
 final activityCategoryStreamProvider =
     StreamProvider.family<ActivityCategory?, String>((ref, id) {
-  final activityCategoryListService = ref.watch(activityCategoryRepoProvider);
+  final activityCategoryListService = ref.read(activityCategoryRepoProvider);
   return activityCategoryListService.watch(activityCategoryID: id);
 });
 
 final activityCategoryListStreamProvider =
-    StreamProvider.autoDispose<List<ActivityCategory>>((ref) {
-  final activityCategoryListService = ref.watch(activityCategoryRepoProvider);
+    StreamProvider.autoDispose<List<ActivityCategory>?>((ref) {
+  final activityCategoryListService = ref.read(activityCategoryRepoProvider);
   return activityCategoryListService.watchList();
 });

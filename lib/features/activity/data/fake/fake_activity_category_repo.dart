@@ -1,85 +1,106 @@
-import 'package:tuple/tuple.dart';
+import 'package:yne_flutter/constants/test_data.dart';
 import 'package:yne_flutter/features/activity/domain/activity_category.dart';
 
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_category_repo.dart';
+import 'package:yne_flutter/utils/delay.dart';
+import 'package:yne_flutter/utils/in_memory_store.dart';
 
 class FakeActivityCategoryRepo extends IntfActivityCategoryRepo {
+  final InMemoryStore<List<ActivityCategory>?> _activityCategories =
+      InMemoryStore<List<ActivityCategory>?>(
+          List.from(fakeActivityCategoryList));
+
   final bool addDelay;
 
   FakeActivityCategoryRepo({this.addDelay = true});
 
   @override
-  Future<ActivityCategory> create(
-      {required ActivityCategory activityCategory}) async {
-    // TODO: implement create
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> delete({required String activityCategoryID}) async {
-    // TODO: implement delete
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<ActivityCategory?> fetch({required String activityCategoryID}) async {
-    // TODO: implement fetch
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Tuple2<String, List<ActivityCategory>>> fetchByActivity(
-      {required String page, required String activityCategoryID}) async {
-    // TODO: implement fetchByActivity
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<ActivityCategory>> fetchList() async {
-    // TODO: implement fetchList
-    throw UnimplementedError();
-  }
-
-  @override
   ActivityCategory? get({required String activityCategoryID}) {
-    // TODO: implement get
-    throw UnimplementedError();
+    return _get(
+        activityCategoryList: _activityCategories.value,
+        activityCategoryID: activityCategoryID);
   }
 
   @override
-  List<ActivityCategory> getList() {
-    // TODO: implement getList
-    throw UnimplementedError();
+  List<ActivityCategory>? getList() {
+    return _activityCategories.value;
   }
 
   @override
   Future<void> set({required ActivityCategory activityCategory}) async {
-    // TODO: implement set
-    throw UnimplementedError();
+    await delay(addDelay);
+    fakeActivityCategoryList.add(activityCategory);
   }
 
   @override
-  Future<void> setList({required List<ActivityCategory> activityList}) async {
-    // TODO: implement setList
-    throw UnimplementedError();
+  Future<void> setList(
+      {required List<ActivityCategory> activityCategoryList}) async {
+    await delay(addDelay);
+    fakeActivityCategoryList.addAll(activityCategoryList);
   }
 
   @override
-  Future<ActivityCategory> update(
-      {required ActivityCategory activityCategory}) async {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<ActivityCategory?> fetch({required String activityCategoryID}) async {
+    final futureFakeActivityCategoryList =
+        Future.value(fakeActivityCategoryList).then((value) => value);
+    final fetchedFakeActivityCategoryList =
+        await futureFakeActivityCategoryList;
+    for (int i = 0; i < fetchedFakeActivityCategoryList.length; i++) {
+      if (fetchedFakeActivityCategoryList[i].id == activityCategoryID) {
+        return fetchedFakeActivityCategoryList[i];
+      }
+    }
+    throw Exception('ActivityCategory not found');
+  }
+
+  @override
+  Future<List<ActivityCategory>?> fetchList() async {
+    final futureFakeActivityCategoryList =
+        Future.value(fakeActivityCategoryList).then((value) => value);
+    final fetchedFakeActivityCategoryList =
+        await futureFakeActivityCategoryList;
+    return fetchedFakeActivityCategoryList;
   }
 
   @override
   Stream<ActivityCategory?> watch({required String activityCategoryID}) {
-    // TODO: implement watch
-    throw UnimplementedError();
+    return watchList().map((activityCategoryList) => _get(
+        activityCategoryList: activityCategoryList,
+        activityCategoryID: activityCategoryID));
   }
 
   @override
-  Stream<List<ActivityCategory>> watchList() {
-    // TODO: implement watchList
-    throw UnimplementedError();
+  Stream<List<ActivityCategory>?> watchList() {
+    return _activityCategories.stream;
+  }
+
+  @override
+  Future<void> create(
+      {required ActivityCategory activityCategory,
+      required String userID}) async {
+    await delay(addDelay);
+    fakeActivityCategoryList.add(activityCategory);
+  }
+
+  @override
+  Future<void> delete(
+      {required String activityCategoryID, required String userID}) async {
+    final List<ActivityCategory>? activityCategories = await fetchList();
+    final int index = activityCategories!.indexWhere((p) => p.id == activityCategoryID);
+    if (index == -1) {
+      // not found
+      print("[Activity ID Undefined]: Activity deletion failed");
+    } else {
+      // else, delete activity categroy
+      activityCategories.removeAt(index);
+    }
+    fakeActivityCategoryList = activityCategories;
+  }
+
+  static ActivityCategory? _get(
+      {required List<ActivityCategory>? activityCategoryList,
+      required String activityCategoryID}) {
+    return activityCategoryList!.firstWhere(
+        (activityCategory) => activityCategory.id == activityCategoryID);
   }
 }

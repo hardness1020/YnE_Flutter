@@ -30,10 +30,10 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
           width: 90,
         ),
       ),
-      body: AsyncValueWidget<List<ActivityCategory>>(
+      body: AsyncValueWidget<List<ActivityCategory>?>(
         value: activityCategoryList,
         data: (catalogList) => DefaultTabController(
-          length: catalogList.length,
+          length: catalogList!.length,
           child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: PreferredSize(

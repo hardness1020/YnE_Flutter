@@ -51,11 +51,11 @@ final activityLocationRepoProvider = Provider<IntfActivityLocationRepo>((ref) {
 //   return activityCommentListRepo.fetch(activityLocationID: id);
 // });
 
-// final activityLocationStreamProvider =
-//     StreamProvider.family<ActivityLocation?, String>((ref, id) {
-//   final activityCommentListRepo = ref.watch(activityLocationRepoProvider);
-//   return activityCommentListRepo.watch(activityLocationID: id);
-// });
+final activityLocationStreamProvider =
+    StreamProvider.family<ActivityLocation?, String>((ref, id) {
+  final activityCommentListRepo = ref.read(activityLocationRepoProvider);
+  return activityCommentListRepo.watch(activityLocationID: id);
+});
 
 // final activityLocationListProvider = Provider<List<ActivityLocation>>((ref) {
 //   final activityCommentListRepo = ref.watch(activityLocationRepoProvider);
@@ -68,8 +68,8 @@ final activityLocationRepoProvider = Provider<IntfActivityLocationRepo>((ref) {
 //   return activityCommentListRepo.fetchList();
 // });
 
-// final activityLocationListStreamProvider =
-//     StreamProvider.autoDispose<List<ActivityLocation>>((ref) {
-//   final activityCommentListRepo = ref.watch(activityLocationRepoProvider);
-//   return activityCommentListRepo.watchList();
-// });
+final activityLocationListStreamProvider =
+    StreamProvider.autoDispose<List<ActivityLocation>>((ref) {
+  final activityCommentListRepo = ref.read(activityLocationRepoProvider);
+  return activityCommentListRepo.watchList();
+});

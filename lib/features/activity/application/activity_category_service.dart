@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 import 'package:yne_flutter/features/activity/domain/activity_category.dart';
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_category_repo.dart';
@@ -13,7 +14,7 @@ class ActivityCategoryService {
     return activityCategoryRepo.get(activityCategoryID: activityCategoryID);
   }
 
-  List<ActivityCategory> getlist() {
+  List<ActivityCategory>? getlist() {
     final activityCategoryRepo = ref.read(activityCategoryRepoProvider);
     return activityCategoryRepo.getList();
   }
@@ -24,9 +25,24 @@ class ActivityCategoryService {
         activityCategoryID: activityCategoryID);
   }
 
-  Future<List<ActivityCategory>> fetchList() async {
+  Future<List<ActivityCategory>?> fetchList() async {
     final activityCategoryRepo = ref.read(activityCategoryRepoProvider);
-    return activityCategoryRepo.fetchList();
+    return await activityCategoryRepo.fetchList();
+  }
+
+  Future<void> create(
+      {required ActivityCategory activityCategory,
+      required String userID}) async {
+    final activityCategoryRepo = ref.read(activityCategoryRepoProvider);
+    await activityCategoryRepo.create(
+        activityCategory: activityCategory, userID: userID);
+  }
+
+  Future<void> delete(
+      {required String activityCategoryID, required String userID}) async {
+    final activityCategoryRepo = ref.read(activityCategoryRepoProvider);
+    await activityCategoryRepo.delete(
+        activityCategoryID: activityCategoryID, userID: userID);
   }
 }
 
@@ -41,20 +57,36 @@ final activityCategorytProvider =
   return activityCategoryService.get(activityCategoryID: id);
 });
 
-final activityCategoryListProvider = Provider<List<ActivityCategory>>((ref) {
+final activityCategoryListProvider = Provider<List<ActivityCategory>?>((ref) {
   final activityCategoryService = ref.read(activityCategoryServiceProvider);
   return activityCategoryService.getlist();
 });
 
 final activityCategoryFuturetProvider =
     FutureProvider.family<ActivityCategory?, String>((ref, id) {
-  final activityCategoryService = ref.watch(activityCategoryServiceProvider);
+  final activityCategoryService = ref.read(activityCategoryServiceProvider);
   return activityCategoryService.fetch(activityCategoryID: id);
 });
 
 final activityCategoryListFutureProvider =
-    FutureProvider.autoDispose<List<ActivityCategory>>((ref) {
-  final activityCategoryListService =
-      ref.watch(activityCategoryServiceProvider);
+    FutureProvider.autoDispose<List<ActivityCategory>?>((ref) {
+  final activityCategoryListService = ref.read(activityCategoryServiceProvider);
   return activityCategoryListService.fetchList();
+});
+
+final createActivityFutureProvider = FutureProvider.autoDispose
+    .family<void, Tuple2<ActivityCategory, String>>(
+        (ref, activityCategoryAndUserID) {
+  final activityCategoryService = ref.read(activityCategoryServiceProvider);
+  return activityCategoryService.create(
+      activityCategory: activityCategoryAndUserID.item1,
+      userID: activityCategoryAndUserID.item2);
+});
+
+final deleteActivityFutureProvider = FutureProvider.autoDispose
+    .family<void, Tuple2<String, String>>((ref, activityCategoryIDAndUserID) {
+  final activityCategoryService = ref.read(activityCategoryServiceProvider);
+  return activityCategoryService.delete(
+      activityCategoryID: activityCategoryIDAndUserID.item1,
+      userID: activityCategoryIDAndUserID.item2);
 });
