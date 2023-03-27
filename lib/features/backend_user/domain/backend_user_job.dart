@@ -1,10 +1,10 @@
-class UserJob {
+class BackendUserJob {
   String? id;
   String? name;
 
-  UserJob({this.id, this.name});
+  BackendUserJob({this.id, this.name});
 
-  UserJob.fromJson(Map<String, dynamic> json) {
+  BackendUserJob.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }

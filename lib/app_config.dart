@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:logger/logger.dart';
 
-bool kUseFakeRepos = String.fromEnvironment('useFakeRepos') == 'true';
+bool kUseFakeRepos = const String.fromEnvironment('useFakeRepos') == 'true';
 final log = Logger();
 
 /// A simple placeholder that can be used to search all the hardcoded

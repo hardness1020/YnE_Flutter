@@ -1,10 +1,10 @@
-class UserHobby {
+class BackendUserHobby {
   String? id;
   String? name;
 
-  UserHobby({this.id, this.name});
+  BackendUserHobby({this.id, this.name});
 
-  UserHobby.fromJson(Map<String, dynamic> json) {
+  BackendUserHobby.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }

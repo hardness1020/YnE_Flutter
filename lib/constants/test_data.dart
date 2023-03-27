@@ -2,7 +2,7 @@ import 'package:yne_flutter/features/activity/domain/activity_category.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
 import 'package:yne_flutter/features/activity/domain/activity_comment.dart';
 import 'package:yne_flutter/features/activity/domain/activity_location.dart';
-import 'package:yne_flutter/features/user/domain/user.dart';
+import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 
 List<ActivityCategory> fakeActivityCategoryList = [
   ActivityCategory(id: '1', name: 'Category 1'),
@@ -48,12 +48,12 @@ List<ActivityComment> fakeActivityCommentList = [
   ),
 ];
 
-List<User> fakeUserList = [
-  User(id: '0', name: 'Amy', gender: 'F', intro: '1 2 3'),
-  User(id: '1', name: 'Bob', gender: 'M', intro: '2 3 4'),
-  User(id: '2', name: 'Cindy', gender: 'F', intro: '3 4 5'),
-  User(id: '3', name: 'Daddy', gender: 'M', intro: '4 5 6'),
-  User(id: '4', name: 'Elle', gender: 'F', intro: '5 6 7'),
+List<BackendUser> fakeUserList = [
+  BackendUser(id: '0', name: 'Amy', gender: 'F', intro: '1 2 3'),
+  BackendUser(id: '1', name: 'Bob', gender: 'M', intro: '2 3 4'),
+  BackendUser(id: '2', name: 'Cindy', gender: 'F', intro: '3 4 5'),
+  BackendUser(id: '3', name: 'Daddy', gender: 'M', intro: '4 5 6'),
+  BackendUser(id: '4', name: 'Elle', gender: 'F', intro: '5 6 7'),
 ];
 
 List<Activity> fakeActivityList = [

@@ -6,7 +6,7 @@ import 'package:yne_flutter/features/auth/presentation/sign_in/sign_in_page.dart
 
 import 'package:yne_flutter/features/shared/presentation/pages/navigation_state.dart';
 // import 'package:yne_flutter/my_home_page.dart';
-import 'package:yne_flutter/features/user/presentation/user_page.dart';
+import 'package:yne_flutter/features/backend_user/presentation/user_page.dart';
 import 'package:yne_flutter/features/activity/presentation/list/activities_list_screen.dart';
 import 'package:yne_flutter/main.dart';
 import 'package:yne_flutter/my_home_page.dart';

@@ -1,12 +1,12 @@
 import 'package:yne_flutter/features/activity/domain/activity.dart';
-import 'package:yne_flutter/features/user/domain/user.dart';
+import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 
 class ActivityComment {
   String? id;
   String? content;
   String? date;
   Activity? belongedActivity;
-  User? author;
+  BackendUser? author;
 
   ActivityComment(
       {this.id,
@@ -20,7 +20,7 @@ class ActivityComment {
     content = json['content'];
     date = json['date'];
     belongedActivity = Activity.fromJson(json['belonged_activity']);
-    author = User.fromJson(json['author']);
+    author = BackendUser.fromJson(json['author']);
   }
 
   Map<String, dynamic> toJson() {

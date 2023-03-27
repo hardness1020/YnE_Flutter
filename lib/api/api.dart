@@ -41,4 +41,10 @@ class YNEApi {
   ];
   static List activityCategoryRetrieve(String id) =>
       [DioMethod.get, '$baseUrl/activity/category/$id'];
+
+  // BackendUser
+  static List backendUserRetrieveByToken = [
+    DioMethod.get,
+    '$baseUrl/user/profile'
+  ];
 }

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yne_flutter/features/auth/presentation/password_forgetfulness/password_forgetfulness_page.dart';
 import 'package:yne_flutter/features/auth/presentation/sign_in/sign_in_page.dart';
 import 'package:yne_flutter/features/auth/presentation/sign_up/sign_up_page.dart';
+import 'package:yne_flutter/features/backend_user/data/interface/intf_backend_user_repo.dart';
 import 'package:yne_flutter/routing/not_found_page.dart';
 import 'package:yne_flutter/features/shared/presentation/pages/navigation_page.dart';
 import 'package:yne_flutter/features/activity/presentation/activity_detail_page.dart';
@@ -17,11 +18,11 @@ enum AppRoute {
 }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
-  // final authState = ref.watch(userStreamProvider);
+  // final authState = ref.watch(userProvider);
 
   return GoRouter(
-    // initialLocation: '/signIn',
-    initialLocation: '/',
+    initialLocation: '/signIn',
+    // initialLocation: '/',
     routes: [
       GoRoute(
           path: '/',

@@ -1,7 +1,7 @@
 import 'package:yne_flutter/features/activity/domain/activity_category.dart';
 import 'package:yne_flutter/features/activity/domain/activity_location.dart';
 import 'package:yne_flutter/features/activity/domain/activity_comment.dart';
-import 'package:yne_flutter/features/user/domain/user.dart';
+import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 
 class Activity {
   String? id;
@@ -9,12 +9,12 @@ class Activity {
   String? endDate;
   String? title;
   String? description;
-  User? host;
+  BackendUser? host;
   ActivityLocation? location;
   List<ActivityCategory>? categories;
   List<ActivityComment>? comments;
-  List<User>? likedUsers;
-  List<User>? participants;
+  List<BackendUser>? likedUsers;
+  List<BackendUser>? participants;
 
   Activity(
       {this.id,
@@ -35,7 +35,7 @@ class Activity {
     endDate = json['end_date'];
     title = json['title'];
     description = json['description'];
-    host = User.fromJson(json['host']);
+    host = BackendUser.fromJson(json['host']);
     location = ActivityLocation.fromJson(json['location']);
     if (json['categories'] != null) {
       categories = <ActivityCategory>[];
@@ -50,15 +50,15 @@ class Activity {
       });
     }
     if (json['liked_users'] != null) {
-      likedUsers = <User>[];
+      likedUsers = <BackendUser>[];
       json['liked_users'].forEach((v) {
-        likedUsers!.add(User.fromJson(v));
+        likedUsers!.add(BackendUser.fromJson(v));
       });
     }
     if (json['participants'] != null) {
-      participants = <User>[];
+      participants = <BackendUser>[];
       json['participants'].forEach((v) {
-        participants!.add(User.fromJson(v));
+        participants!.add(BackendUser.fromJson(v));
       });
     }
   }
@@ -75,7 +75,7 @@ class Activity {
     if (categories != null) {
       data['categories'] = categories!.map((v) => v.toJson()).toList();
     }
-    if(comments != null){
+    if (comments != null) {
       data['comments'] = comments!.map((v) => v.toJson()).toList();
     }
     if (likedUsers != null) {

@@ -1,19 +1,19 @@
 import 'package:yne_flutter/features/activity/domain/activity.dart';
-import 'package:yne_flutter/features/user/domain/user_hobby.dart';
-import 'package:yne_flutter/features/user/domain/user_job.dart';
+import 'package:yne_flutter/features/backend_user/domain/backend_user_hobby.dart';
+import 'package:yne_flutter/features/backend_user/domain/backend_user_job.dart';
 
-class User {
+class BackendUser {
   String? id;
   String? name;
   String? gender;
   String? intro;
-  List<UserJob>? jobs;
-  List<UserHobby>? hobbies;
+  List<BackendUserJob>? jobs;
+  List<BackendUserHobby>? hobbies;
   List<Activity>? hostedActivities;
   List<Activity>? joinedActivities;
   List<Activity>? likedActivities;
 
-  User(
+  BackendUser(
       {this.id,
       this.name,
       this.gender,
@@ -24,21 +24,21 @@ class User {
       this.joinedActivities,
       this.likedActivities});
 
-  User.fromJson(Map<String, dynamic> json) {
+  BackendUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     gender = json['gender'];
     intro = json['intro'];
     if (json['jobs'] != null) {
-      jobs = <UserJob>[];
+      jobs = <BackendUserJob>[];
       json['jobs'].forEach((v) {
-        jobs!.add(UserJob.fromJson(v));
+        jobs!.add(BackendUserJob.fromJson(v));
       });
     }
     if (json['hobbies'] != null) {
-      hobbies = <UserHobby>[];
+      hobbies = <BackendUserHobby>[];
       json['hobbies'].forEach((v) {
-        hobbies!.add(UserHobby.fromJson(v));
+        hobbies!.add(BackendUserHobby.fromJson(v));
       });
     }
     if (json['hosted_activities'] != null) {
