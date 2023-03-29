@@ -16,6 +16,8 @@ TextStyle titleMid =
     TextStyle(color: bluegrey, fontSize: 22, fontWeight: FontWeight.normal);
 TextStyle titleLarge =
     TextStyle(color: bluegrey, fontSize: 24, fontWeight: FontWeight.w500);
+TextStyle displaySmall =
+    TextStyle(color: bluegrey, fontSize: 28, fontWeight: FontWeight.w600);
 
 /// Used to show a single product inside a card.
 class ActivityCard extends ConsumerWidget {
@@ -112,14 +114,12 @@ class ActivityCard extends ConsumerWidget {
                                 const Icon(Icons.calendar_today_outlined),
                                 Column(
                                   children: [
-                                    Text(
-                                        " ${activity.endDate ?? "XXXX/XX/XX"}",
+                                    Text(" ${activity.endDate ?? "XXXX/XX/XX"}",
                                         // style: Theme.of(context)
                                         //     .textTheme
                                         //     .bodySmall),
                                         style: bodySmall),
-                                    Text(
-                                        "~${activity.endDate ?? "XXXX/XX/XX"}",
+                                    Text("~${activity.endDate ?? "XXXX/XX/XX"}",
                                         style: bodySmall),
                                   ],
                                 ),
@@ -162,8 +162,7 @@ class ActivityCard extends ConsumerWidget {
                                 gapW4,
                                 Text(
                                     (activity.likedUsers != null)
-                                        ? activity.likedUsers!.length
-                                            .toString()
+                                        ? activity.likedUsers!.length.toString()
                                         : '0',
                                     style: bodyMid),
                               ],

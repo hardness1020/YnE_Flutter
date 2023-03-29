@@ -2,6 +2,8 @@
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // import 'package:yne_flutter/constants/app_sizes.dart';
+// import 'package:yne_flutter/constants/test_data.dart';
+// import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 // import 'package:yne_flutter/features/shared/presentation/widgets/async_value_widget.dart';
 // import 'package:yne_flutter/features/activity/domain/activity_category.dart';
 // import 'package:yne_flutter/features/activity/application/activity_category_service.dart';
@@ -18,7 +20,8 @@
 //     with TickerProviderStateMixin {
 //   @override
 //   Widget build(BuildContext context) {
-//     final activityCategoryList = ref.watch(activityListFutureProvider);
+//     // final activityCategoryList = ref.watch(activityListFutureProvider);
+//     final user = fakeUserList[0];
 //     return Scaffold(
 //       backgroundColor: Colors.transparent,
 //       appBar: AppBar(
@@ -30,8 +33,9 @@
 //           width: 90,
 //         ),
 //       ),
-//       body: AsyncValueWidget<List<ActivityCategory>>(
-//         value: activityCategoryList,
+//       body: AsyncValueWidget<BackendUser?>(
+//         // body: BackendUser?(
+//         value: user,
 //         data: (catalogList) => DefaultTabController(
 //           length: catalogList.length,
 //           child: Scaffold(
