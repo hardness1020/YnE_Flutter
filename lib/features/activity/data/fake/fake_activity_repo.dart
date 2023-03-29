@@ -54,14 +54,16 @@ class FakeActivityRepo extends IntfActivityRepo {
   @override
   void set({required Activity activity}) {
     try {
-      for (int i = 0; i < _activities.value.length; i++) {
-        if (_activities.value[i].id == activity.id) {
-          _activities.value[i] = activity;
+      final activities = _activities.value;
+      for (int i = 0; i < activities.length; i++) {
+        if (activities[i].id == activity.id) {
+          activities[i] = activity;
           return;
         } else {
-          _activities.value.add(activity);
+          activities.add(activity);
         }
       }
+      _activities.value = activities;
     } catch (e) {
       rethrow;
     }
@@ -70,12 +72,14 @@ class FakeActivityRepo extends IntfActivityRepo {
   @override
   void unset({required String activityID}) {
     try {
-      for (int i = 0; i < _activities.value.length; i++) {
-        if (_activities.value[i].id == activityID) {
-          _activities.value.removeAt(i);
+      final activities = _activities.value;
+      for (int i = 0; i < activities.length; i++) {
+        if (activities[i].id == activityID) {
+          activities.removeAt(i);
           return;
         }
       }
+      _activities.value = activities;
     } catch (e) {
       rethrow;
     }
@@ -236,12 +240,13 @@ class FakeActivityRepo extends IntfActivityRepo {
         // activity not found
         throw Exception("[Activity ID Undefined]: Activity like failed");
       } else {
-        for (int i = 0; i < fakeUserList.length; i++) {
-          if (fakeUserList[i].id == userID) {
+        for (int i = 0; i < fakeOtherUserList.length; i++) {
+          if (fakeOtherUserList[i].id == userID) {
             if (activities[index].likedUsers == null) {
               activities[index].likedUsers = List.empty(growable: true);
             }
-            activities[index].likedUsers!.add(fakeUserList[i]);
+            activities[index].likedUsers!.add(fakeOtherUserList[i]);
+            activities[index].isLiked = true;
             fakeActivityList = activities;
             return activities[index];
           }
@@ -267,6 +272,7 @@ class FakeActivityRepo extends IntfActivityRepo {
         for (int i = 0; i < activities[index].likedUsers!.length; i++) {
           if (activities[index].likedUsers![i].id == userID) {
             activities[index].likedUsers!.removeAt(i);
+            activities[index].isLiked = false;
             fakeActivityList = activities;
             return activities[index];
           }
@@ -289,12 +295,13 @@ class FakeActivityRepo extends IntfActivityRepo {
         // not found
         throw Exception("[Activity ID Undefined]: Activity join failed");
       } else {
-        for (int i = 0; i < fakeUserList.length; i++) {
-          if (fakeUserList[i].id == userID) {
+        for (int i = 0; i < fakeOtherUserList.length; i++) {
+          if (fakeOtherUserList[i].id == userID) {
             if (activities[index].participants == null) {
               activities[index].participants = List.empty(growable: true);
             }
-            activities[index].participants!.add(fakeUserList[i]);
+            activities[index].participants!.add(fakeOtherUserList[i]);
+            activities[index].isJoined = true;
             fakeActivityList = activities;
             return activities[index];
           }
@@ -320,6 +327,7 @@ class FakeActivityRepo extends IntfActivityRepo {
         for (int i = 0; i < activities[index].participants!.length; i++) {
           if (activities[index].participants![i].id == userID) {
             activities[index].participants!.removeAt(i);
+            activities[index].isJoined = false;
             fakeActivityList = activities;
             return activities[index];
           }

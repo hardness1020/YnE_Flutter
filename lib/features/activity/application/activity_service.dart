@@ -15,12 +15,8 @@ class ActivityService {
   }
 
   List<Activity>? getList() {
-    try {
-      final IntfActivityRepo activityRepo = ref.read(activityRepoProvider);
-      return activityRepo.getList();
-    } catch (e) {
-      rethrow;
-    }
+    final IntfActivityRepo activityRepo = ref.read(activityRepoProvider);
+    return activityRepo.getList();
   }
 
   Future<Activity?> fetch({required String activityID}) async {
@@ -96,7 +92,6 @@ class ActivityService {
     final IntfActivityRepo activityRepo = ref.read(activityRepoProvider);
     Activity likedActivity = await activityRepo.userLikeActivity(
         activityID: activityID, userID: userID);
-    likedActivity.isLiked = true;
     activityRepo.set(activity: likedActivity);
     return likedActivity;
   }
@@ -106,7 +101,6 @@ class ActivityService {
     final IntfActivityRepo activityRepo = ref.read(activityRepoProvider);
     Activity unlikedActivity = await activityRepo.userUnlikeActivity(
         activityID: activityID, userID: userID);
-    unlikedActivity.isLiked = false;
     activityRepo.set(activity: unlikedActivity);
     return unlikedActivity;
   }
@@ -116,7 +110,6 @@ class ActivityService {
     final IntfActivityRepo activityRepo = ref.read(activityRepoProvider);
     Activity joinedActivity = await activityRepo.userJoinActivity(
         activityID: activityID, userID: userID);
-    joinedActivity.isJoined = true;
     activityRepo.set(activity: joinedActivity);
     return joinedActivity;
   }
@@ -126,7 +119,6 @@ class ActivityService {
     final IntfActivityRepo activityRepo = ref.read(activityRepoProvider);
     Activity unjoinedActivity = await activityRepo.userUnjoinActivity(
         activityID: activityID, userID: userID);
-    unjoinedActivity.isJoined = false;
     activityRepo.set(activity: unjoinedActivity);
     return unjoinedActivity;
   }
