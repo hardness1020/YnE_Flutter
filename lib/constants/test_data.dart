@@ -92,5 +92,6 @@ List<Activity> fakeActivityList = [
       host: fakeUserList[1],
       startDate: '2023/4/1',
       endDate: '2025/12/25',
-      description: 'Ahhhh!')
+      description:
+          'Ahhhh! weee! Do you want to build a rocket and go to the moon?\n lalalalala Let\'s get started! weeeeeee~~~')
 ];
