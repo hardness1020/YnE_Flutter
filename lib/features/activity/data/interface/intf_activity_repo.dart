@@ -43,16 +43,16 @@ abstract class IntfActivityRepo {
   Future<bool> userHasJoinedActivity(
       {required String activityID, required String userID});
 
-  Future<bool> userLikeActivity(
+  Future<Activity> userLikeActivity(
       {required String activityID, required String userID});
 
-  Future<bool> userUnlikeActivity(
+  Future<Activity> userUnlikeActivity(
       {required String activityID, required String userID});
 
-  Future<bool> userJoinActivity(
+  Future<Activity> userJoinActivity(
       {required String activityID, required String userID});
 
-  Future<bool> userUnjoinActivity(
+  Future<Activity> userUnjoinActivity(
       {required String activityID, required String userID});
 
   Future<Tuple2<String, List<Activity>?>?> fetchListByCategory(

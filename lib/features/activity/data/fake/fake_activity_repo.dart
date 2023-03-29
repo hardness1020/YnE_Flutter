@@ -226,7 +226,7 @@ class FakeActivityRepo extends IntfActivityRepo {
   }
 
   @override
-  Future<bool> userLikeActivity(
+  Future<Activity> userLikeActivity(
       {required String activityID, required String userID}) async {
     try {
       await delay(addDelay);
@@ -243,7 +243,7 @@ class FakeActivityRepo extends IntfActivityRepo {
             }
             activities[index].likedUsers!.add(fakeUserList[i]);
             fakeActivityList = activities;
-            return true;
+            return activities[index];
           }
         }
         throw Exception("[User ID Undefined]: Activity like failed");
@@ -254,7 +254,7 @@ class FakeActivityRepo extends IntfActivityRepo {
   }
 
   @override
-  Future<bool> userUnlikeActivity(
+  Future<Activity> userUnlikeActivity(
       {required String activityID, required String userID}) async {
     try {
       await delay(addDelay);
@@ -268,7 +268,7 @@ class FakeActivityRepo extends IntfActivityRepo {
           if (activities[index].likedUsers![i].id == userID) {
             activities[index].likedUsers!.removeAt(i);
             fakeActivityList = activities;
-            return true;
+            return activities[index];
           }
         }
       }
@@ -279,7 +279,7 @@ class FakeActivityRepo extends IntfActivityRepo {
   }
 
   @override
-  Future<bool> userJoinActivity(
+  Future<Activity> userJoinActivity(
       {required String activityID, required String userID}) async {
     try {
       await delay(addDelay);
@@ -296,7 +296,7 @@ class FakeActivityRepo extends IntfActivityRepo {
             }
             activities[index].participants!.add(fakeUserList[i]);
             fakeActivityList = activities;
-            return true;
+            return activities[index];
           }
         }
       }
@@ -307,7 +307,7 @@ class FakeActivityRepo extends IntfActivityRepo {
   }
 
   @override
-  Future<bool> userUnjoinActivity(
+  Future<Activity> userUnjoinActivity(
       {required String activityID, required String userID}) async {
     try {
       await delay(addDelay);
@@ -321,7 +321,7 @@ class FakeActivityRepo extends IntfActivityRepo {
           if (activities[index].participants![i].id == userID) {
             activities[index].participants!.removeAt(i);
             fakeActivityList = activities;
-            return true;
+            return activities[index];
           }
         }
       }

@@ -10,6 +10,8 @@ class Activity {
   String? title;
   String? description;
   BackendUser? host;
+  bool? isLiked;
+  bool? isJoined;
   ActivityLocation? location;
   List<ActivityCategory>? categories;
   List<ActivityComment>? comments;

@@ -74,13 +74,16 @@ class BackendUser {
       data['hobbies'] = hobbies!.map((v) => v.toJson()).toList();
     }
     if (hostedActivities != null) {
-      data['hosted_activities'] = hostedActivities!.map((v) => v.toJson()).toList();
+      data['hosted_activities'] =
+          hostedActivities!.map((v) => v.toJson()).toList();
     }
     if (joinedActivities != null) {
-      data['joined_activities'] = joinedActivities!.map((v) => v.toJson()).toList();
+      data['joined_activities'] =
+          joinedActivities!.map((v) => v.toJson()).toList();
     }
     if (likedActivities != null) {
-      data['liked_activities'] = likedActivities!.map((v) => v.toJson()).toList();
+      data['liked_activities'] =
+          likedActivities!.map((v) => v.toJson()).toList();
     }
     return data;
   }

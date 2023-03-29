@@ -8,12 +8,21 @@ import 'package:yne_flutter/features/backend_user/data/fake/fake_backend_user_re
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 
 abstract class IntfBackendUserRepo {
-  Stream<BackendUser?> watchBackendUser();
+  Stream<List<BackendUser>?> watchOtherBackendUsers();
 
-  BackendUser? get getBackendUser;
-  void setUser({required BackendUser backendUser});
+  Stream<BackendUser?> watch();
+
+  List<BackendUser>? getOtherBackendUsers();
+
+  BackendUser? get();
+
+  void setOtherBackendUsers({required List<BackendUser> backendUserList});
+
+  void set({required BackendUser backendUser});
 
   Future<BackendUser> fetchByToken({required String token});
+
+  Future<List<BackendUser>?> fetchOtherBackendUsers();
 }
 
 final backendUserRepoProvider = Provider<IntfBackendUserRepo>((ref) {
@@ -25,15 +34,15 @@ final backendUserRepoProvider = Provider<IntfBackendUserRepo>((ref) {
 final backendUserStreamProvider =
     StreamProvider.autoDispose<BackendUser?>((ref) {
   final backendUserRepo = ref.watch(backendUserRepoProvider);
-  return backendUserRepo.watchBackendUser();
+  return backendUserRepo.watch();
 });
 
-final userProvider = FutureProvider<BackendUser?>((ref) async {
+final userProvider = FutureProvider<BackendUser>((ref) async {
   final user = ref.watch(userStreamProvider).value!;
 
   final backendUserRepo = ref.read(backendUserRepoProvider);
   final backendUser =
-      backendUserRepo.fetchByToken(token: await user.getIdToken());
-  backendUserRepo.setUser(backendUser: await backendUser);
+      await backendUserRepo.fetchByToken(token: await user.getIdToken());
+  backendUserRepo.set(backendUser: backendUser);
   return backendUser;
 });
