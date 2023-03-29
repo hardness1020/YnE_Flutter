@@ -5,32 +5,49 @@ import 'package:yne_flutter/utils/net_utils.dart';
 
 class DjangoBackendUserRepo extends IntfBackendUserRepo {
   @override
-  // TODO: implement getBackendUser
-  BackendUser? get getBackendUser => throw UnimplementedError();
-
-  @override
-  void setUser({required BackendUser backendUser}) {
-    // TODO: implement setUser
-  }
-
-  @override
-  Stream<BackendUser?> watchBackendUser() {
-    // TODO: implement watchBackendUser
+  Future<BackendUser> fetchByToken({required String token}) {
+    // TODO: implement fetchByToken
     throw UnimplementedError();
   }
-  
+
   @override
-  Future<BackendUser> fetchByToken({required String token}) async {
-    try {
-      final responseData = await NetUtils().reqeustData(
-        path: YNEApi.backendUserRetrieveByToken[1],
-        method: YNEApi.backendUserRetrieveByToken[0],
-        token: token,
-      );
-      final model = BackendUser.fromJson(responseData['data']);
-      return model;
-    } catch (_) {
-      rethrow;
-    }
+  Future<List<BackendUser>?> fetchOtherBackendUsers() {
+    // TODO: implement fetchOtherBackendUsers
+    throw UnimplementedError();
   }
+
+  @override
+  BackendUser? get() {
+    // TODO: implement get
+    throw UnimplementedError();
+  }
+
+  @override
+  List<BackendUser>? getOtherBackendUsers() {
+    // TODO: implement getOtherBackendUsers
+    throw UnimplementedError();
+  }
+
+  @override
+  void set({required BackendUser backendUser}) {
+    // TODO: implement set
+  }
+
+  @override
+  void setOtherBackendUsers({required List<BackendUser> backendUserList}) {
+    // TODO: implement setOtherBackendUsers
+  }
+
+  @override
+  Stream<BackendUser?> watch() {
+    // TODO: implement watch
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<BackendUser>?> watchOtherBackendUsers() {
+    // TODO: implement watchOtherBackendUsers
+    throw UnimplementedError();
+  }
+
 }

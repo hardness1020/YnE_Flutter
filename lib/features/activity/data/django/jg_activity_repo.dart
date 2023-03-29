@@ -95,25 +95,25 @@ class DjangoActivityRepo extends IntfActivityRepo {
   }
   
   @override
-  Future<bool> userJoinActivity({required String activityID, required String userID}) {
+  Future<Activity> userJoinActivity({required String activityID, required String userID}) {
     // TODO: implement userJoinActivity
     throw UnimplementedError();
   }
   
   @override
-  Future<bool> userLikeActivity({required String activityID, required String userID}) {
+  Future<Activity> userLikeActivity({required String activityID, required String userID}) {
     // TODO: implement userLikeActivity
     throw UnimplementedError();
   }
   
   @override
-  Future<bool> userUnjoinActivity({required String activityID, required String userID}) {
+  Future<Activity> userUnjoinActivity({required String activityID, required String userID}) {
     // TODO: implement userUnjoinActivity
     throw UnimplementedError();
   }
   
   @override
-  Future<bool> userUnlikeActivity({required String activityID, required String userID}) {
+  Future<Activity> userUnlikeActivity({required String activityID, required String userID}) {
     // TODO: implement userUnlikeActivity
     throw UnimplementedError();
   }
@@ -129,5 +129,5 @@ class DjangoActivityRepo extends IntfActivityRepo {
     // TODO: implement watchList
     throw UnimplementedError();
   }
-
+  
 }
