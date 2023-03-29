@@ -204,29 +204,29 @@ final fetchListByLocationFutureProvider = FutureProvider.autoDispose
 });
 
 final userLikeActivityFutureProvider = FutureProvider.autoDispose
-    .family<void, Tuple2<String, String>>((ref, activityIDAndUserID) {
+    .family<bool, Tuple2<String, String>>((ref, activityIDAndUserID) {
   final ActivityService activityService = ref.read(activityServiceProvider);
-  activityService.userLikeActivity(
+  return activityService.userLikeActivity(
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 });
 
 final userUnlikeActivityFutureProvider = FutureProvider.autoDispose
-    .family<void, Tuple2<String, String>>((ref, activityIDAndUserID) {
+    .family<bool, Tuple2<String, String>>((ref, activityIDAndUserID) {
   final ActivityService activityService = ref.read(activityServiceProvider);
-  activityService.userUnlikeActivity(
+  return activityService.userUnlikeActivity(
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 });
 
 final userJoinActivityFutureProvider = FutureProvider.autoDispose
-    .family<void, Tuple2<String, String>>((ref, activityIDAndUserID) {
+    .family<bool, Tuple2<String, String>>((ref, activityIDAndUserID) {
   final ActivityService activityService = ref.read(activityServiceProvider);
-  activityService.userJoinActivity(
+  return activityService.userJoinActivity(
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 });
 
 final userUnjoinActivityFutureProvider = FutureProvider.autoDispose
-    .family<void, Tuple2<String, String>>((ref, activityIDAndUserID) {
+    .family<bool, Tuple2<String, String>>((ref, activityIDAndUserID) {
   final ActivityService activityService = ref.read(activityServiceProvider);
-  activityService.userUnjoinActivity(
+  return activityService.userUnjoinActivity(
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 });
