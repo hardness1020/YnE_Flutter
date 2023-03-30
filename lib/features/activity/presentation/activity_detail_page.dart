@@ -254,15 +254,21 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                               shape: const StadiumBorder(),
                             ),
                             onPressed: () {
-                              if (!status.value!.isJoined!) {
-                                ref.read(userJoinActivityFutureProvider(ids));
+                              // if (!status.value!.isJoined!) {
+                              if (!_isJoining!) {
+                                // ref.read(userJoinActivityFutureProvider(ids));
+                                ref.read(
+                                    userToggleJoinActivityFutureProvider(ids));
                                 print('join!\n');
                               } else {
-                                ref.read(userUnjoinActivityFutureProvider(ids));
+                                // ref.read(userUnjoinActivityFutureProvider(ids));
+                                ref.read(
+                                    userToggleJoinActivityFutureProvider(ids));
                                 print('unjoin!\n');
                               }
                               setState(() {
-                                _isJoining = status.value!.isJoined!;
+                                // _isJoining = status.value!.isJoined!;
+                                _isJoining = !_isJoining!;
                               });
                             },
                             child: _isJoining!
@@ -295,21 +301,32 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                                         // });
                                         // like(context, _isLiking);
 
-                                        if (!activity.isLiked!) {
+                                        // if (!status.value!.isLiked!) {
+                                        if (!_isLiking!) {
+                                          // ref.read(
+                                          //     userLikeActivityFutureProvider(
+                                          //         ids));
                                           ref.read(
-                                              userLikeActivityFutureProvider(
+                                              userToggleLikeActivityFutureProvider(
                                                   ids));
                                           print('like!\n');
                                         } else {
+                                          // ref.read(
+                                          //     userUnlikeActivityFutureProvider(
+                                          //         ids));
                                           ref.read(
-                                              userUnlikeActivityFutureProvider(
+                                              userToggleLikeActivityFutureProvider(
                                                   ids));
                                           print('unlike!\n');
                                         }
+                                        setState(() {
+                                          // _isLiking = status.value!.isLiked!;
+                                          _isLiking = !_isLiking!;
+                                        });
                                       },
                                       backgroundColor: const Color.fromARGB(
                                           255, 241, 55, 71),
-                                      child: activity!.isLiked!
+                                      child: _isLiking!
                                           ? const Icon(Icons.favorite, size: 30)
                                           : const Icon(Icons.favorite_border,
                                               size: 30),
