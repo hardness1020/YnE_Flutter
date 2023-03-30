@@ -114,12 +114,10 @@ class FakeActivityRepo extends IntfActivityRepo {
   }
 
   @override
-  Future<List<Activity>?> fetchList() async {
+  Future<List<Activity>?> fetchList({required String page}) async {
     try {
       await delay(addDelay);
-      final fetchedFakeActivityList =
-          Future.value(fakeActivityList).then((value) => value);
-      return fetchedFakeActivityList;
+      return fakeActivityList;
     } catch (e) {
       rethrow;
     }
@@ -139,10 +137,12 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity?> update(
-      {required Activity activity, required String userID}) async {
+      {required String page,
+      required Activity activity,
+      required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       for (int i = 0; i < activities!.length; i++) {
         if (activities[i].id == activity.id) {
           activities[i] = activity;
@@ -158,10 +158,12 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<void> delete(
-      {required String activityID, required String userID}) async {
+      {required String page,
+      required String activityID,
+      required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       final int index = activities!.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
@@ -178,11 +180,13 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<bool> userHasJoinedActivity(
-      {required String activityID, required String userID}) async {
+      {required String page,
+      required String activityID,
+      required String userID}) async {
     try {
       await delay(addDelay);
       // check if user has joined activity
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       if (activities == null) {
         return false;
       }
@@ -205,11 +209,13 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<bool> userHasLikedActivity(
-      {required String activityID, required String userID}) async {
+      {required String page,
+      required String activityID,
+      required String userID}) async {
     try {
       await delay(addDelay);
       // check if user has liked activity
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       if (activities == null) {
         return false;
       }
@@ -232,10 +238,12 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userLikeActivity(
-      {required String activityID, required String userID}) async {
+      {required String page,
+      required String activityID,
+      required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       final int index = activities!.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // activity not found
@@ -262,10 +270,12 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userUnlikeActivity(
-      {required String activityID, required String userID}) async {
+      {required String page,
+      required String activityID,
+      required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       final int index = activities!.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
@@ -288,12 +298,13 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userToggleLikeActivity({
+    required String page,
     required String activityID,
     required String userID,
   }) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       final int index = activities!.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
@@ -328,10 +339,12 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userJoinActivity(
-      {required String activityID, required String userID}) async {
+      {required String page,
+      required String activityID,
+      required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       final int index = activities!.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
@@ -358,10 +371,12 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userUnjoinActivity(
-      {required String activityID, required String userID}) async {
+      {required String page,
+      required String activityID,
+      required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       final int index = activities!.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
@@ -384,12 +399,13 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userToggleJoinActivity({
+    required String page,
     required String activityID,
     required String userID,
   }) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       final int index = activities!.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
@@ -427,7 +443,7 @@ class FakeActivityRepo extends IntfActivityRepo {
       {required String page, required String activityCategoryID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       List<Activity> listByCategory = <Activity>[];
       for (int i = 0; i < activities!.length; i++) {
         if (activities[i].categories == null) {
@@ -450,7 +466,7 @@ class FakeActivityRepo extends IntfActivityRepo {
       {required String page, required String activityLocationID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList();
+      final List<Activity>? activities = await fetchList(page:page);
       List<Activity> listByLocation = <Activity>[];
       // write for loop to filter out activities by location
       for (int i = 0; i < activities!.length; i++) {

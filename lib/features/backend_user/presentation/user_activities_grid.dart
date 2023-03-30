@@ -19,7 +19,7 @@ class ActivitiesGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activityListFutureValue = ref.watch(activityListFutureProvider);
+    final activityListFutureValue = ref.watch(activityListFutureProvider('1'));
     return AsyncValueWidget<List<Activity>?>(
       value: activityListFutureValue,
       data: (activities) => activities!.isEmpty

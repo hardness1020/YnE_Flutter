@@ -27,7 +27,7 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
   @override
   Widget build(BuildContext context) {
     final activityValue = ref.watch(activityFutureProvider(widget.activityId));
-    Tuple2<String, String> ids = Tuple2<String, String>(widget.activityId, '1');
+    Tuple3<String, String, String> pageAndIDs = Tuple3<String, String, String>('1', widget.activityId, '1');
     final status = ref.watch(activityStreamProvider(widget.activityId));
     return Scaffold(
       backgroundColor: Colors.white,
@@ -258,12 +258,12 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                               if (!_isJoining!) {
                                 // ref.read(userJoinActivityFutureProvider(ids));
                                 ref.read(
-                                    userToggleJoinActivityFutureProvider(ids));
+                                    userToggleJoinActivityFutureProvider(pageAndIDs));
                                 print('join!\n');
                               } else {
                                 // ref.read(userUnjoinActivityFutureProvider(ids));
                                 ref.read(
-                                    userToggleJoinActivityFutureProvider(ids));
+                                    userToggleJoinActivityFutureProvider(pageAndIDs));
                                 print('unjoin!\n');
                               }
                               setState(() {
@@ -308,7 +308,7 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                                           //         ids));
                                           ref.read(
                                               userToggleLikeActivityFutureProvider(
-                                                  ids));
+                                                  pageAndIDs));
                                           print('like!\n');
                                         } else {
                                           // ref.read(
@@ -316,7 +316,7 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                                           //         ids));
                                           ref.read(
                                               userToggleLikeActivityFutureProvider(
-                                                  ids));
+                                                  pageAndIDs));
                                           print('unlike!\n');
                                         }
                                         setState(() {

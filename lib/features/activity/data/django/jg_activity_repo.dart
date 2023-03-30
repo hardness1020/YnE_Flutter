@@ -1,6 +1,5 @@
 import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/api/api.dart';
-import 'package:yne_flutter/utils/delay.dart';
 
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
@@ -38,7 +37,10 @@ class DjangoActivityRepo extends IntfActivityRepo {
   }
 
   @override
-  Future<void> delete({required String activityID, required String userID}) {
+  Future<void> delete(
+      {required String page,
+      required String activityID,
+      required String userID}) {
     // TODO: implement delete
     throw UnimplementedError();
   }
@@ -50,7 +52,7 @@ class DjangoActivityRepo extends IntfActivityRepo {
   }
 
   @override
-  Future<List<Activity>?> fetchList() {
+  Future<List<Activity>?> fetchList({required String page}) {
     // TODO: implement fetchList
     throw UnimplementedError();
   }
@@ -98,49 +100,63 @@ class DjangoActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity?> update(
-      {required Activity activity, required String userID}) {
+      {required String page,
+      required Activity activity,
+      required String userID}) {
     // TODO: implement update
     throw UnimplementedError();
   }
 
   @override
   Future<bool> userHasJoinedActivity(
-      {required String activityID, required String userID}) {
+      {required String page,
+      required String activityID,
+      required String userID}) {
     // TODO: implement userHasJoinedActivity
     throw UnimplementedError();
   }
 
   @override
   Future<bool> userHasLikedActivity(
-      {required String activityID, required String userID}) {
+      {required String page,
+      required String activityID,
+      required String userID}) {
     // TODO: implement userHasLikedActivity
     throw UnimplementedError();
   }
 
   @override
   Future<Activity> userJoinActivity(
-      {required String activityID, required String userID}) {
+      {required String page,
+      required String activityID,
+      required String userID}) {
     // TODO: implement userJoinActivity
     throw UnimplementedError();
   }
 
   @override
   Future<Activity> userLikeActivity(
-      {required String activityID, required String userID}) {
+      {required String page,
+      required String activityID,
+      required String userID}) {
     // TODO: implement userLikeActivity
     throw UnimplementedError();
   }
 
   @override
   Future<Activity> userUnjoinActivity(
-      {required String activityID, required String userID}) {
+      {required String page,
+      required String activityID,
+      required String userID}) {
     // TODO: implement userUnjoinActivity
     throw UnimplementedError();
   }
 
   @override
   Future<Activity> userUnlikeActivity(
-      {required String activityID, required String userID}) {
+      {required String page,
+      required String activityID,
+      required String userID}) {
     // TODO: implement userUnlikeActivity
     throw UnimplementedError();
   }
@@ -159,14 +175,18 @@ class DjangoActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userToggleJoinActivity(
-      {required String activityID, required String userID}) {
+      {required String page,
+      required String activityID,
+      required String userID}) {
     // TODO: implement userToggleJoinActivity
     throw UnimplementedError();
   }
 
   @override
   Future<Activity> userToggleLikeActivity(
-      {required String activityID, required String userID}) {
+      {required String page,
+      required String activityID,
+      required String userID}) {
     // TODO: implement userToggleLikeActivity
     throw UnimplementedError();
   }
