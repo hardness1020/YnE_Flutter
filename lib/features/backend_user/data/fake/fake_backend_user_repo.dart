@@ -5,69 +5,113 @@ import 'package:yne_flutter/utils/delay.dart';
 import 'package:yne_flutter/utils/in_memory_store.dart';
 
 class FakeBackendUserRepo extends IntfBackendUserRepo {
-  final InMemoryStore<BackendUser> _backendUser =
-      InMemoryStore<BackendUser>(fakeUserList[0]);
+  BackendUser? _previousOtherRandomUser;
+  final InMemoryStore<BackendUser> _heroBackendUser =
+      InMemoryStore<BackendUser>(fakeHeroUser);
+
+  // final InMemoryStore<List<BackendUser>> _otherBackendUsers =
+  //     InMemoryStore<List<BackendUser>>(fakeOtherUserList);
 
   final bool addDelay;
 
-  FakeBackendUserRepo({this.addDelay = false});
+  FakeBackendUserRepo({this.addDelay = true});
 
-  @override
-  Stream<BackendUser?> watchBackendUser() {
-    return _backendUser.stream;
-  }
+  // @override
+  // Stream<List<BackendUser>?> watchOtherBackendUsers() {
+  //   try {
+  //     return _otherBackendUsers.stream;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
 
-  @override
-  BackendUser? get getBackendUser => _backendUser.value;
-
-  @override
-  void setUser({required BackendUser backendUser}) {
-    _backendUser.value = backendUser;
-  }
-  
-  @override
-  Future<BackendUser> fetchByToken({required String token}) async {
-    await delay(addDelay);
-    return _backendUser.value;
-  }
-  
-  @override
-  Future<List<BackendUser>?> fetchOtherBackendUsers() {
-    // TODO: implement fetchOtherBackendUsers
-    throw UnimplementedError();
-  }
-  
-  @override
-  BackendUser? get() {
-    // TODO: implement get
-    throw UnimplementedError();
-  }
-  
-  @override
-  List<BackendUser>? getOtherBackendUsers() {
-    // TODO: implement getOtherBackendUsers
-    throw UnimplementedError();
-  }
-  
-  @override
-  void set({required BackendUser? backendUser}) {
-    // TODO: implement set
-  }
-  
-  @override
-  void setOtherBackendUsers({required List<BackendUser> backendUserList}) {
-    // TODO: implement setOtherBackendUsers
-  }
-  
   @override
   Stream<BackendUser?> watch() {
-    // TODO: implement watch
-    throw UnimplementedError();
+    try {
+      return _heroBackendUser.stream;
+    } catch (e) {
+      rethrow;
+    }
   }
-  
+
+  // @override
+  // List<BackendUser>? getOtherBackendUsers() {
+  //   try {
+  //     return _otherBackendUsers.value;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+
   @override
-  Stream<List<BackendUser>?> watchOtherBackendUsers() {
-    // TODO: implement watchOtherBackendUsers
-    throw UnimplementedError();
+  BackendUser? getHero() {
+    try {
+      return _heroBackendUser.value;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<BackendUser?> fetchRandomNextUser() async {
+    try {
+      delay(addDelay);
+      if (fakeOtherUserList.isEmpty) {
+        throw Exception('No other users');
+      }
+      fakeOtherUserList.shuffle();
+      for (BackendUser backendUser in fakeOtherUserList) {
+        if (_previousOtherRandomUser == null ||
+            _previousOtherRandomUser!.id != backendUser.id) {
+          _previousOtherRandomUser = backendUser;
+          return _previousOtherRandomUser;
+        }
+      }
+      if (_previousOtherRandomUser != null) {
+        return _previousOtherRandomUser;
+      }
+        throw Exception('No other users');
+      
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // @override
+  // void setOtherBackendUsers({required List<BackendUser> backendUserList}) {
+  //   try {
+  //     _otherBackendUsers.value = backendUserList;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+
+  @override
+  void setHero({required BackendUser backendUser}) {
+    try {
+      _heroBackendUser.value = backendUser;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<BackendUser> fetchByToken({required String token}) async {
+    try {
+      await delay(addDelay);
+      return fakeHeroUser;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<BackendUser>?> fetchOtherBackendUsers() async {
+    try {
+      await delay(addDelay);
+      return fakeOtherUserList;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

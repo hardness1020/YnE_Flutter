@@ -8,17 +8,19 @@ import 'package:yne_flutter/features/backend_user/data/fake/fake_backend_user_re
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 
 abstract class IntfBackendUserRepo {
-  Stream<List<BackendUser>?> watchOtherBackendUsers();
+  // Stream<List<BackendUser>?> watchOtherBackendUsers();
 
   Stream<BackendUser?> watch();
 
-  List<BackendUser>? getOtherBackendUsers();
+  // List<BackendUser>? getOtherBackendUsers();
 
-  BackendUser? get();
+  BackendUser? getHero();
 
-  void setOtherBackendUsers({required List<BackendUser> backendUserList});
+  Future<BackendUser?> fetchRandomNextUser();
 
-  void set({required BackendUser backendUser});
+  // void setOtherBackendUsers({required List<BackendUser> backendUserList});
+
+  void setHero({required BackendUser backendUser});
 
   Future<BackendUser> fetchByToken({required String token});
 
@@ -37,12 +39,13 @@ final backendUserStreamProvider =
   return backendUserRepo.watch();
 });
 
-final userProvider = FutureProvider<BackendUser>((ref) async {
+final backendHeroSynchronizeProvider =
+    FutureProvider<BackendUser>((ref) async {
   final user = ref.watch(userStreamProvider).value!;
 
   final backendUserRepo = ref.read(backendUserRepoProvider);
   final backendUser =
       await backendUserRepo.fetchByToken(token: await user.getIdToken());
-  backendUserRepo.set(backendUser: backendUser);
+  backendUserRepo.setHero(backendUser: backendUser);
   return backendUser;
 });
