@@ -1,4 +1,5 @@
 import 'package:tuple/tuple.dart';
+import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 import 'package:yne_flutter/utils/delay.dart';
 
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
@@ -240,12 +241,13 @@ class FakeActivityRepo extends IntfActivityRepo {
         // activity not found
         throw Exception("[Activity ID Undefined]: Activity like failed");
       } else {
-        for (int i = 0; i < fakeOtherUserList.length; i++) {
-          if (fakeOtherUserList[i].id == userID) {
+        List<BackendUser> allFakeUsers = fakeOtherUserList + [fakeHeroUser];
+        for (int i = 0; i < allFakeUsers.length; i++) {
+          if (allFakeUsers[i].id == userID) {
             if (activities[index].likedUsers == null) {
               activities[index].likedUsers = List.empty(growable: true);
             }
-            activities[index].likedUsers!.add(fakeOtherUserList[i]);
+            activities[index].likedUsers!.add(allFakeUsers[i]);
             activities[index].isLiked = true;
             fakeActivityList = activities;
             return activities[index];
@@ -297,19 +299,20 @@ class FakeActivityRepo extends IntfActivityRepo {
         // not found
         throw Exception("[Activity ID Undefined]: Activity toggle failed");
       } else {
-        for (int i = 0; i < fakeOtherUserList.length; i++) {
-          if (fakeOtherUserList[i].id == userID) {
+        List<BackendUser> allFakeUsers = fakeOtherUserList + [fakeHeroUser];
+        for (int i = 0; i < allFakeUsers.length; i++) {
+          if (allFakeUsers[i].id == userID) {
             if (activities[index].likedUsers == null) {
               activities[index].likedUsers = List.empty(growable: true);
             }
-            if(activities[index].isLiked == null){
+            if (activities[index].isLiked == null) {
               activities[index].isLiked = false;
             }
             if (activities[index].isLiked ?? false) {
-              activities[index].likedUsers!.remove(fakeOtherUserList[i]);
+              activities[index].likedUsers!.remove(allFakeUsers[i]);
               activities[index].isLiked = false;
             } else {
-              activities[index].likedUsers!.add(fakeOtherUserList[i]);
+              activities[index].likedUsers!.add(allFakeUsers[i]);
               activities[index].isLiked = true;
             }
             fakeActivityList = activities;
@@ -334,12 +337,13 @@ class FakeActivityRepo extends IntfActivityRepo {
         // not found
         throw Exception("[Activity ID Undefined]: Activity join failed");
       } else {
-        for (int i = 0; i < fakeOtherUserList.length; i++) {
-          if (fakeOtherUserList[i].id == userID) {
+        List<BackendUser> allFakeUsers = fakeOtherUserList + [fakeHeroUser];
+        for (int i = 0; i < allFakeUsers.length; i++) {
+          if (allFakeUsers[i].id == userID) {
             if (activities[index].participants == null) {
               activities[index].participants = List.empty(growable: true);
             }
-            activities[index].participants!.add(fakeOtherUserList[i]);
+            activities[index].participants!.add(allFakeUsers[i]);
             activities[index].isJoined = true;
             fakeActivityList = activities;
             return activities[index];
@@ -378,7 +382,7 @@ class FakeActivityRepo extends IntfActivityRepo {
     }
   }
 
-    @override
+  @override
   Future<Activity> userToggleJoinActivity({
     required String activityID,
     required String userID,
@@ -391,8 +395,9 @@ class FakeActivityRepo extends IntfActivityRepo {
         // not found
         throw Exception("[Activity ID Undefined]: Activity toggle failed");
       } else {
-        for (int i = 0; i < fakeOtherUserList.length; i++) {
-          if (fakeOtherUserList[i].id == userID) {
+        List<BackendUser> allFakeUsers = fakeOtherUserList + [fakeHeroUser];
+        for (int i = 0; i < allFakeUsers.length; i++) {
+          if (allFakeUsers[i].id == userID) {
             if (activities[index].participants == null) {
               activities[index].participants = List.empty(growable: true);
             }
@@ -400,10 +405,10 @@ class FakeActivityRepo extends IntfActivityRepo {
               activities[index].isJoined = false;
             }
             if (activities[index].isJoined ?? false) {
-              activities[index].participants!.remove(fakeOtherUserList[i]);
+              activities[index].participants!.remove(allFakeUsers[i]);
               activities[index].isJoined = false;
             } else {
-              activities[index].participants!.add(fakeOtherUserList[i]);
+              activities[index].participants!.add(allFakeUsers[i]);
               activities[index].isJoined = true;
             }
             fakeActivityList = activities;

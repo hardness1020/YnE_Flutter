@@ -105,7 +105,7 @@ class ActivityService {
     return unlikedActivity;
   }
 
-  Future<void> userToggleLikeActivity({
+  Future<Activity> userToggleLikeActivity({
     required String activityID,
     required String userID,
   }) async {
@@ -113,6 +113,7 @@ class ActivityService {
     Activity likeToggledActivity = await activityRepo.userToggleLikeActivity(
         activityID: activityID, userID: userID);
     activityRepo.set(activity: likeToggledActivity);
+    return likeToggledActivity;
   }
 
   Future<Activity> userJoinActivity(
@@ -133,7 +134,7 @@ class ActivityService {
     return unjoinedActivity;
   }
 
-  Future<void> userToggleJoinActivity({
+  Future<Activity> userToggleJoinActivity({
     required String activityID,
     required String userID,
   }) async {
@@ -141,6 +142,7 @@ class ActivityService {
     Activity likeToggledActivity = await activityRepo.userToggleJoinActivity(
         activityID: activityID, userID: userID);
     activityRepo.set(activity: likeToggledActivity);
+    return likeToggledActivity;
   }
 
   Future<Tuple2<String, List<Activity>?>?> fetchListByCategory(
@@ -181,7 +183,7 @@ final activityFutureProvider =
 });
 
 final activityListFutureProvider =
-    FutureProvider.autoDispose<List<Activity>?>((ref) async {
+    FutureProvider.autoDispose.family<List<Activity>?, String>((ref, page) async {
   final ActivityService activityService = ref.watch(activityServiceProvider);
   return await activityService.fetchList();
 });
@@ -240,9 +242,9 @@ final userUnlikeActivityFutureProvider = FutureProvider.autoDispose
 });
 
 final userToggleLikeActivityFutureProvider = FutureProvider.autoDispose
-    .family<void, Tuple2<String, String>>((ref, activityIDandUserId) async {
+    .family<Activity, Tuple2<String, String>>((ref, activityIDandUserId) async {
   final ActivityService activityService = ref.watch(activityServiceProvider);
-  await activityService.userToggleLikeActivity(
+  return await activityService.userToggleLikeActivity(
       activityID: activityIDandUserId.item1, userID: activityIDandUserId.item2);
 });
 
@@ -261,9 +263,9 @@ final userUnjoinActivityFutureProvider = FutureProvider.autoDispose
 });
 
 final userToggleJoinActivityFutureProvider = FutureProvider.autoDispose
-    .family<void, Tuple2<String, String>>((ref, activityIDandUserId) async {
+    .family<Activity, Tuple2<String, String>>((ref, activityIDandUserId) async {
   final ActivityService activityService = ref.watch(activityServiceProvider);
-  await activityService.userToggleJoinActivity(
+  return await activityService.userToggleJoinActivity(
       activityID: activityIDandUserId.item1, userID: activityIDandUserId.item2);
 });
 
