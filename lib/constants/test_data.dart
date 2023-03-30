@@ -48,7 +48,10 @@ List<ActivityComment> fakeActivityCommentList = [
   ),
 ];
 
-List<BackendUser> fakeUserList = [
+BackendUser fakeHeroUser =
+    BackendUser(id: '0', name: 'hero', gender: 'F', intro: '0 1 2');
+
+List<BackendUser> fakeOtherUserList = [
   BackendUser(id: '0', name: 'Amy', gender: 'F', intro: '1 2 3'),
   BackendUser(id: '1', name: 'Bob', gender: 'M', intro: '2 3 4'),
   BackendUser(id: '2', name: 'Cindy', gender: 'F', intro: '3 4 5'),
@@ -65,7 +68,7 @@ List<Activity> fakeActivityList = [
       id: '3',
       title: 'Baking',
       categories: [fakeActivityCategoryList[0]],
-      host: fakeUserList[0],
+      host: fakeOtherUserList[0],
       startDate: '2023/4/1',
       endDate: '2023/5/2',
       description: 'Yay!',
@@ -74,14 +77,14 @@ List<Activity> fakeActivityList = [
       id: '4',
       title: 'Rock Band',
       categories: [fakeActivityCategoryList[1]],
-      host: fakeUserList[0],
+      host: fakeOtherUserList[0],
       startDate: '2023/2/1',
       description: 'Yo!'),
   Activity(
       id: '5',
       title: 'Skiing',
       categories: [fakeActivityCategoryList[0]],
-      host: fakeUserList[1],
+      host: fakeOtherUserList[1],
       startDate: '2023/4/1',
       endDate: '2023/4/3',
       description: 'Weeeee!'),
@@ -89,7 +92,7 @@ List<Activity> fakeActivityList = [
       id: '6',
       title: 'Rocket Building',
       categories: [fakeActivityCategoryList[0]],
-      host: fakeUserList[1],
+      host: fakeOtherUserList[1],
       startDate: '2023/4/1',
       endDate: '2025/12/25',
       description:
