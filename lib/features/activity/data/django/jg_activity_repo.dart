@@ -130,4 +130,16 @@ class DjangoActivityRepo extends IntfActivityRepo {
     throw UnimplementedError();
   }
   
+  @override
+  Future<Activity> userToggleJoinActivity({required String activityID, required String userID}) {
+    // TODO: implement userToggleJoinActivity
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<Activity> userToggleLikeActivity({required String activityID, required String userID}) {
+    // TODO: implement userToggleLikeActivity
+    throw UnimplementedError();
+  }
+  
 }

@@ -47,11 +47,21 @@ abstract class IntfActivityRepo {
   Future<Activity> userUnlikeActivity(
       {required String activityID, required String userID});
 
+  Future<Activity> userToggleLikeActivity({
+    required String activityID,
+    required String userID,
+  });
+
   Future<Activity> userJoinActivity(
       {required String activityID, required String userID});
 
   Future<Activity> userUnjoinActivity(
       {required String activityID, required String userID});
+
+  Future<Activity> userToggleJoinActivity({
+    required String activityID,
+    required String userID,
+  });
 
   Future<Tuple2<String, List<Activity>?>?> fetchListByCategory(
       {required String page, required String activityCategoryID});

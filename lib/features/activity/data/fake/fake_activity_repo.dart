@@ -285,6 +285,45 @@ class FakeActivityRepo extends IntfActivityRepo {
   }
 
   @override
+  Future<Activity> userToggleLikeActivity({
+    required String activityID,
+    required String userID,
+  }) async {
+    try {
+      await delay(addDelay);
+      final List<Activity>? activities = await fetchList();
+      final int index = activities!.indexWhere((p) => p.id == activityID);
+      if (index == -1) {
+        // not found
+        throw Exception("[Activity ID Undefined]: Activity toggle failed");
+      } else {
+        for (int i = 0; i < fakeOtherUserList.length; i++) {
+          if (fakeOtherUserList[i].id == userID) {
+            if (activities[index].likedUsers == null) {
+              activities[index].likedUsers = List.empty(growable: true);
+            }
+            if(activities[index].isLiked == null){
+              activities[index].isLiked = false;
+            }
+            if (activities[index].isLiked ?? false) {
+              activities[index].likedUsers!.remove(fakeOtherUserList[i]);
+              activities[index].isLiked = false;
+            } else {
+              activities[index].likedUsers!.add(fakeOtherUserList[i]);
+              activities[index].isLiked = true;
+            }
+            fakeActivityList = activities;
+            return activities[index];
+          }
+        }
+      }
+      throw Exception("[User ID Undefined]: Activity toggle failed");
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<Activity> userJoinActivity(
       {required String activityID, required String userID}) async {
     try {
@@ -334,6 +373,45 @@ class FakeActivityRepo extends IntfActivityRepo {
         }
       }
       throw Exception("[User ID Undefined]: Activity unjoin failed");
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+    @override
+  Future<Activity> userToggleJoinActivity({
+    required String activityID,
+    required String userID,
+  }) async {
+    try {
+      await delay(addDelay);
+      final List<Activity>? activities = await fetchList();
+      final int index = activities!.indexWhere((p) => p.id == activityID);
+      if (index == -1) {
+        // not found
+        throw Exception("[Activity ID Undefined]: Activity toggle failed");
+      } else {
+        for (int i = 0; i < fakeOtherUserList.length; i++) {
+          if (fakeOtherUserList[i].id == userID) {
+            if (activities[index].participants == null) {
+              activities[index].participants = List.empty(growable: true);
+            }
+            if (activities[index].isJoined == null) {
+              activities[index].isJoined = false;
+            }
+            if (activities[index].isJoined ?? false) {
+              activities[index].participants!.remove(fakeOtherUserList[i]);
+              activities[index].isJoined = false;
+            } else {
+              activities[index].participants!.add(fakeOtherUserList[i]);
+              activities[index].isJoined = true;
+            }
+            fakeActivityList = activities;
+            return activities[index];
+          }
+        }
+      }
+      throw Exception("[User ID Undefined]: Activity toggle failed");
     } catch (e) {
       rethrow;
     }

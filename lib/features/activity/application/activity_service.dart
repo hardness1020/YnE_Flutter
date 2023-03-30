@@ -24,7 +24,7 @@ class ActivityService {
     final Activity? fetchedActivity =
         await activityRepo.fetch(activityID: activityID);
     if (fetchedActivity != null) {
-      // activityRepo.set(activity: fetchedActivity);
+      activityRepo.set(activity: fetchedActivity);
     } else {
       throw Exception('Activity fetched is null');
     }
@@ -105,6 +105,16 @@ class ActivityService {
     return unlikedActivity;
   }
 
+  Future<void> userToggleLikeActivity({
+    required String activityID,
+    required String userID,
+  }) async {
+    final IntfActivityRepo activityRepo = ref.read(activityRepoProvider);
+    Activity likeToggledActivity = await activityRepo.userToggleLikeActivity(
+        activityID: activityID, userID: userID);
+    activityRepo.set(activity: likeToggledActivity);
+  }
+
   Future<Activity> userJoinActivity(
       {required String activityID, required String userID}) async {
     final IntfActivityRepo activityRepo = ref.read(activityRepoProvider);
@@ -121,6 +131,16 @@ class ActivityService {
         activityID: activityID, userID: userID);
     activityRepo.set(activity: unjoinedActivity);
     return unjoinedActivity;
+  }
+
+  Future<void> userToggleJoinActivity({
+    required String activityID,
+    required String userID,
+  }) async {
+    final IntfActivityRepo activityRepo = ref.read(activityRepoProvider);
+    Activity likeToggledActivity = await activityRepo.userToggleJoinActivity(
+        activityID: activityID, userID: userID);
+    activityRepo.set(activity: likeToggledActivity);
   }
 
   Future<Tuple2<String, List<Activity>?>?> fetchListByCategory(
@@ -155,9 +175,9 @@ final activityListProvider = Provider<List<Activity>?>((ref) {
 });
 
 final activityFutureProvider =
-    FutureProvider.autoDispose.family<Activity?, String>((ref, id) {
+    FutureProvider.autoDispose.family<Activity?, String>((ref, id) async {
   final ActivityService activityService = ref.watch(activityServiceProvider);
-  return activityService.fetch(activityID: id);
+  return await activityService.fetch(activityID: id);
 });
 
 final activityListFutureProvider =
@@ -219,6 +239,13 @@ final userUnlikeActivityFutureProvider = FutureProvider.autoDispose
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 });
 
+final userToggleLikeActivityFutureProvider = FutureProvider.autoDispose
+    .family<void, Tuple2<String, String>>((ref, activityIDandUserId) async {
+  final ActivityService activityService = ref.watch(activityServiceProvider);
+  await activityService.userToggleLikeActivity(
+      activityID: activityIDandUserId.item1, userID: activityIDandUserId.item2);
+});
+
 final userJoinActivityFutureProvider = FutureProvider.autoDispose
     .family<Activity, Tuple2<String, String>>((ref, activityIDAndUserID) async {
   final ActivityService activityService = ref.watch(activityServiceProvider);
@@ -231,6 +258,13 @@ final userUnjoinActivityFutureProvider = FutureProvider.autoDispose
   final ActivityService activityService = ref.watch(activityServiceProvider);
   return await activityService.userUnjoinActivity(
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
+});
+
+final userToggleJoinActivityFutureProvider = FutureProvider.autoDispose
+    .family<void, Tuple2<String, String>>((ref, activityIDandUserId) async {
+  final ActivityService activityService = ref.watch(activityServiceProvider);
+  await activityService.userToggleJoinActivity(
+      activityID: activityIDandUserId.item1, userID: activityIDandUserId.item2);
 });
 
 // final userHasLikedActivityFutureProvider = FutureProvider.autoDispose
