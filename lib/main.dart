@@ -27,7 +27,7 @@ class MyApp extends ConsumerWidget {
       routerConfig: goRouter,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        primaryColor: Colors.blue,
+        primaryColor: Colors.white,
         shadowColor: Colors.grey,
         scaffoldBackgroundColor: Colors.white,
       ),

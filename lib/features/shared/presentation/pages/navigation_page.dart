@@ -32,26 +32,24 @@ class NavigationPage extends ConsumerWidget {
             icon: Align(
               alignment: Alignment.center,
               child: FaIcon(
-                FontAwesomeIcons.house,
+                FontAwesomeIcons.magnifyingGlass,
               ),
             ),
           ),
           TabItem(
             icon: Align(
               alignment: Alignment.center,
+              child: Icon(Icons.calendar_today_outlined)
+            ),
+          ),
+          TabItem(
+            icon: Align(
+              alignment: Alignment.center,
               child: FaIcon(
-                FontAwesomeIcons.bookOpen,
+                FontAwesomeIcons.comment,
               ),
             ),
           ),
-          // TabItem(
-          //   icon: Align(
-          //     alignment: Alignment.center,
-          //     child: FaIcon(
-          //       FontAwesomeIcons.bell,
-          //     ),
-          //   ),
-          // ),
           TabItem(
             icon: Align(
               alignment: Alignment.center,
@@ -65,14 +63,17 @@ class NavigationPage extends ConsumerWidget {
           ref.read(navigationStateProvider.notifier).updateIndex(index);
         },
       ),
+
       body: IndexedStack(
         index: state,
         children: const <Widget>[
-          // UserPage(),
-          MyHomePage(title: '1',),
+          UserPage(),
+          // MyHomePage(
+          //   title: '1',
+          // ),
           ActivitiesListScreen(),
+          MyHomePage(title: '3',),
           SignInPage(),
-          // MyHomePage(title: '4',),
         ],
       ),
     );

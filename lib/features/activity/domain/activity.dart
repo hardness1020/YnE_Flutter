@@ -17,7 +17,7 @@ class Activity {
   List<ActivityComment>? comments;
   List<BackendUser>? likedUsers;
   List<BackendUser>? participants;
-  
+
 
   Activity(
       {this.id,
@@ -26,6 +26,8 @@ class Activity {
       this.title,
       this.description,
       this.host,
+      this.isLiked,
+      this.isJoined,
       this.location,
       this.categories,
       this.comments,

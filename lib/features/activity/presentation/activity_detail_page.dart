@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 import 'package:yne_flutter/constants/app_sizes.dart';
+import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
 import 'package:yne_flutter/features/activity/presentation/list/activity_card.dart';
 import 'package:yne_flutter/features/shared/presentation/widgets/async_value_widget.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
@@ -19,12 +21,14 @@ class ActivityDetailPage extends ConsumerStatefulWidget {
 
 class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
     with TickerProviderStateMixin {
-  bool _isLiking = false; // temp
-  bool _isJoining = false; // temp
+  bool? _isLiking = false; // temp
+  bool? _isJoining = false; // temp
 
   @override
   Widget build(BuildContext context) {
     final activityValue = ref.watch(activityFutureProvider(widget.activityId));
+    Tuple2<String, String> ids = Tuple2<String, String>(widget.activityId, '1');
+    final status = ref.watch(activityStreamProvider(widget.activityId));
     return Scaffold(
       backgroundColor: Colors.white,
       body: AsyncValueWidget<Activity?>(
@@ -219,76 +223,189 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                             child:
                                 const Icon(Icons.arrow_back_rounded, size: 40),
                           ),
-                        )
+                        ),
+                        Positioned(
+                          bottom: 30,
+                          left: 40,
+                          width: 170,
+                          height: 40,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 50),
+                              backgroundColor: bluegrey,
+                              shape: const StadiumBorder(),
+                            ),
+                            child: const Text('留言',
+                                style: TextStyle(fontSize: 22)),
+                            onPressed: () => comment(context),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 30,
+                          right: 40,
+                          width: 170,
+                          height: 40,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding:
+                                  const EdgeInsets.only(left: 60, right: 20),
+                              backgroundColor: bluegrey,
+                              shape: const StadiumBorder(),
+                            ),
+                            onPressed: () {
+                              if (!status.value!.isJoined!) {
+                                ref.read(userJoinActivityFutureProvider(ids));
+                                print('join!\n');
+                              } else {
+                                ref.read(userUnjoinActivityFutureProvider(ids));
+                                print('unjoin!\n');
+                              }
+                              setState(() {
+                                _isJoining = status.value!.isJoined!;
+                              });
+                            },
+                            child: _isJoining!
+                                ? const Text('取消參加',
+                                    style: TextStyle(fontSize: 22))
+                                : const Text('我想參加',
+                                    style: TextStyle(fontSize: 22)),
+                          ),
+                        ),
+                        Consumer(
+                          builder: (context, ref, _) {
+                            final status = ref.watch(
+                                activityStreamProvider(widget.activityId));
+                            // final status = ref.watch(
+                            //     userToggleLikeActivityFutureProvider(ids));
+                            return AsyncValueWidget<Activity?>(
+                              value: status,
+                              data: (activity) => Positioned(
+                                bottom: 15,
+                                left: 160,
+                                child: SizedBox(
+                                  width: 70,
+                                  height: 70,
+                                  child: FittedBox(
+                                    child: FloatingActionButton(
+                                      heroTag: 'likeBtn',
+                                      onPressed: () {
+                                        // setState(() {
+                                        //   _isLiking = !_isLiking;
+                                        // });
+                                        // like(context, _isLiking);
+
+                                        if (!activity.isLiked!) {
+                                          ref.read(
+                                              userLikeActivityFutureProvider(
+                                                  ids));
+                                          print('like!\n');
+                                        } else {
+                                          ref.read(
+                                              userUnlikeActivityFutureProvider(
+                                                  ids));
+                                          print('unlike!\n');
+                                        }
+                                      },
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 241, 55, 71),
+                                      child: activity!.isLiked!
+                                          ? const Icon(Icons.favorite, size: 30)
+                                          : const Icon(Icons.favorite_border,
+                                              size: 30),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   )
                 ],
               )),
-      floatingActionButton: Stack(
-        children: [
-          Positioned(
-            bottom: 15,
-            left: 40,
-            width: 170,
-            height: 40,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.only(left: 20, right: 50),
-                backgroundColor: bluegrey,
-                shape: const StadiumBorder(),
-              ),
-              child: const Text('留言', style: TextStyle(fontSize: 22)),
-              onPressed: () => comment(context),
-            ),
-          ),
-          Positioned(
-            bottom: 15,
-            right: 40,
-            width: 170,
-            height: 40,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.only(left: 60, right: 20),
-                backgroundColor: bluegrey,
-                shape: const StadiumBorder(),
-              ),
-              onPressed: () {
-                setState(() {
-                  _isJoining = !_isJoining;
-                });
-                join(context, _isJoining);
-              },
-              child: _isJoining
-                  ? const Text('取消參加', style: TextStyle(fontSize: 22))
-                  : const Text('我想參加', style: TextStyle(fontSize: 22)),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-              width: 70,
-              height: 70,
-              child: FittedBox(
-                child: FloatingActionButton(
-                  heroTag: 'likeBtn',
-                  onPressed: () {
-                    setState(() {
-                      _isLiking = !_isLiking;
-                    });
-                    like(context, _isLiking);
-                  },
-                  backgroundColor: const Color.fromARGB(255, 241, 55, 71),
-                  child: _isLiking
-                      ? const Icon(Icons.favorite, size: 30)
-                      : const Icon(Icons.favorite_border, size: 30),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: AsyncValueWidget(value: status, data: data),
+      // floatingActionButton: Stack(
+      //   children: [
+      //     Positioned(
+      //       bottom: 15,
+      //       left: 40,
+      //       width: 170,
+      //       height: 40,
+      //       child: ElevatedButton(
+      //         style: ElevatedButton.styleFrom(
+      //           padding: const EdgeInsets.only(left: 20, right: 50),
+      //           backgroundColor: bluegrey,
+      //           shape: const StadiumBorder(),
+      //         ),
+      //         child: const Text('留言', style: TextStyle(fontSize: 22)),
+      //         onPressed: () => comment(context),
+      //       ),
+      //     ),
+      //     Positioned(
+      //       bottom: 15,
+      //       right: 40,
+      //       width: 170,
+      //       height: 40,
+      //       child: ElevatedButton(
+      //         style: ElevatedButton.styleFrom(
+      //           padding: const EdgeInsets.only(left: 60, right: 20),
+      //           backgroundColor: bluegrey,
+      //           shape: const StadiumBorder(),
+      //         ),
+      //         onPressed: () {
+      //           // setState(() {
+      //           //   _isJoining = !_isJoining;
+      //           // });
+      //           // if (!_isJoining!) {
+      //           //   ref.read(userJoinActivityFutureProvider(ids));
+      //           // } else {
+      //           //   ref.read(userUnjoinActivityFutureProvider(ids));
+      //           // }
+      //           if (!activityValue.value!.isJoined!) {
+      //             ref.read(userJoinActivityFutureProvider(ids));
+      //           } else {
+      //             ref.read(userUnjoinActivityFutureProvider(ids));
+      //           }
+      //         },
+      //         child: activityValue.value!.isJoined!
+
+      //             ? const Text('取消參加', style: TextStyle(fontSize: 22))
+      //             : const Text('我想參加', style: TextStyle(fontSize: 22)),
+      //       ),
+      //     ),
+      //     Align(
+      //       alignment: Alignment.bottomCenter,
+      //       child: SizedBox(
+      //         width: 70,
+      //         height: 70,
+      //         child: FittedBox(
+      //           child: FloatingActionButton(
+      //             heroTag: 'likeBtn',
+      //             onPressed: () {
+      //               // setState(() {
+      //               //   _isLiking = !_isLiking;
+      //               // });
+      //               // like(context, _isLiking);
+
+      //               if (!_isLiking!) {
+      //                 ref.read(userLikeActivityFutureProvider(ids));
+      //               } else {
+      //                 ref.read(userUnlikeActivityFutureProvider(ids));
+      //               }
+      //             },
+      //             backgroundColor: const Color.fromARGB(255, 241, 55, 71),
+      //             child: _isLiking!
+      //                 ? const Icon(Icons.favorite, size: 30)
+      //                 : const Icon(Icons.favorite_border, size: 30),
+      //           ),
+      //         ),
+      //       ),
+      //     ),
+      //   ],
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

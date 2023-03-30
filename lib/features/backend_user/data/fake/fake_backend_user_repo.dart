@@ -70,8 +70,7 @@ class FakeBackendUserRepo extends IntfBackendUserRepo {
       if (_previousOtherRandomUser != null) {
         return _previousOtherRandomUser;
       }
-        throw Exception('No other users');
-      
+      throw Exception('No other users');
     } catch (e) {
       rethrow;
     }

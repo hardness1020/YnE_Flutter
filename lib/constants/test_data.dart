@@ -61,9 +61,9 @@ List<BackendUser> fakeOtherUserList = [
 
 List<Activity> fakeActivityList = [
   Activity(
-      id: '1', title: 'Activity 1', categories: [fakeActivityCategoryList[0]]),
+      id: '1', title: 'Activity 1', categories: [fakeActivityCategoryList[0]], isLiked:false, isJoined:false),
   Activity(
-      id: '2', title: 'Activity 2', categories: [fakeActivityCategoryList[1]]),
+      id: '2', title: 'Activity 2', categories: [fakeActivityCategoryList[1]], isLiked:false, isJoined:false),
   Activity(
       id: '3',
       title: 'Baking',

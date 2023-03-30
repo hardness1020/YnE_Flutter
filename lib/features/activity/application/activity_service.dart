@@ -24,7 +24,7 @@ class ActivityService {
     final Activity? fetchedActivity =
         await activityRepo.fetch(activityID: activityID);
     if (fetchedActivity != null) {
-      activityRepo.set(activity: fetchedActivity);
+      // activityRepo.set(activity: fetchedActivity);
     } else {
       throw Exception('Activity fetched is null');
     }
@@ -167,19 +167,19 @@ final activityServiceProvider = Provider<ActivityService>((ref) {
 });
 
 final activityProvider = Provider.family<Activity?, String>((ref, id) {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
+  final ActivityService activityService = ref.read(activityServiceProvider);
   return activityService.get(activityID: id);
 });
 
 final activityListProvider = Provider<List<Activity>?>((ref) {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
+  final ActivityService activityService = ref.read(activityServiceProvider);
   return activityService.getList();
 });
 
 final activityFutureProvider =
-    FutureProvider.autoDispose.family<Activity?, String>((ref, id) async {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
-  return await activityService.fetch(activityID: id);
+    FutureProvider.autoDispose.family<Activity?, String>((ref, id) {
+  final ActivityService activityService = ref.read(activityServiceProvider);
+  return activityService.fetch(activityID: id);
 });
 
 final activityListFutureProvider =
@@ -190,21 +190,21 @@ final activityListFutureProvider =
 
 final createActivityFutureProvider = FutureProvider.autoDispose
     .family<void, Tuple2<Activity, String>>((ref, activityAndUserID) async {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
+  final ActivityService activityService = ref.read(activityServiceProvider);
   await activityService.create(
       activity: activityAndUserID.item1, userID: activityAndUserID.item2);
 });
 
 final updateActivityFutureProvider = FutureProvider.autoDispose
     .family<void, Tuple2<Activity, String>>((ref, activityAndUserID) async {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
+  final ActivityService activityService = ref.read(activityServiceProvider);
   return await activityService.update(
       activity: activityAndUserID.item1, userID: activityAndUserID.item2);
 });
 
 final deleteActivityFutureProvider = FutureProvider.autoDispose
     .family<void, Tuple2<String, String>>((ref, activityIDAndUserID) async {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
+  final ActivityService activityService = ref.read(activityServiceProvider);
   await activityService.delete(
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 });
@@ -212,7 +212,7 @@ final deleteActivityFutureProvider = FutureProvider.autoDispose
 final fetchListByCategoryFutureProvider = FutureProvider.autoDispose
     .family<Tuple2<String, List<Activity>?>?, Tuple2<String, String>>(
         (ref, pageAndActivityCategoryID) async {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
+  final ActivityService activityService = ref.read(activityServiceProvider);
   return await activityService.fetchListByCategory(
       page: pageAndActivityCategoryID.item1,
       activityCategoryID: pageAndActivityCategoryID.item2);
@@ -221,7 +221,7 @@ final fetchListByCategoryFutureProvider = FutureProvider.autoDispose
 final fetchListByLocationFutureProvider = FutureProvider.autoDispose
     .family<Tuple2<String, List<Activity>?>?, Tuple2<String, String>>(
         (ref, pageAndActivityLocationID) async {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
+  final ActivityService activityService = ref.read(activityServiceProvider);
   return await activityService.fetchListByLocation(
       page: pageAndActivityLocationID.item1,
       activityLocationID: pageAndActivityLocationID.item2);
@@ -229,14 +229,14 @@ final fetchListByLocationFutureProvider = FutureProvider.autoDispose
 
 final userLikeActivityFutureProvider = FutureProvider.autoDispose
     .family<Activity, Tuple2<String, String>>((ref, activityIDAndUserID) async {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
+  final ActivityService activityService = ref.read(activityServiceProvider);
   return await activityService.userLikeActivity(
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 });
 
 final userUnlikeActivityFutureProvider = FutureProvider.autoDispose
     .family<Activity, Tuple2<String, String>>((ref, activityIDAndUserID) async {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
+  final ActivityService activityService = ref.read(activityServiceProvider);
   return await activityService.userUnlikeActivity(
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 });
@@ -250,14 +250,14 @@ final userToggleLikeActivityFutureProvider = FutureProvider.autoDispose
 
 final userJoinActivityFutureProvider = FutureProvider.autoDispose
     .family<Activity, Tuple2<String, String>>((ref, activityIDAndUserID) async {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
+  final ActivityService activityService = ref.read(activityServiceProvider);
   return await activityService.userJoinActivity(
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 });
 
 final userUnjoinActivityFutureProvider = FutureProvider.autoDispose
     .family<Activity, Tuple2<String, String>>((ref, activityIDAndUserID) async {
-  final ActivityService activityService = ref.watch(activityServiceProvider);
+  final ActivityService activityService = ref.read(activityServiceProvider);
   return await activityService.userUnjoinActivity(
       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 });
@@ -271,14 +271,14 @@ final userToggleJoinActivityFutureProvider = FutureProvider.autoDispose
 
 // final userHasLikedActivityFutureProvider = FutureProvider.autoDispose
 //     .family<bool, Tuple2<String, String>>((ref, activityIDAndUserID) {
-//   final ActivityService activityService = ref.watch(activityServiceProvider);
+//   final ActivityService activityService = ref.read(activityServiceProvider);
 //   return activityService.userHasLikedActivity(
 //       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 // });
 
 // final userHasJoinedActivityFutureProvider = FutureProvider.autoDispose
 //     .family<bool, Tuple2<String, String>>((ref, activityIDAndUserID) {
-//   final ActivityService activityService = ref.watch(activityServiceProvider);
+//   final ActivityService activityService = ref.read(activityServiceProvider);
 //   return activityService.userHasJoinedActivity(
 //       activityID: activityIDAndUserID.item1, userID: activityIDAndUserID.item2);
 // });

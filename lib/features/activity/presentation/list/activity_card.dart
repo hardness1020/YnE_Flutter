@@ -4,8 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
 
 Color bluegrey = const Color.fromARGB(255, 39, 42, 80);
+TextStyle bodyTiny =
+    TextStyle(color: bluegrey, fontSize: 10, fontWeight: FontWeight.w400);
 TextStyle bodySmall =
     TextStyle(color: bluegrey, fontSize: 12, fontWeight: FontWeight.w300);
+TextStyle bodyMidLight =
+    TextStyle(color: bluegrey, fontSize: 14, fontWeight: FontWeight.w400);
 TextStyle bodyMid =
     TextStyle(color: bluegrey, fontSize: 14, fontWeight: FontWeight.w600);
 TextStyle bodyLarge =
@@ -18,6 +22,8 @@ TextStyle titleLarge =
     TextStyle(color: bluegrey, fontSize: 24, fontWeight: FontWeight.w500);
 TextStyle displaySmall =
     TextStyle(color: bluegrey, fontSize: 28, fontWeight: FontWeight.w600);
+TextStyle displayMid =
+    TextStyle(color: bluegrey, fontSize: 32, fontWeight: FontWeight.w600);
 
 /// Used to show a single product inside a card.
 class ActivityCard extends ConsumerWidget {
@@ -44,7 +50,6 @@ class ActivityCard extends ConsumerWidget {
         ],
       ),
       child: Card(
-        // shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(80))),
         child: InkWell(
           key: activityCardKey,
           onTap: onPressed,
@@ -192,54 +197,5 @@ class ActivityCard extends ConsumerWidget {
         ),
       ),
     );
-    // return Card(
-    //   child: InkWell(
-    //     key: activityCardKey,
-    //     onTap: onPressed,
-    //     child: Padding(
-    //       padding: const EdgeInsets.all(Sizes.p16),
-    //       child: Stack(
-    //         children: [
-    //           Column(
-    //             crossAxisAlignment: CrossAxisAlignment.stretch,
-    //             children: [
-    //               // CustomImage(imageUrl: activity.imageUrl),
-    //               // gapH8,
-    //               const Divider(),
-    //               // gapH8,
-    //               Text(activity.title ?? "Title not found",
-    //                   style: Theme.of(context).textTheme.headlineSmall),
-    //               // if (product.numRatings >= 1) ...[
-    //               //   gapH8,
-    //               //   ProductAverageRating(product: product),
-    //               // ],
-    //               // gapH24,
-    //               // Text(priceFormatted,
-    //               //     style: Theme.of(context).textTheme.headlineSmall),
-    //               Expanded(
-    //                 child: Text(activity.host?.name ?? "Anonymous",
-    //                     style: Theme.of(context).textTheme.titleMedium),
-    //               ),
-    //               gapH4,
-    //               Text(
-    //                   '${activity.startDate ?? "XXXX/XX/XX"}~${activity.endDate ?? "XXXX/XX/XX"}',
-    //                   style: Theme.of(context).textTheme.titleSmall),
-    //               gapH8,
-    //               Text(activity.description ?? "......Description......",
-    //                   style: Theme.of(context).textTheme.bodyMedium),
-    //               gapH4,
-    //               // Text(
-    //               //   product.availableQuantity <= 0
-    //               //       ? 'Out of Stock'.hardcoded
-    //               //       : 'Quantity: ${product.availableQuantity}'.hardcoded,
-    //               //   style: Theme.of(context).textTheme.bodySmall,
-    //               // )
-    //             ],
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

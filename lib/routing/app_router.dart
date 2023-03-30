@@ -21,8 +21,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   // final authState = ref.watch(userProvider);
 
   return GoRouter(
-    initialLocation: '/signIn',
-    // initialLocation: '/',
+    // initialLocation: '/signIn',
+    initialLocation: '/',
     routes: [
       GoRoute(
           path: '/',
