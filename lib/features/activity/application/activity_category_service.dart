@@ -53,31 +53,32 @@ final activityCategoryServiceProvider =
 
 final activityCategorytProvider =
     Provider.family<ActivityCategory?, String>((ref, id) {
-  final activityCategoryService = ref.read(activityCategoryServiceProvider);
+  final activityCategoryService = ref.watch(activityCategoryServiceProvider);
   return activityCategoryService.get(activityCategoryID: id);
 });
 
 final activityCategoryListProvider = Provider<List<ActivityCategory>?>((ref) {
-  final activityCategoryService = ref.read(activityCategoryServiceProvider);
+  final activityCategoryService = ref.watch(activityCategoryServiceProvider);
   return activityCategoryService.getlist();
 });
 
 final activityCategoryFuturetProvider =
     FutureProvider.family<ActivityCategory?, String>((ref, id) {
-  final activityCategoryService = ref.read(activityCategoryServiceProvider);
+  final activityCategoryService = ref.watch(activityCategoryServiceProvider);
   return activityCategoryService.fetch(activityCategoryID: id);
 });
 
 final activityCategoryListFutureProvider =
     FutureProvider.autoDispose<List<ActivityCategory>?>((ref) {
-  final activityCategoryListService = ref.read(activityCategoryServiceProvider);
+  final activityCategoryListService =
+      ref.watch(activityCategoryServiceProvider);
   return activityCategoryListService.fetchList();
 });
 
 final createActivityFutureProvider = FutureProvider.autoDispose
     .family<void, Tuple2<ActivityCategory, String>>(
         (ref, activityCategoryAndUserID) {
-  final activityCategoryService = ref.read(activityCategoryServiceProvider);
+  final activityCategoryService = ref.watch(activityCategoryServiceProvider);
   return activityCategoryService.create(
       activityCategory: activityCategoryAndUserID.item1,
       userID: activityCategoryAndUserID.item2);
@@ -85,7 +86,7 @@ final createActivityFutureProvider = FutureProvider.autoDispose
 
 final deleteActivityFutureProvider = FutureProvider.autoDispose
     .family<void, Tuple2<String, String>>((ref, activityCategoryIDAndUserID) {
-  final activityCategoryService = ref.read(activityCategoryServiceProvider);
+  final activityCategoryService = ref.watch(activityCategoryServiceProvider);
   return activityCategoryService.delete(
       activityCategoryID: activityCategoryIDAndUserID.item1,
       userID: activityCategoryIDAndUserID.item2);

@@ -37,12 +37,12 @@ final activityCategoryRepoProvider = Provider<IntfActivityCategoryRepo>((ref) {
 
 final activityCategoryStreamProvider =
     StreamProvider.family<ActivityCategory?, String>((ref, id) {
-  final activityCategoryListService = ref.read(activityCategoryRepoProvider);
+  final activityCategoryListService = ref.watch(activityCategoryRepoProvider);
   return activityCategoryListService.watch(activityCategoryID: id);
 });
 
 final activityCategoryListStreamProvider =
     StreamProvider.autoDispose<List<ActivityCategory>?>((ref) {
-  final activityCategoryListService = ref.read(activityCategoryRepoProvider);
+  final activityCategoryListService = ref.watch(activityCategoryRepoProvider);
   return activityCategoryListService.watchList();
 });

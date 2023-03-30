@@ -13,8 +13,6 @@ class BackendUserService {
     return backendUserRepo.getHero();
   }
 
-
-
   // List<BackendUser>? getOtherBackendUsers() {
   //   final IntfBackendUserRepo backendUserRepo =
   //       ref.read(backendUserRepoProvider);
@@ -35,7 +33,7 @@ class BackendUserService {
     return await backendUserRepo.fetchOtherBackendUsers();
   }
 
-    Future<BackendUser?> fetchRandomNextUser() async {
+  Future<BackendUser?> fetchRandomNextUser() async {
     final IntfBackendUserRepo backendUserRepo =
         ref.read(backendUserRepoProvider);
     return await backendUserRepo.fetchRandomNextUser();
@@ -58,30 +56,30 @@ final backendUserServiceProvider =
     Provider.autoDispose<BackendUserService>((ref) => BackendUserService(ref));
 
 final heroBackendUserProvider = Provider.autoDispose<BackendUser?>((ref) {
-  final backendUserService = ref.read(backendUserServiceProvider);
+  final backendUserService = ref.watch(backendUserServiceProvider);
   return backendUserService.getHero();
 });
 
 // final otherBackendUsersProvider =
 //     Provider.autoDispose<List<BackendUser>?>((ref) {
-//   final backendUserService = ref.read(backendUserServiceProvider);
+//   final backendUserService = ref.watch(backendUserServiceProvider);
 //   return backendUserService.getOtherBackendUsers();
 // });
 
 final randomNextBackendUserFutureProvider =
     FutureProvider.autoDispose<BackendUser?>((ref) async {
-  final backendUserService = ref.read(backendUserServiceProvider);
+  final backendUserService = ref.watch(backendUserServiceProvider);
   return await backendUserService.fetchRandomNextUser();
 });
 
 // final backendUserByTokenFutureProvider =
 //     FutureProvider.autoDispose.family<BackendUser, String>((ref, token) async {
-//   final backendUserService = ref.read(backendUserServiceProvider);
+//   final backendUserService = ref.watch(backendUserServiceProvider);
 //   return await backendUserService.fetchByToken(token: token);
 // });
 
 final otherBackendUsersFetchedFutureProvider =
     FutureProvider.autoDispose<List<BackendUser>?>((ref) async {
-  final backendUserService = ref.read(backendUserServiceProvider);
+  final backendUserService = ref.watch(backendUserServiceProvider);
   return await backendUserService.fetchOtherBackendUsers();
 });

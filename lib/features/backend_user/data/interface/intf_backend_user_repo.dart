@@ -39,11 +39,10 @@ final backendUserStreamProvider =
   return backendUserRepo.watch();
 });
 
-final backendHeroSynchronizeProvider =
-    FutureProvider<BackendUser>((ref) async {
+final backendHeroSynchronizeProvider = FutureProvider<BackendUser>((ref) async {
   final user = ref.watch(userStreamProvider).value!;
 
-  final backendUserRepo = ref.read(backendUserRepoProvider);
+  final backendUserRepo = ref.watch(backendUserRepoProvider);
   final backendUser =
       await backendUserRepo.fetchByToken(token: await user.getIdToken());
   backendUserRepo.setHero(backendUser: backendUser);

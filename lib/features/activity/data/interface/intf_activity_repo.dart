@@ -7,7 +7,6 @@ import 'package:yne_flutter/features/activity/data/django/jg_activity_repo.dart'
 import 'package:yne_flutter/features/activity/data/fake/fake_activity_repo.dart';
 
 abstract class IntfActivityRepo {
-
   Stream<List<Activity>?> watchList();
 
   Stream<Activity?> watch({required String activityID});
@@ -32,8 +31,7 @@ abstract class IntfActivityRepo {
   Future<Activity?> update(
       {required Activity activity, required String userID});
 
-  Future<void> delete(
-      {required String activityID, required String userID});
+  Future<void> delete({required String activityID, required String userID});
 
   // check if user has liked the activity
   Future<bool> userHasLikedActivity(
@@ -70,12 +68,12 @@ final activityRepoProvider = Provider<IntfActivityRepo>((ref) {
 
 final activityListStreamProvider =
     StreamProvider.autoDispose<List<Activity>?>((ref) {
-  final activityListRepo = ref.read(activityRepoProvider);
+  final activityListRepo = ref.watch(activityRepoProvider);
   return activityListRepo.watchList();
 });
 
 final activityStreamProvider =
     StreamProvider.autoDispose.family<Activity?, String>((ref, id) {
-  final activityListRepo = ref.read(activityRepoProvider);
+  final activityListRepo = ref.watch(activityRepoProvider);
   return activityListRepo.watch(activityID: id);
 });

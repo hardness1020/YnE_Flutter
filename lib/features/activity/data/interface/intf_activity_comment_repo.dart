@@ -53,7 +53,7 @@ final activityCommentRepoProvider = Provider<IntfActivityCommentRepo>((ref) {
 
 final activityCommentStreamProvider =
     StreamProvider.family<ActivityComment?, String>((ref, id) {
-  final activityCommentListRepo = ref.read(activityCommentRepoProvider);
+  final activityCommentListRepo = ref.watch(activityCommentRepoProvider);
   return activityCommentListRepo.watch(activityCommentID: id);
 });
 
@@ -70,6 +70,6 @@ final activityCommentStreamProvider =
 
 final activityCommentListStreamProvider =
     StreamProvider.autoDispose<List<ActivityComment>>((ref) {
-  final activityCommentListRepo = ref.read(activityCommentRepoProvider);
+  final activityCommentListRepo = ref.watch(activityCommentRepoProvider);
   return activityCommentListRepo.watchList();
 });

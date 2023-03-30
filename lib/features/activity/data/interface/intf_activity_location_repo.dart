@@ -53,7 +53,7 @@ final activityLocationRepoProvider = Provider<IntfActivityLocationRepo>((ref) {
 
 final activityLocationStreamProvider =
     StreamProvider.family<ActivityLocation?, String>((ref, id) {
-  final activityCommentListRepo = ref.read(activityLocationRepoProvider);
+  final activityCommentListRepo = ref.watch(activityLocationRepoProvider);
   return activityCommentListRepo.watch(activityLocationID: id);
 });
 
@@ -70,6 +70,6 @@ final activityLocationStreamProvider =
 
 final activityLocationListStreamProvider =
     StreamProvider.autoDispose<List<ActivityLocation>>((ref) {
-  final activityCommentListRepo = ref.read(activityLocationRepoProvider);
+  final activityCommentListRepo = ref.watch(activityLocationRepoProvider);
   return activityCommentListRepo.watchList();
 });
