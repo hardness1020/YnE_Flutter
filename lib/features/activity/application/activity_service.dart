@@ -183,7 +183,7 @@ final activityFutureProvider =
 });
 
 final activityListFutureProvider =
-    FutureProvider.autoDispose.family<List<Activity>?, String>((ref, page) async {
+    FutureProvider.autoDispose<List<Activity>?>((ref) async {
   final ActivityService activityService = ref.watch(activityServiceProvider);
   return await activityService.fetchList();
 });
