@@ -18,7 +18,6 @@ class Activity {
   List<BackendUser>? likedUsers;
   List<BackendUser>? participants;
 
-
   Activity(
       {this.id,
       this.startDate,
@@ -75,19 +74,20 @@ class Activity {
     data['end_date'] = endDate;
     data['title'] = title;
     data['description'] = description;
-    data['host'] = host!.toJson();
-    data['location'] = location!.toJson();
+    data['host'] = host!.id;
+    data['location'] = location!.id;
     if (categories != null) {
-      data['categories'] = categories!.map((v) => v.toJson()).toList();
+      data['categories'] = categories!.map((category) => category.id).toList();
     }
     if (comments != null) {
-      data['comments'] = comments!.map((v) => v.toJson()).toList();
+      data['comments'] = comments!.map((comment) => comment.id).toList();
     }
     if (likedUsers != null) {
-      data['liked_users'] = likedUsers!.map((v) => v.toJson()).toList();
+      data['liked_users'] = likedUsers!.map((comment) => comment.id).toList();
     }
     if (participants != null) {
-      data['participants'] = participants!.map((v) => v.toJson()).toList();
+      data['participants'] =
+          participants!.map((participant) => participant.id).toList();
     }
     return data;
   }

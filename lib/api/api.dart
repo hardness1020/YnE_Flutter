@@ -21,26 +21,43 @@ class YNEApi {
   static const baseUrl = "http://172.28.27.82:8000";
 
   // Activity
-  static List activityList = [DioMethod.get, '$baseUrl/activity'];
+  static List activityList(String page) =>
+      [DioMethod.get, '$baseUrl/activity/?page=$page'];
   static List activityCreate = [DioMethod.post, '$baseUrl/activity'];
-  static List activityRetrieve(String id) =>
-      [DioMethod.get, '$baseUrl/activity/$id'];
-  static List activityUpdate(String id) =>
-      [DioMethod.patch, '$baseUrl/activity/$id'];
-  static List activityDelete(String id) =>
-      [DioMethod.delete, '$baseUrl/activity/$id'];
-  static List activityLikedByUser(String id, String userID) =>
-      [DioMethod.post, '$baseUrl/activity/$id/liked_by_user'];
-  static List activityUnlikedByUser(String id, String userID) =>
-      [DioMethod.post, '$baseUrl/activity/$id/unliked_by_user'];
+  static List activityRetrieve(String activityID) =>
+      [DioMethod.get, '$baseUrl/activity/$activityID'];
+  static List activityDelete(String activityID) =>
+      [DioMethod.delete, '$baseUrl/activity/$activityID'];
+  static List activityUpdate(String activityID) =>
+      [DioMethod.put, '$baseUrl/activity/$activityID'];
+  static List userLikeActivity(String activityID) =>
+      [DioMethod.patch, '$baseUrl/activity/$activityID/user_like_activity'];
+  static List userUnlikeActivity(String activityID) =>
+      [DioMethod.patch, '$baseUrl/activity/$activityID/user_unlike_activity'];
+  static List userJoinActivity(String activityID) =>
+      [DioMethod.patch, '$baseUrl/activity/$activityID/user_join_activity'];
+  static List userUnjoinActivity(String activityID) =>
+      [DioMethod.patch, '$baseUrl/activity/$activityID/user_unjoin_activity'];
+  static List userToggleLikeActivity(String activityID) => [
+        DioMethod.patch,
+        '$baseUrl/activity/$activityID/user_toggle_like_activity'
+      ];
+  static List userToggleJoinActivity(String activityID) => [
+        DioMethod.patch,
+        '$baseUrl/activity/$activityID/user_toggle_join_activity'
+      ];
 
   // ActivityCategory
   static List activityCategoryList = [
     DioMethod.get,
     '$baseUrl/activity/category'
   ];
-  static List activityCategoryRetrieve(String id) =>
-      [DioMethod.get, '$baseUrl/activity/category/$id'];
+  static List activityCategoryRetrieve(String activityCategoryID) =>
+      [DioMethod.get, '$baseUrl/activity/category/$activityCategoryID'];
+
+  // User
+  static List nextBackendUser = [DioMethod.get, '$baseUrl/next_django_user'];
+  static List heroBackendUser = [DioMethod.get, '$baseUrl/hero_django_user'];
 
   // BackendUser
   static List backendUserRetrieveByToken = [

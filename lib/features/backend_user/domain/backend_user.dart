@@ -31,32 +31,32 @@ class BackendUser {
     intro = json['intro'];
     if (json['jobs'] != null) {
       jobs = <BackendUserJob>[];
-      json['jobs'].forEach((v) {
-        jobs!.add(BackendUserJob.fromJson(v));
+      json['jobs'].forEach((job) {
+        jobs!.add(BackendUserJob.fromJson(job));
       });
     }
     if (json['hobbies'] != null) {
       hobbies = <BackendUserHobby>[];
-      json['hobbies'].forEach((v) {
-        hobbies!.add(BackendUserHobby.fromJson(v));
+      json['hobbies'].forEach((hobby) {
+        hobbies!.add(BackendUserHobby.fromJson(hobby));
       });
     }
     if (json['hosted_activities'] != null) {
       hostedActivities = <Activity>[];
-      json['hosted_activities'].forEach((v) {
-        hostedActivities!.add(Activity.fromJson(v));
+      json['hosted_activities'].forEach((activity) {
+        hostedActivities!.add(Activity.fromJson(activity));
       });
     }
     if (json['joined_activities'] != null) {
       joinedActivities = <Activity>[];
-      json['joined_activities'].forEach((v) {
-        joinedActivities!.add(Activity.fromJson(v));
+      json['joined_activities'].forEach((activity) {
+        joinedActivities!.add(Activity.fromJson(activity));
       });
     }
     if (json['liked_activities'] != null) {
       likedActivities = <Activity>[];
-      json['liked_activities'].forEach((v) {
-        likedActivities!.add(Activity.fromJson(v));
+      json['liked_activities'].forEach((activity) {
+        likedActivities!.add(Activity.fromJson(activity));
       });
     }
   }
@@ -68,22 +68,22 @@ class BackendUser {
     data['gender'] = gender;
     data['intro'] = intro;
     if (jobs != null) {
-      data['jobs'] = jobs!.map((v) => v.toJson()).toList();
+      data['jobs'] = jobs!.map((job) => job.id).toList();
     }
     if (hobbies != null) {
-      data['hobbies'] = hobbies!.map((v) => v.toJson()).toList();
+      data['hobbies'] = hobbies!.map((hobby) => hobby.id).toList();
     }
     if (hostedActivities != null) {
       data['hosted_activities'] =
-          hostedActivities!.map((v) => v.toJson()).toList();
+          hostedActivities!.map((activity) => activity.id).toList();
     }
     if (joinedActivities != null) {
       data['joined_activities'] =
-          joinedActivities!.map((v) => v.toJson()).toList();
+          joinedActivities!.map((activity) => activity.id).toList();
     }
     if (likedActivities != null) {
       data['liked_activities'] =
-          likedActivities!.map((v) => v.toJson()).toList();
+          likedActivities!.map((activity) => activity.id).toList();
     }
     return data;
   }
