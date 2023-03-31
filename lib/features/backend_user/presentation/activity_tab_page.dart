@@ -4,7 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:yne_flutter/features/activity/domain/activity.dart';
-import 'package:yne_flutter/features/activity/presentation/activity_tab_controller.dart';
+import 'package:yne_flutter/features/activity/presentation/detail/activity_tab_controller.dart';
 import 'package:yne_flutter/routing/app_router.dart';
 
 class ActivityTabPage extends ConsumerStatefulWidget {

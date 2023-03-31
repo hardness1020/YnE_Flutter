@@ -7,7 +7,7 @@ import 'package:yne_flutter/features/auth/presentation/sign_up/sign_up_page.dart
 import 'package:yne_flutter/features/backend_user/data/interface/intf_backend_user_repo.dart';
 import 'package:yne_flutter/routing/not_found_page.dart';
 import 'package:yne_flutter/features/shared/presentation/pages/navigation_page.dart';
-import 'package:yne_flutter/features/activity/presentation/activity_detail_page.dart';
+import 'package:yne_flutter/features/activity/presentation/detail/activity_detail_page.dart';
 
 enum AppRoute {
   signIn,

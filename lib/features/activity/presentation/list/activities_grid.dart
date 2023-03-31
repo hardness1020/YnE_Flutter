@@ -35,12 +35,11 @@ class ActivitiesGrid extends ConsumerWidget {
               itemBuilder: (_, index) {
                 final activity = activities[index];
                 return ActivityCard(
-                  activity: activity,
-                  onPressed: () => context.goNamed(
-                    AppRoute.activityDetail.name,
-                    params: {'id': activity.id!},
-                  ),
-                );
+                    activity: activity,
+                    onPressed: () {
+                      context.goNamed(AppRoute.activityDetail.name,
+                          params: {'id': activity.id!});
+                    });
               },
             ),
     );
