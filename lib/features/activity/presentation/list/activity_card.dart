@@ -25,7 +25,6 @@ TextStyle displaySmall =
 TextStyle displayMid =
     TextStyle(color: bluegrey, fontSize: 32, fontWeight: FontWeight.w600);
 
-/// Used to show a single product inside a card.
 class ActivityCard extends ConsumerWidget {
   const ActivityCard({super.key, required this.activity, this.onPressed});
   final Activity activity;
@@ -185,14 +184,7 @@ class ActivityCard extends ConsumerWidget {
                   backgroundImage: AssetImage("assets/images/woman.jpg"),
                 ),
               ),
-              // Container(
-              //   // for User Photo
-              //   margin: const EdgeInsets.only(left: 8.0, top: 14),
-              //   width: 5.0, height: 5.0,
-              //   child: const Image(
-              //       image: AssetImage("assets/images/woman.jpg"), height: 10),
-              // )
-            ],
+              ],
           ),
         ),
       ),

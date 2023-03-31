@@ -4,25 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
 import 'package:yne_flutter/features/activity/presentation/list/activity_card.dart';
 
-// Color bluegrey = const Color.fromARGB(255, 39, 42, 80);
-// TextStyle bodySmall =
-//     TextStyle(color: bluegrey, fontSize: 12, fontWeight: FontWeight.w300);
-// TextStyle bodyMid =
-//     TextStyle(color: bluegrey, fontSize: 14, fontWeight: FontWeight.w600);
-// TextStyle bodyLarge =
-//     TextStyle(color: bluegrey, fontSize: 16, fontWeight: FontWeight.normal);
-// TextStyle titleSmall =
-//     TextStyle(color: bluegrey, fontSize: 20, fontWeight: FontWeight.normal);
-// TextStyle titleMid =
-//     TextStyle(color: bluegrey, fontSize: 22, fontWeight: FontWeight.normal);
-// TextStyle titleLarge =
-//     TextStyle(color: bluegrey, fontSize: 24, fontWeight: FontWeight.w500);
-// TextStyle displaySmall =
-//     TextStyle(color: bluegrey, fontSize: 28, fontWeight: FontWeight.w600);
-// TextStyle displayMid =
-//     TextStyle(color: bluegrey, fontSize: 30, fontWeight: FontWeight.w600);
-
-/// Used to show a single product inside a card.
 class UserActivityWidget extends ConsumerWidget {
   const UserActivityWidget({super.key, required this.activity, this.onPressed});
   final Activity activity;
@@ -144,13 +125,6 @@ class UserActivityWidget extends ConsumerWidget {
                   )
                 ],
               )),
-          // Container(
-          //   // for User Photo
-          //   margin: const EdgeInsets.only(left: 8.0, top: 14),
-          //   width: 5.0, height: 5.0,
-          //   child: const Image(
-          //       image: AssetImage("assets/images/woman.jpg"), height: 10),
-          // )
         ],
       ),
     );

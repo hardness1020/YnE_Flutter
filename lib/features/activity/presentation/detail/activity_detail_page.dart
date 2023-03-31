@@ -6,8 +6,8 @@ import 'package:yne_flutter/constants/app_sizes.dart';
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
 import 'package:yne_flutter/features/activity/presentation/detail/join_controller.dart';
 import 'package:yne_flutter/features/activity/presentation/detail/join_state.dart';
-import 'package:yne_flutter/features/activity/presentation/detail/like_controller.dart';
-import 'package:yne_flutter/features/activity/presentation/detail/like_state.dart';
+import 'package:yne_flutter/features/shared/presentation/like/like_controller.dart';
+import 'package:yne_flutter/features/shared/presentation/like/like_state.dart';
 import 'package:yne_flutter/features/activity/presentation/list/activity_card.dart';
 import 'package:yne_flutter/features/shared/presentation/widgets/async_value_widget.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
@@ -269,28 +269,34 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                   right: 40,
                   width: 170,
                   height: 40,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.only(left: 60, right: 20),
-                      backgroundColor: bluegrey,
-                      shape: const StadiumBorder(),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: Container(
+                      color: bluegrey,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.only(left: 60, right: 20),
+                          backgroundColor: bluegrey,
+                          shape: const StadiumBorder(),
+                        ),
+                        onPressed: stateJoin.isLoading
+                            ? null
+                            : () => _toggleJoin(stateJoin, pageAndIDs),
+                        child: stateJoin.isLoading
+                            ? const SizedBox(
+                                width: 25,
+                                height: 25,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 3.0,
+                                ),
+                              )
+                            : status.value!.isJoined!
+                                ? const Text('取消參加', style: TextStyle(fontSize: 22))
+                                : const Text('我想參加',
+                                    style: TextStyle(fontSize: 22)),
+                      ),
                     ),
-                    onPressed: stateJoin.isLoading
-                        ? null
-                        : () => _toggleJoin(stateJoin, pageAndIDs),
-                    child: stateJoin.isLoading
-                        ? const SizedBox(
-                            width: 25,
-                            height: 25,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 3.0,
-                            ),
-                          )
-                        : status.value!.isJoined!
-                            ? const Text('取消參加', style: TextStyle(fontSize: 22))
-                            : const Text('我想參加',
-                                style: TextStyle(fontSize: 22)),
                   ),
                 ),
                 Positioned(

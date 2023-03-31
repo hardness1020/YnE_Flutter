@@ -1,10 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/features/activity/application/activity_service.dart';
-import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
-
-import 'package:yne_flutter/features/activity/presentation/detail/like_state.dart';
-import 'package:yne_flutter/features/auth/application/auth_service.dart';
+import 'package:yne_flutter/features/shared/presentation/like/like_state.dart';
 
 // final LikeNotifierProvider =
 //     StateNotifierProvider<MyStateNotifier, String>((ref) {

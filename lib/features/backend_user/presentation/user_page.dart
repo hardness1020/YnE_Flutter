@@ -102,10 +102,6 @@ class _UserPageState extends ConsumerState<UserPage>
                                   runSpacing:
                                       12.0, // space between rows of tags
                                   children: user.hostedActivities!.map((e) {
-                                    // return Chip(
-                                    //   label: Text(e.title!),
-                                    //   backgroundColor: Colors.grey[300],
-                                    // );
                                     return UserActivityWidget(
                                       activity: e,
                                       onPressed: () => context.goNamed(
