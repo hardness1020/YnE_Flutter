@@ -59,7 +59,7 @@ class FakeActivityRepo extends IntfActivityRepo {
       for (int i = 0; i < activities.length; i++) {
         if (activities[i].id == activity.id) {
           activities[i] = activity;
-          return;
+          break;
         } else {
           activities.add(activity);
         }
@@ -77,7 +77,7 @@ class FakeActivityRepo extends IntfActivityRepo {
       for (int i = 0; i < activities.length; i++) {
         if (activities[i].id == activityID) {
           activities.removeAt(i);
-          return;
+          break;
         }
       }
       _activities.value = activities;
@@ -137,13 +137,11 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity?> update(
-      {required String page,
-      required Activity activity,
-      required String userID}) async {
+      {required Activity activity, required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page:page);
-      for (int i = 0; i < activities!.length; i++) {
+      final List<Activity> activities = _activities.value;
+      for (int i = 0; i < activities.length; i++) {
         if (activities[i].id == activity.id) {
           activities[i] = activity;
           break;
@@ -158,18 +156,16 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<void> delete(
-      {required String page,
-      required String activityID,
-      required String userID}) async {
+      {required String activityID, required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page:page);
-      final int index = activities!.indexWhere((p) => p.id == activityID);
+      final List<Activity> activities = _activities.value;
+      final int index = activities.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
         throw Exception("[Activity ID Undefined]: Activity deletion failed");
       } else {
-        // else, deleteactivity
+        // else, delete activity
         activities.removeAt(index);
       }
       fakeActivityList = activities;
@@ -179,72 +175,12 @@ class FakeActivityRepo extends IntfActivityRepo {
   }
 
   @override
-  Future<bool> userHasJoinedActivity(
-      {required String page,
-      required String activityID,
-      required String userID}) async {
-    try {
-      await delay(addDelay);
-      // check if user has joined activity
-      final List<Activity>? activities = await fetchList(page:page);
-      if (activities == null) {
-        return false;
-      }
-      final int index = activities.indexWhere((p) => p.id == activityID);
-      if (index == -1) {
-        // activity not found
-        throw Exception("[Activity ID Undefined]: Activity join failed");
-      } else {
-        for (int i = 0; i < activities[index].participants!.length; i++) {
-          if (activities[index].participants![i].id == userID) {
-            return true;
-          }
-        }
-        return false;
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<bool> userHasLikedActivity(
-      {required String page,
-      required String activityID,
-      required String userID}) async {
-    try {
-      await delay(addDelay);
-      // check if user has liked activity
-      final List<Activity>? activities = await fetchList(page:page);
-      if (activities == null) {
-        return false;
-      }
-      final int index = activities.indexWhere((p) => p.id == activityID);
-      if (index == -1) {
-        // activity not found
-        throw Exception("[Activity ID Undefined]: Activity like failed");
-      } else {
-        for (int i = 0; i < activities[index].likedUsers!.length; i++) {
-          if (activities[index].likedUsers![i].id == userID) {
-            return true;
-          }
-        }
-        return false;
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
   Future<Activity> userLikeActivity(
-      {required String page,
-      required String activityID,
-      required String userID}) async {
+      {required String activityID, required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page:page);
-      final int index = activities!.indexWhere((p) => p.id == activityID);
+      final List<Activity> activities = _activities.value;
+      final int index = activities.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // activity not found
         throw Exception("[Activity ID Undefined]: Activity like failed");
@@ -270,13 +206,11 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userUnlikeActivity(
-      {required String page,
-      required String activityID,
-      required String userID}) async {
+      {required String activityID, required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page:page);
-      final int index = activities!.indexWhere((p) => p.id == activityID);
+      final List<Activity> activities = _activities.value;
+      final int index = activities.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
         throw Exception("[Activity ID Undefined]: Activity unlike failed");
@@ -298,14 +232,13 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userToggleLikeActivity({
-    required String page,
     required String activityID,
     required String userID,
   }) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page:page);
-      final int index = activities!.indexWhere((p) => p.id == activityID);
+      final List<Activity> activities = _activities.value;
+      final int index = activities.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
         throw Exception("[Activity ID Undefined]: Activity toggle failed");
@@ -339,13 +272,11 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userJoinActivity(
-      {required String page,
-      required String activityID,
-      required String userID}) async {
+      {required String activityID, required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page:page);
-      final int index = activities!.indexWhere((p) => p.id == activityID);
+      final List<Activity> activities = _activities.value;
+      final int index = activities.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
         throw Exception("[Activity ID Undefined]: Activity join failed");
@@ -371,13 +302,11 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userUnjoinActivity(
-      {required String page,
-      required String activityID,
-      required String userID}) async {
+      {required String activityID, required String userID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page:page);
-      final int index = activities!.indexWhere((p) => p.id == activityID);
+      final List<Activity> activities = _activities.value;
+      final int index = activities.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
         throw Exception("[Activity ID Undefined]: Activity unjoin failed");
@@ -399,14 +328,13 @@ class FakeActivityRepo extends IntfActivityRepo {
 
   @override
   Future<Activity> userToggleJoinActivity({
-    required String page,
     required String activityID,
     required String userID,
   }) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page:page);
-      final int index = activities!.indexWhere((p) => p.id == activityID);
+      final List<Activity> activities = _activities.value;
+      final int index = activities.indexWhere((p) => p.id == activityID);
       if (index == -1) {
         // not found
         throw Exception("[Activity ID Undefined]: Activity toggle failed");
@@ -443,7 +371,7 @@ class FakeActivityRepo extends IntfActivityRepo {
       {required String page, required String activityCategoryID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page:page);
+      final List<Activity>? activities = await fetchList(page: page);
       List<Activity> listByCategory = <Activity>[];
       for (int i = 0; i < activities!.length; i++) {
         if (activities[i].categories == null) {
@@ -466,7 +394,7 @@ class FakeActivityRepo extends IntfActivityRepo {
       {required String page, required String activityLocationID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page:page);
+      final List<Activity>? activities = await fetchList(page: page);
       List<Activity> listByLocation = <Activity>[];
       // write for loop to filter out activities by location
       for (int i = 0; i < activities!.length; i++) {
@@ -482,6 +410,64 @@ class FakeActivityRepo extends IntfActivityRepo {
       rethrow;
     }
   }
+
+  // @override
+  // Future<bool> userHasJoinedActivity(
+  //     {
+  //     required String activityID,
+  //     required String userID}) async {
+  //   try {
+  //     await delay(addDelay);
+  //     // check if user has joined activity
+  //     final List<Activity>? activities = await fetchList(page:page);
+  //     if (activities == null) {
+  //       return false;
+  //     }
+  //     final int index = activities.indexWhere((p) => p.id == activityID);
+  //     if (index == -1) {
+  //       // activity not found
+  //       throw Exception("[Activity ID Undefined]: Activity join failed");
+  //     } else {
+  //       for (int i = 0; i < activities[index].participants!.length; i++) {
+  //         if (activities[index].participants![i].id == userID) {
+  //           return true;
+  //         }
+  //       }
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+
+  // @override
+  // Future<bool> userHasLikedActivity(
+  //     {
+  //     required String activityID,
+  //     required String userID}) async {
+  //   try {
+  //     await delay(addDelay);
+  //     // check if user has liked activity
+  //     final List<Activity>? activities = await fetchList(page:page);
+  //     if (activities == null) {
+  //       return false;
+  //     }
+  //     final int index = activities.indexWhere((p) => p.id == activityID);
+  //     if (index == -1) {
+  //       // activity not found
+  //       throw Exception("[Activity ID Undefined]: Activity like failed");
+  //     } else {
+  //       for (int i = 0; i < activities[index].likedUsers!.length; i++) {
+  //         if (activities[index].likedUsers![i].id == userID) {
+  //           return true;
+  //         }
+  //       }
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
 
   static Activity? _get(
       {required List<Activity>? activityList, required String activityID}) {

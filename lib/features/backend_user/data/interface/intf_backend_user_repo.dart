@@ -8,21 +8,15 @@ import 'package:yne_flutter/features/backend_user/data/fake/fake_backend_user_re
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 
 abstract class IntfBackendUserRepo {
-  // Stream<List<BackendUser>?> watchOtherBackendUsers();
-
   Stream<BackendUser?> watch();
-
-  // List<BackendUser>? getOtherBackendUsers();
-
-  BackendUser? getHero();
-
-  Future<BackendUser?> fetchRandomNextUser();
-
-  // void setOtherBackendUsers({required List<BackendUser> backendUserList});
 
   void setHero({required BackendUser backendUser});
 
+  BackendUser? getHero();
+
   Future<BackendUser> fetchByToken({required String token});
+
+  Future<BackendUser?> fetchRandomNextUser();
 
   Future<List<BackendUser>?> fetchOtherBackendUsers();
 }

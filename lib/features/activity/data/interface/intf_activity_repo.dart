@@ -29,55 +29,36 @@ abstract class IntfActivityRepo {
       {required Activity activity, required String userID});
 
   Future<Activity?> update(
-      {required String page,
-      required Activity activity,
-      required String userID});
+      {required Activity activity, required String userID});
 
-  Future<void> delete(
-      {required String page,
-      required String activityID,
-      required String userID});
+  Future<void> delete({required String activityID, required String userID});
 
-  // check if user has liked the activity
-  Future<bool> userHasLikedActivity(
-      {required String page,
-      required String activityID,
-      required String userID});
+  // // check if user has liked the activity
+  // Future<bool> userHasLikedActivity(
+  //     {required String activityID, required String userID});
 
-  // check if user has joined the activity
-  Future<bool> userHasJoinedActivity(
-      {required String page,
-      required String activityID,
-      required String userID});
+  // // check if user has joined the activity
+  // Future<bool> userHasJoinedActivity(
+  //     {required String activityID, required String userID});
 
   Future<Activity> userLikeActivity(
-      {required String page,
-      required String activityID,
-      required String userID});
+      {required String activityID, required String userID});
 
   Future<Activity> userUnlikeActivity(
-      {required String page,
-      required String activityID,
-      required String userID});
+      {required String activityID, required String userID});
 
   Future<Activity> userToggleLikeActivity({
-    required String page,
     required String activityID,
     required String userID,
   });
 
   Future<Activity> userJoinActivity(
-      {required String page,
-      required String activityID,
-      required String userID});
+      {required String activityID, required String userID});
 
   Future<Activity> userUnjoinActivity(
-      {required String page,
-      required String activityID,
-      required String userID});
+      {required String activityID, required String userID});
 
   Future<Activity> userToggleJoinActivity({
-    required String page,
     required String activityID,
     required String userID,
   });

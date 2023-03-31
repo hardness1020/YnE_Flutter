@@ -8,22 +8,8 @@ class FakeBackendUserRepo extends IntfBackendUserRepo {
   BackendUser? _previousOtherRandomUser;
   final InMemoryStore<BackendUser> _heroBackendUser =
       InMemoryStore<BackendUser>(fakeHeroUser);
-
-  // final InMemoryStore<List<BackendUser>> _otherBackendUsers =
-  //     InMemoryStore<List<BackendUser>>(fakeOtherUserList);
-
   final bool addDelay;
-
   FakeBackendUserRepo({this.addDelay = true});
-
-  // @override
-  // Stream<List<BackendUser>?> watchOtherBackendUsers() {
-  //   try {
-  //     return _otherBackendUsers.stream;
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
 
   @override
   Stream<BackendUser?> watch() {
@@ -34,19 +20,29 @@ class FakeBackendUserRepo extends IntfBackendUserRepo {
     }
   }
 
-  // @override
-  // List<BackendUser>? getOtherBackendUsers() {
-  //   try {
-  //     return _otherBackendUsers.value;
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
+  @override
+  void setHero({required BackendUser backendUser}) {
+    try {
+      _heroBackendUser.value = backendUser;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   @override
   BackendUser? getHero() {
     try {
       return _heroBackendUser.value;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<BackendUser> fetchByToken({required String token}) async {
+    try {
+      await delay(addDelay);
+      return fakeHeroUser;
     } catch (e) {
       rethrow;
     }
@@ -71,34 +67,6 @@ class FakeBackendUserRepo extends IntfBackendUserRepo {
         return _previousOtherRandomUser;
       }
       throw Exception('No other users');
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  // @override
-  // void setOtherBackendUsers({required List<BackendUser> backendUserList}) {
-  //   try {
-  //     _otherBackendUsers.value = backendUserList;
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
-
-  @override
-  void setHero({required BackendUser backendUser}) {
-    try {
-      _heroBackendUser.value = backendUser;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<BackendUser> fetchByToken({required String token}) async {
-    try {
-      await delay(addDelay);
-      return fakeHeroUser;
     } catch (e) {
       rethrow;
     }
