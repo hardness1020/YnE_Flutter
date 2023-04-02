@@ -30,13 +30,15 @@
 
 ## 🧐 About <a name = "about"></a>
 
-This is an front-end using **Flutter** for YnE APP (Youth and Elderly). 
+This is an front-end using **Flutter** for YnE APP (Youth and Elderly).
+
 It is a mobile application that show the youth activities for the elderly.
 
 <br/>
 
 ## 🏰 Software Architecture <a name = "software-architecture"></a>
 The project is based on **Riverpod-based architecture**. 
+
 Each feature is separated into its own folder. For each feature, there are four folders: **presentation**, **application**, **domain**, and **data**, which are responsible for the presentation layer, application layer, domain layer, and data layer, respectively.
 
 > The following is a brief description of each layer:
@@ -60,7 +62,7 @@ Each feature is separated into its own folder. For each feature, there are four 
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-Run the app on your local machine with fake or real data
+Run the app on your local machine with fake or real data.
 ```
 flutter run --dart-define=USE_FAKE_REPOSITORY={true|false}
 ```
