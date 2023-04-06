@@ -47,3 +47,7 @@ app.*.map.json
 Podfile
 
 temp/*
+
+# Android release files
+bundletool-all-1.14.0.jar
+yne.apks

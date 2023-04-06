@@ -9,7 +9,7 @@
             "request": "launch",
             "type": "dart",
             "toolArgs": [
-                "--dart-define=useFakeRepos=true"
+                "--dart-define=USE_FAKE_REPOSITORY=true"
             ]
         },
         {
