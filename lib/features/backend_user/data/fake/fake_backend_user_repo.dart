@@ -56,10 +56,11 @@ class FakeBackendUserRepo extends IntfBackendUserRepo {
         throw Exception('No other users');
       }
       fakeOtherUserList.shuffle();
-      for (BackendUser backendUser in fakeOtherUserList) {
+      for (int i = 0; i < fakeOtherUserList.length; i++) {
         if (_previousOtherRandomUser == null ||
-            _previousOtherRandomUser!.id != backendUser.id) {
-          _previousOtherRandomUser = backendUser;
+            _previousOtherRandomUser!.id != fakeOtherUserList[i].id) {
+          _previousOtherRandomUser = fakeOtherUserList[i];
+          print("in");
           return _previousOtherRandomUser;
         }
       }
