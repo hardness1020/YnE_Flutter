@@ -44,7 +44,7 @@ final heroBackendUserProvider = Provider.autoDispose<BackendUser?>((ref) {
 
 final randomNextBackendUserFutureProvider =
     FutureProvider.autoDispose<BackendUser?>((ref) async {
-  final backendUserService = ref.read(backendUserServiceProvider);
+  final backendUserService = ref.watch(backendUserServiceProvider);
   return await backendUserService.fetchRandomNextUser();
 });
 

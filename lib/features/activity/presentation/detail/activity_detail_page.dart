@@ -26,7 +26,7 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
     with TickerProviderStateMixin {
   Future<void> _toggleLike(
       LikeState state, Tuple3<String, String, String> pageAndIDs) async {
-    final controller = ref.read(likeControllerProvider.notifier);
+    final controller = ref.read(likeControllerProvider(widget.activityId).notifier);
     final success = await controller.toggleLike(pageAndIDs);
     if (!success) print('Like Error\n');
   }
@@ -44,7 +44,7 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
     Tuple3<String, String, String> pageAndIDs =
         Tuple3<String, String, String>('1', widget.activityId, '1');
     final status = ref.watch(activityStreamProvider(widget.activityId));
-    final stateLike = ref.watch(likeControllerProvider);
+    final stateLike = ref.watch(likeControllerProvider(widget.activityId));
     final stateJoin = ref.watch(joinControllerProvider);
     return Scaffold(
       backgroundColor: Colors.white,

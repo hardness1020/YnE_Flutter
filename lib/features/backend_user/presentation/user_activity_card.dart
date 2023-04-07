@@ -3,6 +3,7 @@ import 'package:yne_flutter/constants/app_sizes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
 import 'package:yne_flutter/features/activity/presentation/list/activity_card.dart';
+import 'package:yne_flutter/features/shared/presentation/widgets/like_button.dart';
 
 class UserActivityWidget extends ConsumerWidget {
   const UserActivityWidget({super.key, required this.activity, this.onPressed});
@@ -84,31 +85,27 @@ class UserActivityWidget extends ConsumerWidget {
               top: 9.0,
               child: Column(
                 children: [
-                  SizedBox(
-                    width: 45,
-                    height: 45,
-                    child: FittedBox(
-                      child: FloatingActionButton(
-                        heroTag: UniqueKey(),
-                        onPressed: () {
-                          // setState(() {
-                          //   _isLiking = !_isLiking;
-                          // });
-                          // like(context, _isLiking);
-                          print('press on ${activity.title!}\n');
-                          // if (!status.isLiked!) {
-                          //   ref.read(userLikeActivityFutureProvider(ids));
-                          // } else {
-                          //   ref.read(userUnlikeActivityFutureProvider(ids));
-                          // }
-                        },
-                        backgroundColor: Color.fromARGB(255, 246, 156, 164),
-                        child: //status.isLiked!
-                            // ? const Icon(Icons.favorite, size: 30) :
-                            const Icon(Icons.favorite_border, size: 38),
-                      ),
-                    ),
-                  ),
+                  LikeButton(activity: activity),
+                  // SizedBox(
+                  //   width: 45,
+                  //   height: 45,
+                  //   child: FittedBox(
+                  //     child: FloatingActionButton(
+                  //       heroTag: UniqueKey(),
+                  //       onPressed: () {
+                  //         // setState(() {
+                  //         //   _isLiking = !_isLiking;
+                  //         // });
+                  //         // like(context, _isLiking);
+                  //         print('press on ${activity.title!}\n');
+                  //       },
+                  //       backgroundColor: Color.fromARGB(255, 246, 156, 164),
+                  //       child: //status.isLiked!
+                  //           // ? const Icon(Icons.favorite, size: 30) :
+                  //           const Icon(Icons.favorite_border, size: 38),
+                  //     ),
+                  //   ),
+                  // ),
                   Row(
                     children: [
                       const Icon(

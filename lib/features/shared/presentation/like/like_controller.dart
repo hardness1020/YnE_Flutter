@@ -14,9 +14,9 @@ import 'package:yne_flutter/features/shared/presentation/like/like_state.dart';
 // });
 
 class LikeController extends StateNotifier<LikeState> {
-  LikeController({required this.activityService}) : super(LikeState());
+  LikeController({required this.activityService, required this.activityId}) : super(LikeState());
   final ActivityService activityService;
-  // String activityId;
+  String activityId;
 
   Future<bool> toggleLike(Tuple3<String, String, String> pageAndIDs) async {
     state = state.copyWith(value: const AsyncValue.loading());
@@ -31,7 +31,9 @@ class LikeController extends StateNotifier<LikeState> {
 }
 
 final likeControllerProvider =
-    StateNotifierProvider.autoDispose<LikeController, LikeState>((ref) {
+// Provider.family<Activity?, String>((ref, id)
+    // StateNotifierProvider.autoDispose<LikeController, LikeState>((ref) {
+  StateNotifierProvider.family<LikeController, LikeState, String>((ref, activityId) {
   final activityService = ref.watch(activityServiceProvider);
-  return LikeController(activityService: activityService);
+  return LikeController(activityService: activityService, activityId: activityId);
 });
