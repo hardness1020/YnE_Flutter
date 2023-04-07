@@ -8,12 +8,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yne_flutter/features/activity/presentation/list/activity_card.dart';
 import 'package:yne_flutter/features/backend_user/application/backend_user_service.dart';
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
-import 'package:yne_flutter/features/backend_user/domain/backend_user_hobby.dart';
-import 'package:yne_flutter/features/backend_user/domain/backend_user_job.dart';
 import 'package:yne_flutter/features/backend_user/presentation/user_activity_card.dart';
 import 'package:yne_flutter/features/shared/presentation/widgets/async_value_widget.dart';
-// import 'package:yne_flutter/features/shared/presentation/widgets/async_value_widget.dart';
-// import 'package:yne_flutter/features/shared/presentation/widgets/responsive_center.dart';
 import 'package:yne_flutter/routing/app_router.dart';
 
 class UserPage extends ConsumerStatefulWidget {
@@ -25,26 +21,12 @@ class UserPage extends ConsumerStatefulWidget {
 
 class _UserPageState extends ConsumerState<UserPage>
     with TickerProviderStateMixin {
-  // final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    // final activityCategoryList = ref.watch(activityListFutureProvider);
-    // BackendUserJob job0 = BackendUserJob(id: '0', name: 'rocket builder');
-    // BackendUserJob job1 = BackendUserJob(id: '1', name: 'rocker');
-    // BackendUserHobby hobby0 =
-    //     BackendUserHobby(id: '0', name: 'rocket building');
-    // BackendUserHobby hobby1 = BackendUserHobby(id: '1', name: 'origami');
-    // final user = BackendUser(
-    //     id: '0',
-    //     name: 'Amy',
-    //     gender: 'F',
-    //     intro: '1 2 3',
-    //     jobs: [job0, job1],
-    //     hobbies: [hobby0, hobby1],
-    //     hostedActivities: [fakeActivityList[3], fakeActivityList[5]]);
     AsyncValue<BackendUser?> userValue =
         ref.watch(randomNextBackendUserFutureProvider);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: AsyncValueWidget<BackendUser?>(
@@ -196,9 +178,8 @@ class _UserPageState extends ConsumerState<UserPage>
           child: FloatingActionButton(
             heroTag: 'nextBtn',
             onPressed: () {
-              final nextUser = ref.watch(randomNextBackendUserFutureProvider);
-              print(nextUser.value!.name!);
-            },
+              userValue = ref.refresh(randomNextBackendUserFutureProvider);
+              },
             backgroundColor: const Color.fromARGB(255, 225, 216, 217),
             child: const Icon(Icons.arrow_forward_ios, size: 30),
           ),
