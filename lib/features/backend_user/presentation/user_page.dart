@@ -84,13 +84,13 @@ class _UserPageState extends ConsumerState<UserPage>
                               ],
                               // hosted activity
 
-                              if (user.hostedActivities != null) ...[
+                              if (user.hostActivities != null) ...[
                                 Wrap(
                                     alignment: WrapAlignment.start,
                                     spacing: 8.0, // space between adjacent tags
                                     runSpacing:
                                         12.0, // space between rows of tags
-                                    children: user.hostedActivities!.map((e) {
+                                    children: user.hostActivities!.map((e) {
                                       return UserActivityWidget(
                                         activity: e,
                                         onPressed: () => context.goNamed(
@@ -126,7 +126,7 @@ class _UserPageState extends ConsumerState<UserPage>
                                       color: bluegrey,
                                       fontSize: 22,
                                       fontWeight: FontWeight.w600)),
-                              Text(user.intro ?? '',
+                              Text(user.introduction ?? '',
                                   style: TextStyle(
                                       color: bluegrey,
                                       fontSize: 22,

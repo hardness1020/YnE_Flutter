@@ -183,7 +183,7 @@ final activityListProvider = Provider<List<Activity>?>((ref) {
 
 final activityFutureProvider =
     FutureProvider.autoDispose.family<Activity?, String>((ref, id) {
-  final ActivityService activityService = ref.read(activityServiceProvider);
+  final ActivityService activityService = ref.watch(activityServiceProvider);
   return activityService.fetch(activityID: id);
 });
 
@@ -195,7 +195,7 @@ final activityListFutureProvider = FutureProvider.autoDispose
 
 final createActivityFutureProvider = FutureProvider.autoDispose
     .family<void, Tuple2<Activity, String>>((ref, activityAndUserID) async {
-  final ActivityService activityService = ref.read(activityServiceProvider);
+  final ActivityService activityService = ref.watch(activityServiceProvider);
   await activityService.create(
       activity: activityAndUserID.item1, userID: activityAndUserID.item2);
 });
@@ -275,7 +275,7 @@ final userToggleJoinActivityFutureProvider = FutureProvider.autoDispose
 final fetchListByCategoryFutureProvider = FutureProvider.autoDispose
     .family<Tuple2<String, List<Activity>?>?, Tuple2<String, String>>(
         (ref, pageAndActivityCategoryID) async {
-  final ActivityService activityService = ref.read(activityServiceProvider);
+  final ActivityService activityService = ref.watch(activityServiceProvider);
   return await activityService.fetchListByCategory(
       page: pageAndActivityCategoryID.item1,
       activityCategoryID: pageAndActivityCategoryID.item2);
@@ -284,7 +284,7 @@ final fetchListByCategoryFutureProvider = FutureProvider.autoDispose
 final fetchListByLocationFutureProvider = FutureProvider.autoDispose
     .family<Tuple2<String, List<Activity>?>?, Tuple2<String, String>>(
         (ref, pageAndActivityLocationID) async {
-  final ActivityService activityService = ref.read(activityServiceProvider);
+  final ActivityService activityService = ref.watch(activityServiceProvider);
   return await activityService.fetchListByLocation(
       page: pageAndActivityLocationID.item1,
       activityLocationID: pageAndActivityLocationID.item2);

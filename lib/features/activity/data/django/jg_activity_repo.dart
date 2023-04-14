@@ -11,8 +11,6 @@ class DjangoActivityRepo extends IntfActivityRepo {
   final InMemoryStore<List<Activity>> _activities =
       InMemoryStore<List<Activity>>(List.from(<Activity>[]));
 
-  DjangoActivityRepo();
-
   @override
   Stream<Activity?> watch({required String activityID}) {
     try {
@@ -57,10 +55,13 @@ class DjangoActivityRepo extends IntfActivityRepo {
       for (int i = 0; i < activities.length; i++) {
         if (activities[i].id == activity.id) {
           activities[i] = activity;
-          return;
+          break;
         } else {
           activities.add(activity);
         }
+      }
+      if(activities.isEmpty){
+        activities.add(activity);
       }
       _activities.value = activities;
     } catch (e) {
@@ -100,7 +101,7 @@ class DjangoActivityRepo extends IntfActivityRepo {
         method: YNEApi.activityList(page)[0],
         path: YNEApi.activityList(page)[1],
       );
-      return (responseData['results'] as List)
+      return (responseData['data'] as List)
           .map((activity) => Activity.fromJson(activity))
           .toList();
     } catch (e) {
@@ -114,7 +115,7 @@ class DjangoActivityRepo extends IntfActivityRepo {
       final responseData = await NetUtils().reqeustData(
           method: YNEApi.activityRetrieve(activityID)[0],
           path: YNEApi.activityRetrieve(activityID)[1]);
-      return Activity.fromJson(responseData['results']);
+      return Activity.fromJson(responseData['data']);
     } catch (e) {
       rethrow;
     }
@@ -124,11 +125,13 @@ class DjangoActivityRepo extends IntfActivityRepo {
   Future<Activity?> create(
       {required Activity activity, required String userID}) async {
     try {
+      activity.host = BackendUser(id: userID);
       final responseData = await NetUtils().reqeustData(
-          method: YNEApi.activityCreate[0],
-          path: YNEApi.activityCreate[1],
-          postData: {'activity': activity.toJson(), 'host': userID});
-      return Activity.fromJson(responseData['results']);
+        method: YNEApi.activityCreate[0],
+        path: YNEApi.activityCreate[1],
+        postData: activity.toJson(),
+      );
+      return Activity.fromJson(responseData['data']);
     } catch (e) {
       rethrow;
     }
@@ -156,7 +159,7 @@ class DjangoActivityRepo extends IntfActivityRepo {
         path: YNEApi.activityUpdate(activity.id!)[1],
         postData: {'activity': activity.toJson(), 'host': userID},
       );
-      return Activity.fromJson(responseData['results']);
+      return Activity.fromJson(responseData['data']);
     } catch (e) {
       rethrow;
     }
@@ -171,7 +174,7 @@ class DjangoActivityRepo extends IntfActivityRepo {
         path: YNEApi.userLikeActivity(activityID)[1],
         postData: {'liked_user': userID},
       );
-      return Activity.fromJson(responseData['results']);
+      return Activity.fromJson(responseData['data']);
     } catch (e) {
       rethrow;
     }
@@ -186,7 +189,7 @@ class DjangoActivityRepo extends IntfActivityRepo {
         path: YNEApi.userUnlikeActivity(activityID)[1],
         postData: {'unliked_user': userID},
       );
-      return Activity.fromJson(responseData['results']);
+      return Activity.fromJson(responseData['data']);
     } catch (e) {
       rethrow;
     }
@@ -201,7 +204,7 @@ class DjangoActivityRepo extends IntfActivityRepo {
         path: YNEApi.userJoinActivity(activityID)[1],
         postData: {'joined_user': userID},
       );
-      return Activity.fromJson(responseData['results']);
+      return Activity.fromJson(responseData['data']);
     } catch (e) {
       rethrow;
     }
@@ -216,7 +219,7 @@ class DjangoActivityRepo extends IntfActivityRepo {
         path: YNEApi.userUnjoinActivity(activityID)[1],
         postData: {'unjoined_user': userID},
       );
-      return Activity.fromJson(responseData['results']);
+      return Activity.fromJson(responseData['data']);
     } catch (e) {
       rethrow;
     }
@@ -231,7 +234,7 @@ class DjangoActivityRepo extends IntfActivityRepo {
         path: YNEApi.userToggleLikeActivity(activityID)[1],
         postData: {'user': userID},
       );
-      return Activity.fromJson(responseData['results']);
+      return Activity.fromJson(responseData['data']);
     } catch (e) {
       rethrow;
     }
@@ -246,7 +249,7 @@ class DjangoActivityRepo extends IntfActivityRepo {
         path: YNEApi.userToggleJoinActivity(activityID)[1],
         postData: {'user': userID},
       );
-      return Activity.fromJson(responseData['results']);
+      return Activity.fromJson(responseData['data']);
     } catch (e) {
       rethrow;
     }

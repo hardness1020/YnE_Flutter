@@ -60,7 +60,7 @@ class FakeBackendUserRepo extends IntfBackendUserRepo {
         if (_previousOtherRandomUser == null ||
             _previousOtherRandomUser!.id != fakeOtherUserList[i].id) {
           _previousOtherRandomUser = fakeOtherUserList[i];
-          print("in");
+          print('previous user: ${_previousOtherRandomUser!.name}');
           return _previousOtherRandomUser;
         }
       }

@@ -41,8 +41,8 @@ class DjangoBackendUserRepo extends IntfBackendUserRepo {
   Future<BackendUser> fetchByToken({required String token}) async {
     try {
       final responseData = await NetUtils().reqeustData(
-        path: YNEApi.backendUserRetrieveByToken[1],
-        method: YNEApi.backendUserRetrieveByToken[0],
+        method: YNEApi.heroBackendUser[0],
+        path: YNEApi.heroBackendUser[1],
         token: token,
       );
       final backendUser = BackendUser.fromJson(responseData['data']);
@@ -56,8 +56,8 @@ class DjangoBackendUserRepo extends IntfBackendUserRepo {
   Future<BackendUser?> fetchRandomNextUser() async {
     try {
       final responseData = await NetUtils().reqeustData(
-        path: YNEApi.nextBackendUser[1],
         method: YNEApi.nextBackendUser[0],
+        path: YNEApi.nextBackendUser[1],
       );
       return BackendUser.fromJson(responseData['data']);
     } catch (_) {

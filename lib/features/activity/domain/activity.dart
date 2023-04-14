@@ -1,6 +1,7 @@
 import 'package:yne_flutter/features/activity/domain/activity_category.dart';
 import 'package:yne_flutter/features/activity/domain/activity_location.dart';
 import 'package:yne_flutter/features/activity/domain/activity_comment.dart';
+import 'package:yne_flutter/features/backend_user/application/backend_user_service.dart';
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 
 class Activity {
@@ -8,30 +9,44 @@ class Activity {
   String? startDate;
   String? endDate;
   String? title;
-  String? description;
+  ActivityLocation? location;
+  String? participantsNum;
+  // short
+  List<ActivityCategory>? categories;
+  String? commentsNum;
+  String? likesNum;
   BackendUser? host;
+  // medium
+  String? description;
+  List<BackendUser>? participants;
+  List<BackendUser>? likedUsers;
+  List<ActivityComment>? comments;
   bool? isLiked;
   bool? isJoined;
-  ActivityLocation? location;
-  List<ActivityCategory>? categories;
-  List<ActivityComment>? comments;
-  List<BackendUser>? likedUsers;
-  List<BackendUser>? participants;
+  String? backGroundLink;
 
-  Activity(
-      {this.id,
-      this.startDate,
-      this.endDate,
-      this.title,
-      this.description,
-      this.host,
-      this.isLiked,
-      this.isJoined,
-      this.location,
-      this.categories,
-      this.comments,
-      this.likedUsers,
-      this.participants});
+  // long
+
+  Activity({
+    this.id,
+    this.startDate,
+    this.endDate,
+    this.title,
+    this.description,
+    this.host,
+    this.isLiked,
+    this.isJoined,
+    this.location,
+    this.categories,
+    this.comments,
+    this.commentsNum,
+    this.likedUsers,
+    this.likesNum,
+    this.participants,
+    this.participantsNum,
+    this.backGroundLink,
+
+  });
 
   Activity.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -43,52 +58,55 @@ class Activity {
     location = ActivityLocation.fromJson(json['location']);
     if (json['categories'] != null) {
       categories = <ActivityCategory>[];
-      json['categories'].forEach((v) {
-        categories!.add(ActivityCategory.fromJson(v));
+      json['categories'].forEach((category) {
+        categories!.add(ActivityCategory.fromJson(category));
       });
     }
     if (json['comments'] != null) {
       comments = <ActivityComment>[];
-      json['comments'].forEach((v) {
-        comments!.add(ActivityComment.fromJson(v));
+      json['comments'].forEach((comment) {
+        comments!.add(ActivityComment.fromJson(comment));
       });
     }
+    commentsNum = json['comments_num'];
     if (json['liked_users'] != null) {
       likedUsers = <BackendUser>[];
-      json['liked_users'].forEach((v) {
-        likedUsers!.add(BackendUser.fromJson(v));
+      json['liked_users'].forEach((backendUser) {
+        likedUsers!.add(BackendUser.fromJson(backendUser));
       });
     }
+    likesNum = json['likes_num'];
     if (json['participants'] != null) {
       participants = <BackendUser>[];
       json['participants'].forEach((v) {
         participants!.add(BackendUser.fromJson(v));
       });
     }
+    participantsNum = json['participants_num'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['start_date'] = startDate;
-    data['end_date'] = endDate;
-    data['title'] = title;
-    data['description'] = description;
-    data['host'] = host!.id;
-    data['location'] = location!.id;
-    if (categories != null) {
-      data['categories'] = categories!.map((category) => category.id).toList();
+    try {
+      final Map<String, dynamic> data = <String, dynamic>{};
+      data['user_id'] = host!.id;
+      data['start_date'] = startDate;
+      data['end_date'] = endDate;
+      data['title'] = title;
+      if (location != null) {
+        data['location_id'] = location!.id;
+      }
+      data['description'] = description;
+      if (categories != null) {
+        data['categories_id'] =
+            categories!.map((category) => category.id).toList();
+      }
+      // if (participants != null) {
+      //   data['participants'] =
+      //       participants!.map((participant) => participant.id).toList();
+      // }
+      return data;
+    } catch (e) {
+      rethrow;
     }
-    if (comments != null) {
-      data['comments'] = comments!.map((comment) => comment.id).toList();
-    }
-    if (likedUsers != null) {
-      data['liked_users'] = likedUsers!.map((comment) => comment.id).toList();
-    }
-    if (participants != null) {
-      data['participants'] =
-          participants!.map((participant) => participant.id).toList();
-    }
-    return data;
   }
 }
