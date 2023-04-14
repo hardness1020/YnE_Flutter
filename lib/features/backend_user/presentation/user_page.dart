@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:yne_flutter/constants/app_sizes.dart';
-import 'package:yne_flutter/constants/test_data.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yne_flutter/features/activity/presentation/list/activity_card.dart';
 import 'package:yne_flutter/features/backend_user/application/backend_user_service.dart';
@@ -21,7 +21,6 @@ class UserPage extends ConsumerStatefulWidget {
 
 class _UserPageState extends ConsumerState<UserPage>
     with TickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
     AsyncValue<BackendUser?> userValue =
@@ -52,11 +51,26 @@ class _UserPageState extends ConsumerState<UserPage>
                             ],
                           ),
                         ),
-                        child: const Image(
-                            image: AssetImage("assets/images/ski.jpg"),
-                            // width: 360,
-                            height: 350,
-                            fit: BoxFit.cover),
+                        child: user?.userBigPicLink != null
+                            ? CachedNetworkImage(
+                                placeholder: (context, url) => const Center(
+                                      child: SizedBox(
+                                          width: 50,
+                                          height: 50,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                            strokeWidth: 3.0,
+                                          )),
+                                    ),
+                                imageUrl: user!.userBigPicLink!,
+                                // imageUrl: 'https://picsum.photos/250?image=9',
+                                width: 500,
+                                height: 350,
+                                fit: BoxFit.cover)
+                            : const Image(
+                                image: AssetImage("assets/images/woman.jpg"),
+                                height: 350,
+                                fit: BoxFit.cover),
                       ),
                       gapH12,
                       Container(
@@ -179,7 +193,7 @@ class _UserPageState extends ConsumerState<UserPage>
             heroTag: 'nextBtn',
             onPressed: () {
               userValue = ref.refresh(randomNextBackendUserFutureProvider);
-              },
+            },
             backgroundColor: const Color.fromARGB(255, 225, 216, 217),
             child: const Icon(Icons.arrow_forward_ios, size: 30),
           ),

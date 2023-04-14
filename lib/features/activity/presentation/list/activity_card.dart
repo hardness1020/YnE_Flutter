@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yne_flutter/constants/app_sizes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 Color bluegrey = const Color.fromARGB(255, 39, 42, 80);
 TextStyle bodyTiny =
@@ -58,11 +59,28 @@ class ActivityCard extends ConsumerWidget {
                   margin: const EdgeInsets.only(bottom: 10),
                   child: Column(
                     children: [
-                      const Image(
-                          image: AssetImage("assets/images/ski.jpg"),
-                          width: 360,
-                          height: 150,
-                          fit: BoxFit.cover),
+                      activity.backGroundLink != null
+                          ? CachedNetworkImage(
+                              placeholder: (context, url) => const Center(
+                                    child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 3.0,
+                                        )),
+                                  ),
+                              imageUrl: activity.backGroundLink!,
+                              // imageUrl: 'https://picsum.photos/250?image=9',
+                              width: 360,
+                              height: 150,
+                              fit: BoxFit.cover)
+                          : const Image(
+                              image: AssetImage("assets/images/ski.jpg"),
+                              width: 360,
+                              height: 150,
+                              fit: BoxFit.cover),
+
                       // activity photo
                       gapH8,
                       Container(
@@ -179,12 +197,30 @@ class ActivityCard extends ConsumerWidget {
               Container(
                 // for User Photo
                 margin: const EdgeInsets.only(left: 25.0, top: 110),
-                child: const CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage("assets/images/woman.jpg"),
-                ),
+                child: activity.host?.userHeadShotLink != null
+                    ? ClipOval(
+                        child: CachedNetworkImage(
+                            placeholder: (context, url) => const Center(
+                                  child: SizedBox(
+                                      width: 25,
+                                      height: 25,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 3.0,
+                                      )),
+                                ),
+                            imageUrl: activity.host!.userHeadShotLink!,
+                            // imageUrl: 'https://picsum.photos/250?image=9',
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.fill),
+                      )
+                    : const CircleAvatar(
+                        radius: 40,
+                        backgroundImage: AssetImage("assets/images/woman.jpg"),
+                      ),
               ),
-              ],
+            ],
           ),
         ),
       ),

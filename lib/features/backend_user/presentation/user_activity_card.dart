@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
 import 'package:yne_flutter/features/activity/presentation/list/activity_card.dart';
 import 'package:yne_flutter/features/shared/presentation/widgets/like_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class UserActivityWidget extends ConsumerWidget {
   const UserActivityWidget({super.key, required this.activity, this.onPressed});
@@ -27,10 +28,27 @@ class UserActivityWidget extends ConsumerWidget {
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
-                child: const Image(
-                    image: AssetImage("assets/images/woman.jpg"),
-                    width: 90,
-                    height: 90),
+                child: activity.backGroundLink != null
+                    ? CachedNetworkImage(
+                        placeholder: (context, url) => const Center(
+                              child: SizedBox(
+                                  width: 30,
+                                  height: 30,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 3.0,
+                                  )),
+                            ),
+                        imageUrl: activity.backGroundLink!,
+                        // imageUrl: 'https://picsum.photos/250?image=9',
+                        width: 90,
+                        height: 90,
+                        fit: BoxFit.cover)
+                    : const Image(
+                        image: AssetImage("assets/images/ski.jpg"),
+                        width: 90,
+                        height: 90,
+                        fit: BoxFit.cover),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

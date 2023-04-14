@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:yne_flutter/constants/app_sizes.dart';
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
@@ -26,7 +27,8 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
     with TickerProviderStateMixin {
   Future<void> _toggleLike(
       LikeState state, Tuple3<String, String, String> pageAndIDs) async {
-    final controller = ref.read(likeControllerProvider(widget.activityId).notifier);
+    final controller =
+        ref.read(likeControllerProvider(widget.activityId).notifier);
     final success = await controller.toggleLike(pageAndIDs);
     if (!success) print('Like Error\n');
   }
@@ -60,26 +62,45 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                             children: [
                               // activity pic
                               Container(
-                                clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                      bottomLeft: Radius.circular(20),
-                                      bottomRight: Radius.circular(20)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 3,
-                                      blurRadius: 2,
-                                      offset: const Offset(2, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: const Image(
-                                    image: AssetImage("assets/images/ski.jpg"),
-                                    // width: 360,
-                                    height: 350,
-                                    fit: BoxFit.cover),
-                              ),
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(20),
+                                        bottomRight: Radius.circular(20)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 3,
+                                        blurRadius: 2,
+                                        offset: const Offset(2, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: activity!.backGroundLink != null
+                                      ? CachedNetworkImage(
+                                          placeholder: (context, url) =>
+                                              const Center(
+                                                child: SizedBox(
+                                                    width: 50,
+                                                    height: 50,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                      strokeWidth: 3.0,
+                                                    )),
+                                              ),
+                                          imageUrl: activity.backGroundLink!,
+                                          // imageUrl:
+                                          //     'https://picsum.photos/250?image=9',
+                                          width: 500,
+                                          height: 350,
+                                          fit: BoxFit.cover)
+                                      : const Image(
+                                          image: AssetImage(
+                                              "assets/images/ski.jpg"),
+                                          // width: 360,
+                                          height: 350,
+                                          fit: BoxFit.cover)),
                               gapH12,
                               Container(
                                 width: double.infinity,
@@ -177,11 +198,37 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                                           vertical: 15.0),
                                       child: Row(
                                         children: [
-                                          const CircleAvatar(
-                                            radius: 30,
-                                            backgroundImage: AssetImage(
-                                                "assets/images/woman.jpg"),
-                                          ),
+                                          activity!.host?.userHeadShotLink !=
+                                                  null
+                                              ? ClipOval(
+                                                  child: CachedNetworkImage(
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              const Center(
+                                                                child: SizedBox(
+                                                                    width: 30,
+                                                                    height: 30,
+                                                                    child:
+                                                                        CircularProgressIndicator(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      strokeWidth:
+                                                                          3.0,
+                                                                    )),
+                                                              ),
+                                                      imageUrl: activity!.host!
+                                                          .userHeadShotLink!,
+                                                      // imageUrl:
+                                                      //     'https://picsum.photos/250?image=9',
+                                                      width: 60,
+                                                      height: 60,
+                                                      fit: BoxFit.fill),
+                                                )
+                                              : const CircleAvatar(
+                                                  radius: 30,
+                                                  backgroundImage: AssetImage(
+                                                      "assets/images/woman.jpg"),
+                                                ),
                                           Container(
                                             margin:
                                                 const EdgeInsets.only(left: 20),
@@ -283,16 +330,18 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                             ? null
                             : () => _toggleJoin(stateJoin, pageAndIDs),
                         child: stateJoin.isLoading
-                            ? const SizedBox(
-                                width: 25,
-                                height: 25,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 3.0,
-                                ),
+                            ? const Center(
+                                child: SizedBox(
+                                    width: 25,
+                                    height: 25,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 3.0,
+                                    )),
                               )
                             : status.value!.isJoined!
-                                ? const Text('取消參加', style: TextStyle(fontSize: 22))
+                                ? const Text('取消參加',
+                                    style: TextStyle(fontSize: 22))
                                 : const Text('我想參加',
                                     style: TextStyle(fontSize: 22)),
                       ),
@@ -313,13 +362,14 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                             : () => _toggleLike(stateLike, pageAndIDs),
                         backgroundColor: const Color.fromARGB(255, 241, 55, 71),
                         child: stateLike.isLoading
-                            ? const SizedBox(
-                                width: 25,
-                                height: 25,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 3.0,
-                                ),
+                            ? const Center(
+                                child: SizedBox(
+                                    width: 25,
+                                    height: 25,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 3.0,
+                                    )),
                               )
                             : status.value!.isLiked!
                                 ? const Icon(Icons.favorite, size: 30)
