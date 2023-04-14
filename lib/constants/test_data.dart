@@ -52,7 +52,18 @@ BackendUser fakeHeroUser =
     BackendUser(id: '0', name: 'hero', gender: 'F', introduction: '0 1 2');
 
 List<BackendUser> fakeOtherUserList = [
-  BackendUser(id: '1', name: 'Amy', gender: 'F', introduction: '1 2 3'),
+  BackendUser(
+      id: '1',
+      name: 'Amy',
+      gender: 'F',
+      introduction: '1 2 3',
+      hostActivities: [
+        fakeActivityList[0],
+        fakeActivityList[1],
+        fakeActivityList[2]
+      ],
+      userBigPicLink: "https://picsum.photos/id/91/1000/500",
+      userHeadShotLink: "https://picsum.photos/id/103/1000/500",),
   BackendUser(id: '2', name: 'Bob', gender: 'M', introduction: '2 3 4'),
   BackendUser(id: '3', name: 'Cindy', gender: 'F', introduction: '3 4 5'),
   BackendUser(id: '4', name: 'Daddy', gender: 'M', introduction: '4 5 6'),
@@ -65,13 +76,15 @@ List<Activity> fakeActivityList = [
       title: 'Activity 1',
       categories: [fakeActivityCategoryList[0]],
       isLiked: false,
-      isJoined: false),
+      isJoined: false,
+      backGroundLink: "https://picsum.photos/id/101/1000/500"),
   Activity(
       id: '2',
       title: 'Activity 2',
       categories: [fakeActivityCategoryList[1]],
       isLiked: false,
-      isJoined: false),
+      isJoined: false,
+      backGroundLink: "https://picsum.photos/id/102/1000/500"),
   Activity(
       id: '3',
       title: 'Baking',
