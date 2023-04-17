@@ -8,6 +8,7 @@ import 'package:yne_flutter/features/shared/presentation/pages/navigation_state.
 // import 'package:yne_flutter/my_home_page.dart';
 import 'package:yne_flutter/features/backend_user/presentation/user_page.dart';
 import 'package:yne_flutter/features/activity/presentation/list/activities_list_screen.dart';
+import 'package:yne_flutter/features/chatroom/presentation/list/chatroom_list_screen.dart';
 import 'package:yne_flutter/main.dart';
 import 'package:yne_flutter/my_home_page.dart';
 
@@ -72,7 +73,8 @@ class NavigationPage extends ConsumerWidget {
           //   title: '1',
           // ),
           ActivitiesListScreen(),
-          MyHomePage(title: '3',),
+          // MyHomePage(title: '3',),
+          ChatroomListScreen(),
           SignInPage(),
         ],
       ),
