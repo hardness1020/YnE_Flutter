@@ -27,7 +27,7 @@ class _UserPageState extends ConsumerState<UserPage>
         ref.watch(randomNextBackendUserFutureProvider);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: AsyncValueWidget<BackendUser?>(
         value: userValue,
         data: (user) => CustomScrollView(
@@ -47,7 +47,7 @@ class _UserPageState extends ConsumerState<UserPage>
                             colors: [
                               Color.fromRGBO(255, 255, 255, 0),
                               Color.fromRGBO(255, 255, 255, 0.3),
-                              Color.fromRGBO(255, 255, 255, 1.0),
+                              Color.fromRGBO(245, 245, 245, 1.0),
                             ],
                           ),
                         ),

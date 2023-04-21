@@ -26,10 +26,10 @@ class MyApp extends ConsumerWidget {
       title: 'YnE',
       routerConfig: goRouter,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: Colors.white,
+        // primarySwatch: Colors.grey,
+        primaryColor: Colors.grey.shade100,
         shadowColor: Colors.grey,
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.grey.shade100,
       ),
     );
   }

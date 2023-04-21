@@ -1,5 +1,6 @@
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yne_flutter/features/activity/presentation/list/activities_grid.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:yne_flutter/features/chatroom/presentation/list/chatroom_card.dart';
+import 'package:yne_flutter/features/chatroom/presentation/list/chatroom_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:yne_flutter/features/shared/presentation/widgets/responsive_center.dart';
 import 'package:yne_flutter/constants/app_sizes.dart';
@@ -47,45 +48,39 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        // title: Image.asset(
-        //   "assets/images/YnE.png",
-        //   width: 90,
-        // ),
-        title: const Text("聊天室",
-            style:
-                TextStyle(color: Color.fromRGBO(55, 71, 79, 1), fontSize: 28)),
-        // actions: const [
-        //   Align(
-        //     alignment: Alignment.center,
-        //     child: Padding(
-        //       padding: EdgeInsets.only(right: 20.0),
-        //       child: FaIcon(FontAwesomeIcons.bell,
-        //           color: Color.fromRGBO(55, 71, 79, 0.756), size: 30),
-        //     ),
-        //   ),
-        // ],
+        title: const Padding(
+          padding: EdgeInsets.only(left: 10),
+          child: Text("聊天室",
+              style: TextStyle(
+                  color: Color.fromRGBO(42, 53, 59, 1),
+                  fontSize: 27,
+                  fontWeight: FontWeight.w800)),
+        ),
       ),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
           SliverAppBar(
             pinned: true,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.grey.shade100,
             title: SizedBox(
               height: 40,
               child: TextField(
-                textAlignVertical: TextAlignVertical.top,
-                cursorHeight: 25.0,
+                textAlignVertical: TextAlignVertical.bottom,
                 cursorColor: Colors.grey.shade700,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.search,
+                decoration: const InputDecoration(
+                  hintText: "搜尋",
+                  hintStyle: TextStyle(
+                      fontSize: 16, color: Color.fromRGBO(0, 0, 0, 0.55)),
+                  prefixIcon: Icon(Icons.search,
                       color: Color.fromRGBO(55, 71, 79, 0.756)),
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                    borderSide: BorderSide.none,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                    borderSide:
+                        BorderSide(color: Color.fromRGBO(205, 205, 205, 0.918)),
                   ),
                   filled: true,
-                  fillColor: Colors.grey.shade300,
+                  fillColor: Colors.white,
                 ),
               ),
             ),
@@ -103,7 +98,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
           ),
           const ResponsiveSliverCenter(
             padding: EdgeInsets.all(Sizes.p16),
-            child: ActivitiesGrid(),
+            child: ChatroomGrid(),
           ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:yne_flutter/constants/test_data.dart';
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
 import 'package:yne_flutter/features/shared/presentation/localization/string_hardcoded.dart';
 import 'package:yne_flutter/constants/app_sizes.dart';
@@ -9,47 +10,61 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yne_flutter/features/shared/presentation/widgets/async_value_widget.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
-import 'package:yne_flutter/features/activity/presentation/list/activity_card.dart';
+import 'package:yne_flutter/features/chatroom/presentation/list/chatroom_card.dart';
 import 'package:yne_flutter/routing/app_router.dart';
 import 'package:yne_flutter/features/activity/application/activity_service.dart';
 
 /// A widget that displays the list of products that match the search query.
-class ActivitiesGrid extends ConsumerWidget {
-  const ActivitiesGrid({super.key});
+class ChatroomGrid extends ConsumerWidget {
+  const ChatroomGrid({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final activityListValue = ref.watch(activitiesSearchResultsProvider);
-    final activityListFutureValue = ref.watch(activityListFutureProvider('1'));
-    return AsyncValueWidget<List<Activity>?>(
-      value: activityListFutureValue,
-      data: (activities) => activities!.isEmpty
-          ? Center(
-              child: Text(
-                'No activities found'.hardcoded,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            )
-          : ActivitiesLayoutGrid(
-              itemCount: activities.length,
-              itemBuilder: (_, index) {
-                final activity = activities[index];
-                return ActivityCard(
-                    activity: activity,
-                    onPressed: () {
-                      context.goNamed(AppRoute.activityDetail.name,
-                          params: {'id': activity.id!});
-                    });
-              },
-            ),
-    );
+    // final chatroomListFutureValue = ref.watch(activityListFutureProvider('1'));
+    // final chatroomListFutureValue = ref.watch(activityListFutureProvider('1'));
+    final userList = fakeOtherUserList;
+    return ChatroomLayoutGrid(
+        itemCount: userList.length,
+        itemBuilder: (_, index) {
+          final user = userList[index];
+          return ChatroomCard(
+              user: user,
+              onPressed: () {
+                context.goNamed(AppRoute.chatroomDetail.name,
+                    params: {'id': '0'}); // temp
+              });
+        });
   }
 }
+//     return AsyncValueWidget<List<Activity>?>(
+//       value: chatroomListFutureValue,
+//       data: (activities) => activities!.isEmpty
+//           ? Center(
+//               child: Text(
+//                 'No chat yet'.hardcoded,
+//                 style: Theme.of(context).textTheme.headlineMedium,
+//               ),
+//             )
+//           : ChatroomLayoutGrid(
+//               itemCount: activities.length,
+//               itemBuilder: (_, index) {
+//                 final activity = activities[index];
+//                 return ChatroomCard(
+//                     user: user,
+//                     onPressed: () {
+//                       // context.goNamed(AppRoute.activityDetail.name,
+//                       //     params: {'id': activity.id!});
+//                     });
+//               },
+//             ),
+//     );
+//   }
+// }
 
 /// Grid widget with content-sized items.
 /// See: https://codewithandrea.com/articles/flutter-layout-grid-content-sized-items/
-class ActivitiesLayoutGrid extends StatelessWidget {
-  const ActivitiesLayoutGrid({
+class ChatroomLayoutGrid extends StatelessWidget {
+  const ChatroomLayoutGrid({
     super.key,
     required this.itemCount,
     required this.itemBuilder,

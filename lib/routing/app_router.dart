@@ -5,6 +5,7 @@ import 'package:yne_flutter/features/auth/presentation/password_forgetfulness/pa
 import 'package:yne_flutter/features/auth/presentation/sign_in/sign_in_page.dart';
 import 'package:yne_flutter/features/auth/presentation/sign_up/sign_up_page.dart';
 import 'package:yne_flutter/features/backend_user/data/interface/intf_backend_user_repo.dart';
+import 'package:yne_flutter/features/chatroom/presentation/detail/chatroom_detail_page.dart';
 import 'package:yne_flutter/routing/not_found_page.dart';
 import 'package:yne_flutter/features/shared/presentation/pages/navigation_page.dart';
 import 'package:yne_flutter/features/activity/presentation/detail/activity_detail_page.dart';
@@ -15,6 +16,7 @@ enum AppRoute {
   passwordForgetfulness,
   navigation,
   activityDetail,
+  chatroomDetail
 }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -53,6 +55,13 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 builder: (context, state) {
                   final activityId = state.params['id']!;
                   return ActivityDetailPage(activityId: activityId);
+                }),
+            GoRoute(
+                path: 'chatroom/:id',
+                name: AppRoute.chatroomDetail.name,
+                builder: (context, state) {
+                  final chatroomId = state.params['id']!;
+                  return ChatroomDetailPage(chatroomId: chatroomId);
                 }),
           ])
     ],

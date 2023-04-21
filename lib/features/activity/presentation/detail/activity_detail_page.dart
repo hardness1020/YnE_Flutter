@@ -49,7 +49,7 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
     final stateLike = ref.watch(likeControllerProvider(widget.activityId));
     final stateJoin = ref.watch(joinControllerProvider);
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: AsyncValueWidget<Activity?>(
           value: activityValue,
           data: (activity) => Stack(children: [

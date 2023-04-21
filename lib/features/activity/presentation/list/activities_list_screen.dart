@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:yne_flutter/features/shared/presentation/widgets/responsive_center.dart';
 import 'package:yne_flutter/constants/app_sizes.dart';
 
-
 /// Shows the list of products with a search field at the top.
 class ActivitiesListScreen extends StatefulWidget {
   const ActivitiesListScreen({super.key});
@@ -68,21 +67,22 @@ class _ActivitiesListScreenState extends State<ActivitiesListScreen> {
         slivers: [
           SliverAppBar(
             pinned: true,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.grey.shade100,
             title: SizedBox(
               height: 40,
               child: TextField(
                 textAlignVertical: TextAlignVertical.top,
                 cursorHeight: 25.0,
-                cursorColor: Colors.grey.shade700,
-                decoration: InputDecoration(
-                 prefixIcon: const Icon(Icons.search, color: Color.fromRGBO(55, 71, 79, 0.756)),
-                  border: const OutlineInputBorder(
+                cursorColor: Colors.grey.shade800,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.search,
+                      color: Color.fromRGBO(55, 71, 79, 0.756)),
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(25.0)),
                     borderSide: BorderSide.none,
                   ),
                   filled: true,
-                  fillColor: Colors.grey.shade300,
+                  fillColor: Color.fromRGBO(195, 195, 195, 1),
                 ),
               ),
             ),
@@ -91,7 +91,8 @@ class _ActivitiesListScreenState extends State<ActivitiesListScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(color: Color.fromARGB(80, 158, 158, 158), width: 2.0),
+                    bottom: BorderSide(
+                        color: Color.fromARGB(80, 158, 158, 158), width: 2.0),
                   ),
                 ),
               ),
