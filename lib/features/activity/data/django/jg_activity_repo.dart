@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/api/api.dart';
 
@@ -60,7 +64,7 @@ class DjangoActivityRepo extends IntfActivityRepo {
           activities.add(activity);
         }
       }
-      if(activities.isEmpty){
+      if (activities.isEmpty) {
         activities.add(activity);
       }
       _activities.value = activities;
@@ -250,6 +254,29 @@ class DjangoActivityRepo extends IntfActivityRepo {
         postData: {'user': userID},
       );
       return Activity.fromJson(responseData['data']);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Activity?> updateActivityBackground(
+      {required String activityID,
+      required String userID,
+      required File background}) async {
+    try {
+      final FormData formData = FormData.fromMap({
+        'thumbnail': await MultipartFile.fromFile(
+          background.path,
+          filename: background.path.split('/').last,
+          contentType: MediaType('image', background.path.split('.').last),
+        ),
+      });
+      await NetUtils().reqeustData(
+        method: YNEApi.updateActivity(activityID)[0],
+        path: YNEApi.updateActivity(activityID)[1],
+        postData: formData,
+      );
     } catch (e) {
       rethrow;
     }

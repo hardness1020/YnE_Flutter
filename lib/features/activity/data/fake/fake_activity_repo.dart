@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 import 'package:yne_flutter/utils/delay.dart';
@@ -411,6 +413,25 @@ class FakeActivityRepo extends IntfActivityRepo {
     }
   }
 
+  @override
+  Future<Activity?> updateActivityBackground(
+      {required String activityID,
+      required String userID,
+      required File background}) {
+    // TODO: implement updateActivityBackground
+    throw UnimplementedError();
+  }
+
+  static Activity? _get(
+      {required List<Activity>? activityList, required String activityID}) {
+    try {
+      return activityList!.firstWhere((activity) => activity.id == activityID);
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
+
   // @override
   // Future<bool> userHasJoinedActivity(
   //     {
@@ -468,13 +489,3 @@ class FakeActivityRepo extends IntfActivityRepo {
   //     rethrow;
   //   }
   // }
-
-  static Activity? _get(
-      {required List<Activity>? activityList, required String activityID}) {
-    try {
-      return activityList!.firstWhere((activity) => activity.id == activityID);
-    } catch (e) {
-      rethrow;
-    }
-  }
-}
