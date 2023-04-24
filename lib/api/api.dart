@@ -36,6 +36,9 @@ class YNEApi {
   static List activityUpdate(String activityID) =>
       [DioMethod.put, '$baseUrl/activity/$activityID/'];
 
+  static List updateActivity(String activityID) =>
+      [DioMethod.patch, '$baseUrl/activity/$activityID/update_thumbnail/'];
+
   static List userLikeActivity(String activityID) =>
       [DioMethod.patch, '$baseUrl/activity/$activityID/liked/'];
 
@@ -78,6 +81,12 @@ class YNEApi {
     DioMethod.get,
     '$baseUrl/django_user/hero_django_user/'
   ];
+
+  static List updateBackendUserBigPic(String userID) =>
+      [DioMethod.patch, '$baseUrl/django_user/$userID/update_big_pic/'];
+
+  static List updateBakcendUserAvatar(String userID) =>
+      [DioMethod.patch, '$baseUrl/django_user/$userID/update_avatar/'];
 
   // // BackendUser
   // static List backendUserRetrieveByToken = [

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 
@@ -33,14 +35,6 @@ abstract class IntfActivityRepo {
 
   Future<void> delete({required String activityID, required String userID});
 
-  // // check if user has liked the activity
-  // Future<bool> userHasLikedActivity(
-  //     {required String activityID, required String userID});
-
-  // // check if user has joined the activity
-  // Future<bool> userHasJoinedActivity(
-  //     {required String activityID, required String userID});
-
   Future<Activity> userLikeActivity(
       {required String activityID, required String userID});
 
@@ -61,6 +55,12 @@ abstract class IntfActivityRepo {
   Future<Activity> userToggleJoinActivity({
     required String activityID,
     required String userID,
+  });
+
+  Future<Activity?> updateActivityBackground({
+    required String activityID,
+    required String userID,
+    required File background,
   });
 
   Future<Tuple2<String, List<Activity>?>?> fetchListByCategory(

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,6 +19,12 @@ abstract class IntfBackendUserRepo {
   Future<BackendUser> fetchByToken({required String token});
 
   Future<BackendUser?> fetchRandomNextUser();
+
+  Future<BackendUser?> updateHeadShot(
+      {required String token, required File headshot});
+
+  Future<BackendUser?> updateBigPic(
+      {required String token, required File bigPic});
 
   Future<List<BackendUser>?> fetchOtherBackendUsers();
 }

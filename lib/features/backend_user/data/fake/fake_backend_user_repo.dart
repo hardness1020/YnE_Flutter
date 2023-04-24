@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:yne_flutter/constants/test_data.dart';
 import 'package:yne_flutter/features/backend_user/data/interface/intf_backend_user_repo.dart';
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
@@ -81,5 +83,19 @@ class FakeBackendUserRepo extends IntfBackendUserRepo {
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<BackendUser?> updateBigPic(
+      {required String token, required File bigPic}) {
+    // TODO: implement updateBigPic
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<BackendUser?> updateHeadShot(
+      {required String token, required File headshot}) {
+    // TODO: implement updateHeadShot
+    throw UnimplementedError();
   }
 }

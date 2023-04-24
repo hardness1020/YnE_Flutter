@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:yne_flutter/api/api.dart';
 import 'package:yne_flutter/features/backend_user/data/interface/intf_backend_user_repo.dart';
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
@@ -60,6 +64,50 @@ class DjangoBackendUserRepo extends IntfBackendUserRepo {
         path: YNEApi.nextBackendUser[1],
       );
       return BackendUser.fromJson(responseData['data']);
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<BackendUser?> updateBigPic(
+      {required String token, required File bigPic}) async {
+    try {
+      final FormData formData = FormData.fromMap({
+        'big_pic': await MultipartFile.fromFile(
+          bigPic.path,
+          filename: bigPic.path.split('/').last,
+          contentType: MediaType('image', bigPic.path.split('.').last),
+        ),
+      });
+      await NetUtils().reqeustData(
+        method: YNEApi.updateBackendUserBigPic(_heroBackendUser.value!.id!)[0],
+        path: YNEApi.updateBackendUserBigPic(_heroBackendUser.value!.id!)[1],
+        token: token,
+        postData: formData,
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<BackendUser?> updateHeadShot(
+      {required String token, required File headshot}) async {
+    try {
+      final FormData formData = FormData.fromMap({
+        'head_shot': await MultipartFile.fromFile(
+          headshot.path,
+          filename: headshot.path.split('/').last,
+          contentType: MediaType('image', headshot.path.split('.').last),
+        ),
+      });
+      await NetUtils().reqeustData(
+        method: YNEApi.updateBakcendUserAvatar(_heroBackendUser.value!.id!)[0],
+        path: YNEApi.updateBakcendUserAvatar(_heroBackendUser.value!.id!)[1],
+        token: token,
+        postData: formData,
+      );
     } catch (_) {
       rethrow;
     }
