@@ -183,9 +183,9 @@ final activityListProvider = Provider<List<Activity>?>((ref) {
 });
 
 final activityFutureProvider =
-    FutureProvider.autoDispose.family<Activity?, String>((ref, id) {
+    FutureProvider.autoDispose.family<Activity?, String>((ref, id) async {
   final ActivityService activityService = ref.watch(activityServiceProvider);
-  return activityService.fetch(activityID: id);
+  return await activityService.fetch(activityID: id);
 });
 
 final activityListFutureProvider = FutureProvider.autoDispose
