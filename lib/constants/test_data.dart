@@ -149,5 +149,139 @@ List<Activity> fakeActivityList = [
       startDate: '2023/4/1',
       endDate: '2025/12/25',
       description:
-          'Ahhhh! weee! Do you want to build a rocket and go to the moon?\n lalalalala Let\'s get started! weeeeeee~~~')
+          'Ahhhh! weee! Do you want to build a rocket and go to the moon?\n lalalalala Let\'s get started! weeeeeee~~~'),
+  Activity(
+      id: '7',
+      title: 'sky diving',
+      categories: [fakeActivityCategoryList[1]],
+      isLiked: false,
+      isJoined: false,
+      // host: fakeOtherUserList[0],
+      startDate: '2023/2/1',
+      description: 'white bear is so cute'),
+  Activity(
+      id: '8',
+      title: 'swimming',
+      categories: [fakeActivityCategoryList[0]],
+      isLiked: false,
+      isJoined: false,
+      // host: fakeOtherUserList[1],
+      startDate: '2023/4/1',
+      endDate: '2023/4/3',
+      description: 'Weeeee! I love swimming'),
+  Activity(
+      id: '9',
+      title: 'cutie pie',
+      categories: [fakeActivityCategoryList[0]],
+      isLiked: false,
+      isJoined: false,
+      // host: fakeOtherUserList[1],
+      startDate: '2023/10/1',
+      endDate: '2028/12/25',
+      description:
+          'Ahhhh! is so cute! Do you want to build a rocket and go to the moon?\n lalalalala Let\'s get started! weeeeeee~~~'),
+  Activity(
+      id: '10',
+      title: 'helicopter tour',
+      categories: [fakeActivityCategoryList[1]],
+      isLiked: false,
+      isJoined: false,
+      startDate: '2023/2/1',
+      description: 'white bear is so cute'),
+  Activity(
+      id: '11',
+      title: 'Whitewater Rafting',
+      categories: [fakeActivityCategoryList[1]],
+      isLiked: false,
+      isJoined: false,
+      startDate: '2023/5/15',
+      description:
+          'Experience the thrill of the rapids on this exciting whitewater rafting adventure. Navigate through the rushing waters and enjoy the stunning views along the way.'),
+  Activity(
+      id: '12',
+      title: 'Hiking and Camping Trip',
+      categories: [fakeActivityCategoryList[0]],
+      isLiked: false,
+      isJoined: false,
+      startDate: '2023/7/1',
+      description:
+          'Escape to the great outdoors and join us on a hiking and camping trip. Explore beautiful trails, set up camp, and enjoy the natural beauty of the wilderness.'),
+  Activity(
+      id: '13',
+      title: 'Wine Tasting Tour',
+      categories: [fakeActivityCategoryList[2]],
+      isLiked: false,
+      isJoined: false,
+      startDate: '2023/8/20',
+      description:
+          'Indulge in the finest wines on this exclusive wine tasting tour. Sample a variety of wines and learn about the history and production of each one.'),
+  Activity(
+      id: '14',
+      title: 'Cooking Class',
+      categories: [fakeActivityCategoryList[3]],
+      isLiked: false,
+      isJoined: false,
+      startDate: '2023/10/5',
+      description:
+          'Learn to cook like a pro on this fun and interactive cooking class. Discover new recipes and techniques, and enjoy a delicious meal at the end of the class.'),
+  Activity(
+      id: '15',
+      title: 'Salsa Dancing Class',
+      categories: [fakeActivityCategoryList[4]],
+      isLiked: false,
+      isJoined: false,
+      startDate: '2023/11/1',
+      endDate: '2023/12/1',
+      description:
+          'Learn the basics of salsa dancing in this fun and interactive class.'),
+  Activity(
+      id: '16',
+      title: 'Painting Class',
+      categories: [fakeActivityCategoryList[0]],
+      isLiked: false,
+      isJoined: false,
+      startDate: '2023/12/1',
+      endDate: '2024/5/30',
+      description:
+          'Learn the basics of painting in this fun and interactive class.'),
+  Activity(
+      id: '17',
+      title: 'Yoga Class',
+      categories: [fakeActivityCategoryList[0]],
+      isLiked: false,
+      isJoined: false,
+      startDate: '2023/12/1',
+      endDate: '2024/8/30',
+      description:
+          'Learn the basics of yoga in this fun and interactive class.'),
+  Activity(
+      id: '18',
+      title: 'Baking Class',
+      categories: [fakeActivityCategoryList[1]],
+      isLiked: false,
+      isJoined: false,
+      startDate: '2023/10/1',
+      endDate: '2024/3/30',
+      description:
+          'Learn the basics of baking in this fun and interactive class.'),
+  Activity(
+      id: '19',
+      title: 'Skiing',
+      categories: [fakeActivityCategoryList[0]],
+      isLiked: false,
+      isJoined: false,
+      startDate: '2023/12/1',
+      endDate: '2024/8/30',
+      description:
+          'Learn the basics of skiing in this fun and interactive class.'),
+  Activity(
+      id: '20',
+      title: 'Rock Climbing',
+      categories: [fakeActivityCategoryList[1]],
+      isLiked: false,
+      isJoined: false,
+      startDate: '2023/12/1',
+      endDate: '2024/8/30',
+      description:
+          'Learn the basics of rock climbing in this fun and interactive class.'),
 ];

@@ -19,17 +19,18 @@ class ActivityService {
     return activityRepo.getList();
   }
 
-  Future<List<Activity>?> fetchList({required String page}) async {
+  Future<Tuple2<String, List<Activity>?>> fetchList(
+      {required String page}) async {
     try {
       final IntfActivityRepo activityRepo = ref.read(activityRepoProvider);
-      final List<Activity>? fetchedActivityList =
+      final Tuple2<String, List<Activity>?> pageAndFetchedActivityList =
           await activityRepo.fetchList(page: page);
-      if (fetchedActivityList != null) {
-        activityRepo.setList(activityList: fetchedActivityList);
+      if (pageAndFetchedActivityList.item2 != null) {
+        activityRepo.setList(activityList: pageAndFetchedActivityList.item2!);
       } else {
         throw Exception('Activity fetched is null');
       }
-      return fetchedActivityList;
+      return pageAndFetchedActivityList;
     } catch (e) {
       rethrow;
     }
@@ -188,7 +189,7 @@ final activityFutureProvider =
 });
 
 final activityListFutureProvider = FutureProvider.autoDispose
-    .family<List<Activity>?, String>((ref, page) async {
+    .family<Tuple2<String, List<Activity>?>, String>((ref, page) async {
   final ActivityService activityService = ref.watch(activityServiceProvider);
   return await activityService.fetchList(page: page);
 });

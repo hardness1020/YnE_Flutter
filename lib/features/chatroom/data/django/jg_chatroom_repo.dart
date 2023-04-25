@@ -1,0 +1,62 @@
+import 'package:yne_flutter/features/chatroom/data/interface/intf_chatroom_repo.dart';
+import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
+
+class DjangoChatroomRepo extends IntfChatroomRepo{
+  @override
+  Future<ChatRoom?> fetch({required String chatroomID}) {
+    // TODO: implement fetch
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<ChatRoom>?> fetchList({required String page}) {
+    // TODO: implement fetchList
+    throw UnimplementedError();
+  }
+
+  @override
+  ChatRoom? get({required String chatroomID}) {
+    // TODO: implement get
+    throw UnimplementedError();
+  }
+
+  @override
+  List<ChatRoom>? getList() {
+    // TODO: implement getList
+    throw UnimplementedError();
+  }
+
+  @override
+  void set({required ChatRoom chatroomList}) {
+    // TODO: implement set
+  }
+
+  @override
+  void setList({required List<ChatRoom> chatroomList}) {
+    // TODO: implement setList
+  }
+
+  @override
+  void unset({required String chatroomID}) {
+    // TODO: implement unset
+  }
+
+  @override
+  Future<ChatRoom?> userReadChatRoom({required String chatroomID}) {
+    // TODO: implement userReadChatRoom
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<ChatRoom?> watch({required String chatroomID}) {
+    // TODO: implement watch
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<ChatRoom>?> watchList() {
+    // TODO: implement watchList
+    throw UnimplementedError();
+  }
+
+}

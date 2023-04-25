@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
 import 'package:yne_flutter/features/shared/presentation/localization/string_hardcoded.dart';
 import 'package:yne_flutter/constants/app_sizes.dart';
@@ -21,9 +22,9 @@ class ActivitiesGrid extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // final activityListValue = ref.watch(activitiesSearchResultsProvider);
     final activityListFutureValue = ref.watch(activityListFutureProvider('1'));
-    return AsyncValueWidget<List<Activity>?>(
+    return AsyncValueWidget<Tuple2<String, List<Activity>?>>(
       value: activityListFutureValue,
-      data: (activities) => activities!.isEmpty
+      data: (pageAndActivities) => pageAndActivities.item2!.isEmpty
           ? Center(
               child: Text(
                 'No activities found'.hardcoded,
@@ -31,9 +32,9 @@ class ActivitiesGrid extends ConsumerWidget {
               ),
             )
           : ActivitiesLayoutGrid(
-              itemCount: activities.length,
+              itemCount: pageAndActivities.item2!.length,
               itemBuilder: (_, index) {
-                final activity = activities[index];
+                final activity = pageAndActivities.item2![index];
                 return ActivityCard(
                     activity: activity,
                     onPressed: () {

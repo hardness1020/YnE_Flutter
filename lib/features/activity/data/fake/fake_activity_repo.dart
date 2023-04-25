@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:tuple/tuple.dart';
+import 'package:yne_flutter/constants/total_pages.dart';
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 import 'package:yne_flutter/utils/delay.dart';
 
@@ -116,10 +117,25 @@ class FakeActivityRepo extends IntfActivityRepo {
   }
 
   @override
-  Future<List<Activity>?> fetchList({required String page}) async {
+  Future<Tuple2<String, List<Activity>?>> fetchList({required String page}) async {
     try {
       await delay(addDelay);
-      return fakeActivityList;
+      List<Activity>? pagedActivityList;
+      int startingPage = int.parse(page);
+      activityTotalPages = fakeActivityList.length ~/ activityPerPage;
+      if (startingPage > activityTotalPages) {
+        pagedActivityList = fakeActivityList
+            .skip((activityTotalPages - 1) * activityPerPage)
+            .take(activityPerPage)
+            .toList();
+      } else {
+        pagedActivityList = fakeActivityList
+            .skip((startingPage - 1) * activityPerPage)
+            .take(activityPerPage)
+            .toList();
+      }
+      activityTotalPages = fakeActivityList.length;
+      return Tuple2(page, pagedActivityList);
     } catch (e) {
       rethrow;
     }
@@ -373,7 +389,8 @@ class FakeActivityRepo extends IntfActivityRepo {
       {required String page, required String activityCategoryID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page: page);
+      final pageAndActivities = await fetchList(page: page);
+      final List<Activity>? activities = pageAndActivities.item2;
       List<Activity> listByCategory = <Activity>[];
       for (int i = 0; i < activities!.length; i++) {
         if (activities[i].categories == null) {
@@ -396,7 +413,8 @@ class FakeActivityRepo extends IntfActivityRepo {
       {required String page, required String activityLocationID}) async {
     try {
       await delay(addDelay);
-      final List<Activity>? activities = await fetchList(page: page);
+      final pageAndActivities = await fetchList(page: page);
+      final List<Activity>? activities = pageAndActivities.item2;
       List<Activity> listByLocation = <Activity>[];
       // write for loop to filter out activities by location
       for (int i = 0; i < activities!.length; i++) {

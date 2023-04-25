@@ -46,7 +46,7 @@ app.*.map.json
 # ios
 Podfile
 
-temp/*
+# temp/*
 
 # Android release files
 bundletool-all-1.14.0.jar

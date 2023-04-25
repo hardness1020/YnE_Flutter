@@ -23,7 +23,7 @@ abstract class IntfActivityRepo {
 
   void unset({required String activityID});
 
-  Future<List<Activity>?> fetchList({required String page});
+  Future<Tuple2<String, List<Activity>?>> fetchList({required String page});
 
   Future<Activity?> fetch({required String activityID});
 

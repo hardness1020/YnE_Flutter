@@ -99,15 +99,18 @@ class DjangoActivityRepo extends IntfActivityRepo {
   }
 
   @override
-  Future<List<Activity>?> fetchList({required String page}) async {
+  Future<Tuple2<String, List<Activity>?>> fetchList(
+      {required String page}) async {
     try {
       final responseData = await NetUtils().reqeustData(
         method: YNEApi.activityList(page)[0],
         path: YNEApi.activityList(page)[1],
       );
-      return (responseData['data'] as List)
-          .map((activity) => Activity.fromJson(activity))
-          .toList();
+      return Tuple2(
+          page,
+          (responseData['data'] as List)
+              .map((activity) => Activity.fromJson(activity))
+              .toList());
     } catch (e) {
       rethrow;
     }

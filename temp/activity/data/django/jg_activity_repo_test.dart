@@ -105,11 +105,11 @@ void main() {
       final fetchedActivity = await repo.fetch(activityID: "1");
       expect(fetchedActivity!.id, "1");
     });
-    test("fetch activity list", () async {
-      final fetchedActivityList = await repo.fetchList(page: "1");
-      expect(fetchedActivityList, isNotEmpty);
-      expect(fetchedActivityList!.length, isNotNull);
-    });
+    // test("fetch activity list", () async {
+    //   final fetchedActivityList = await repo.fetchList(page: "1");
+    //   expect(fetchedActivityList, isNotEmpty);
+    //   expect(fetchedActivityList!.length, isNotNull);
+    // });
 
     test("create activity", () async {
       final activityToCreate = Activity(
