@@ -1,7 +1,8 @@
+import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/features/chatroom/data/interface/intf_chatroom_repo.dart';
 import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
 
-class FakeChatroomRepo extends IntfChatroomRepo{
+class FakeChatroomRepo extends IntfChatroomRepo {
   @override
   Future<ChatRoom?> fetch({required String chatroomID}) {
     // TODO: implement fetch
@@ -9,7 +10,7 @@ class FakeChatroomRepo extends IntfChatroomRepo{
   }
 
   @override
-  Future<List<ChatRoom>?> fetchList({required String page}) {
+  Future<Tuple2<String, List<ChatRoom>?>> fetchList({required String page}) {
     // TODO: implement fetchList
     throw UnimplementedError();
   }
@@ -21,13 +22,13 @@ class FakeChatroomRepo extends IntfChatroomRepo{
   }
 
   @override
-  List<ChatRoom>? getList() {
+  Tuple2<String, List<ChatRoom>?> getList({required String page}) {
     // TODO: implement getList
     throw UnimplementedError();
   }
 
   @override
-  void set({required ChatRoom chatroomList}) {
+  void set({required ChatRoom chatroom}) {
     // TODO: implement set
   }
 
@@ -58,5 +59,4 @@ class FakeChatroomRepo extends IntfChatroomRepo{
     // TODO: implement watchList
     throw UnimplementedError();
   }
-
 }
