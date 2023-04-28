@@ -3,6 +3,9 @@ import 'package:yne_flutter/features/activity/domain/activity.dart';
 import 'package:yne_flutter/features/activity/domain/activity_comment.dart';
 import 'package:yne_flutter/features/activity/domain/activity_location.dart';
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
+import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
+import 'package:yne_flutter/features/chatroom/domain/message.dart';
+import 'package:yne_flutter/features/chatroom/presentation/detail/message_model.dart';
 
 List<ActivityCategory> fakeActivityCategoryList = [
   ActivityCategory(id: '1', name: 'Category 1'),
@@ -48,15 +51,15 @@ List<ActivityComment> fakeActivityCommentList = [
   ),
 ];
 
-BackendUser fakeHeroUser =
-    BackendUser(id: '0', name: 'hero', gender: 'F', introduction: '0 1 2');
+BackendUser fakeHeroUser = BackendUser(
+    id: '0', name: 'hero', gender: 'F', introduction: 'I am a cute kangaroo');
 
 List<BackendUser> fakeOtherUserList = [
   BackendUser(
     id: '1',
     name: 'Amy',
     gender: 'F',
-    introduction: '1 2 3',
+    introduction: 'Not that cute a kangaroo',
     hostActivities: [
       fakeActivityList[0],
       fakeActivityList[1],
@@ -116,8 +119,8 @@ List<Activity> fakeActivityList = [
         userBigPicLink: "https://picsum.photos/id/91/1000/500",
         userHeadShotLink: "https://picsum.photos/id/103/1000/500",
       ),
-      startDate: '2023/4/1',
-      endDate: '2023/5/2',
+      startDate: '2023-4-1',
+      endDate: '2023-5-2',
       description: 'Yay!',
       location: fakeLocationList[0]),
   Activity(
@@ -127,7 +130,7 @@ List<Activity> fakeActivityList = [
       isLiked: false,
       isJoined: false,
       // host: fakeOtherUserList[0],
-      startDate: '2023/2/1',
+      startDate: '2023-2-1',
       description: 'Yo!'),
   Activity(
       id: '5',
@@ -136,8 +139,8 @@ List<Activity> fakeActivityList = [
       isLiked: false,
       isJoined: false,
       // host: fakeOtherUserList[1],
-      startDate: '2023/4/1',
-      endDate: '2023/4/3',
+      startDate: '2023-4-1',
+      endDate: '2023-4-3',
       description: 'Weeeee!'),
   Activity(
       id: '6',
@@ -146,8 +149,8 @@ List<Activity> fakeActivityList = [
       isLiked: false,
       isJoined: false,
       // host: fakeOtherUserList[1],
-      startDate: '2023/4/1',
-      endDate: '2025/12/25',
+      startDate: '2023-4-1',
+      endDate: '2025-12-25',
       description:
           'Ahhhh! weee! Do you want to build a rocket and go to the moon?\n lalalalala Let\'s get started! weeeeeee~~~'),
   Activity(
@@ -157,7 +160,7 @@ List<Activity> fakeActivityList = [
       isLiked: false,
       isJoined: false,
       // host: fakeOtherUserList[0],
-      startDate: '2023/2/1',
+      startDate: '2023-2-1',
       description: 'white bear is so cute'),
   Activity(
       id: '8',
@@ -166,8 +169,8 @@ List<Activity> fakeActivityList = [
       isLiked: false,
       isJoined: false,
       // host: fakeOtherUserList[1],
-      startDate: '2023/4/1',
-      endDate: '2023/4/3',
+      startDate: '2023-4-1',
+      endDate: '2023-4-3',
       description: 'Weeeee! I love swimming'),
   Activity(
       id: '9',
@@ -176,8 +179,8 @@ List<Activity> fakeActivityList = [
       isLiked: false,
       isJoined: false,
       // host: fakeOtherUserList[1],
-      startDate: '2023/10/1',
-      endDate: '2028/12/25',
+      startDate: '2023-10-1',
+      endDate: '2028-12-25',
       description:
           'Ahhhh! is so cute! Do you want to build a rocket and go to the moon?\n lalalalala Let\'s get started! weeeeeee~~~'),
   Activity(
@@ -186,7 +189,7 @@ List<Activity> fakeActivityList = [
       categories: [fakeActivityCategoryList[1]],
       isLiked: false,
       isJoined: false,
-      startDate: '2023/2/1',
+      startDate: '2023-2-1',
       description: 'white bear is so cute'),
   Activity(
       id: '11',
@@ -194,7 +197,7 @@ List<Activity> fakeActivityList = [
       categories: [fakeActivityCategoryList[1]],
       isLiked: false,
       isJoined: false,
-      startDate: '2023/5/15',
+      startDate: '2023-5-15',
       description:
           'Experience the thrill of the rapids on this exciting whitewater rafting adventure. Navigate through the rushing waters and enjoy the stunning views along the way.'),
   Activity(
@@ -203,7 +206,7 @@ List<Activity> fakeActivityList = [
       categories: [fakeActivityCategoryList[0]],
       isLiked: false,
       isJoined: false,
-      startDate: '2023/7/1',
+      startDate: '2023-7-1',
       description:
           'Escape to the great outdoors and join us on a hiking and camping trip. Explore beautiful trails, set up camp, and enjoy the natural beauty of the wilderness.'),
   Activity(
@@ -212,7 +215,7 @@ List<Activity> fakeActivityList = [
       categories: [fakeActivityCategoryList[2]],
       isLiked: false,
       isJoined: false,
-      startDate: '2023/8/20',
+      startDate: '2023-8-20',
       description:
           'Indulge in the finest wines on this exclusive wine tasting tour. Sample a variety of wines and learn about the history and production of each one.'),
   Activity(
@@ -221,7 +224,7 @@ List<Activity> fakeActivityList = [
       categories: [fakeActivityCategoryList[3]],
       isLiked: false,
       isJoined: false,
-      startDate: '2023/10/5',
+      startDate: '2023-10-5',
       description:
           'Learn to cook like a pro on this fun and interactive cooking class. Discover new recipes and techniques, and enjoy a delicious meal at the end of the class.'),
   Activity(
@@ -230,8 +233,8 @@ List<Activity> fakeActivityList = [
       categories: [fakeActivityCategoryList[4]],
       isLiked: false,
       isJoined: false,
-      startDate: '2023/11/1',
-      endDate: '2023/12/1',
+      startDate: '2023-11-1',
+      endDate: '2023-12-1',
       description:
           'Learn the basics of salsa dancing in this fun and interactive class.'),
   Activity(
@@ -240,8 +243,8 @@ List<Activity> fakeActivityList = [
       categories: [fakeActivityCategoryList[0]],
       isLiked: false,
       isJoined: false,
-      startDate: '2023/12/1',
-      endDate: '2024/5/30',
+      startDate: '2023-12-1',
+      endDate: '2024-5-30',
       description:
           'Learn the basics of painting in this fun and interactive class.'),
   Activity(
@@ -250,8 +253,8 @@ List<Activity> fakeActivityList = [
       categories: [fakeActivityCategoryList[0]],
       isLiked: false,
       isJoined: false,
-      startDate: '2023/12/1',
-      endDate: '2024/8/30',
+      startDate: '2023-12-1',
+      endDate: '2024-8-30',
       description:
           'Learn the basics of yoga in this fun and interactive class.'),
   Activity(
@@ -260,8 +263,8 @@ List<Activity> fakeActivityList = [
       categories: [fakeActivityCategoryList[1]],
       isLiked: false,
       isJoined: false,
-      startDate: '2023/10/1',
-      endDate: '2024/3/30',
+      startDate: '2023-10-1',
+      endDate: '2024-3-30',
       description:
           'Learn the basics of baking in this fun and interactive class.'),
   Activity(
@@ -270,8 +273,8 @@ List<Activity> fakeActivityList = [
       categories: [fakeActivityCategoryList[0]],
       isLiked: false,
       isJoined: false,
-      startDate: '2023/12/1',
-      endDate: '2024/8/30',
+      startDate: '2023-12-1',
+      endDate: '2024-8-30',
       description:
           'Learn the basics of skiing in this fun and interactive class.'),
   Activity(
@@ -280,8 +283,61 @@ List<Activity> fakeActivityList = [
       categories: [fakeActivityCategoryList[1]],
       isLiked: false,
       isJoined: false,
-      startDate: '2023/12/1',
-      endDate: '2024/8/30',
+      startDate: '2023-12-1',
+      endDate: '2024-8-30',
       description:
           'Learn the basics of rock climbing in this fun and interactive class.'),
+];
+
+List<ChatRoom> fakeChatroomList = [
+  ChatRoom(
+    id: '1',
+    heroRead: false,
+    chatPartner: fakeOtherUserList[0],
+    messages: [
+      Message(
+          chatroomID: '1',
+          heroRead: true,
+          content: 'Hello, how are you?',
+          time: '2021-5-1 12:00:00',
+          type: "sent"),
+      Message(
+          chatroomID: '1',
+          heroRead: false,
+          content: 'I am fine, thank you.',
+          time: '2021-5-1 12:01:00',
+          type: "received"),
+      Message(
+          chatroomID: '1',
+          heroRead: false,
+          content: 'And you?',
+          time: '2021-5-1 12:02:00',
+          type: "received"),
+    ],
+  ),
+    ChatRoom(
+    id: '2',
+    heroRead: false,
+    chatPartner: fakeOtherUserList[1],
+    messages: [
+      Message(
+          chatroomID: '2',
+          heroRead: true,
+          content: 'I am so cute!',
+          time: '2021-5-1 13:00',
+          type: "received"),
+      Message(
+          chatroomID: '2',
+          heroRead: true,
+          content: 'No, you are NOT',
+          time: '2021-5-1 13:01',
+          type: "sent"),
+      Message(
+          chatroomID: '2',
+          heroRead: false,
+          content: 'How dare you!',
+          time: '2021-5-1 13:02',
+          type: "received"),
+    ],
+  ),
 ];
