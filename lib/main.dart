@@ -9,7 +9,7 @@ import 'firebase_options.dart';
 import 'package:yne_flutter/routing/app_router.dart';
 
 void main() async {
-  // kUseFakeRepos = true;
+  kUseFakeRepos = true;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   usePathUrlStrategy();

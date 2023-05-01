@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
+import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
 
 Color bluegrey = const Color.fromARGB(255, 39, 42, 80);
 TextStyle bodyTiny =
@@ -28,15 +29,45 @@ TextStyle displayMid =
     TextStyle(color: bluegrey, fontSize: 32, fontWeight: FontWeight.w600);
 
 class ChatroomCard extends ConsumerWidget {
-  const ChatroomCard({super.key, required this.user, this.onPressed});
-  final BackendUser? user;
+  const ChatroomCard({super.key, required this.chatroom, this.onPressed});
+  final ChatRoom? chatroom;
   final VoidCallback? onPressed;
 
   // * Keys for testing using find.byKey()
   static const chatroomCardKey = Key('chatroom_card');
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = chatroom!.chatPartner;
+    String duration = "";
+    final now = DateTime.now();
+    final lastMsgTime = chatroom?.messages?[0]?.dateTime;
+    if (lastMsgTime != null) {
+      final dur = now.difference(lastMsgTime);
+      if (dur.inDays > 0) {
+        final day = dur.inDays;
+        if (day == 1) {
+          duration = "1 day ago";
+        } else {
+          duration = "$day days ago";
+        }
+      } else if (dur.inHours > 0) {
+        final hour = dur.inHours;
+        if (hour == 1) {
+          duration = "1 hour ago";
+        } else {
+          duration = "$hour hours ago";
+        }
+      } else if (dur.inMinutes > 0) {
+        final min = dur.inMinutes;
+        if (min == 1) {
+          duration = "1 minute ago";
+        } else {
+          duration = "$min minites ago";
+        }
+      } else {
+        duration = "less than 1 minute";
+      }
+    }
     return InkWell(
       key: chatroomCardKey,
       onTap: onPressed,
@@ -87,7 +118,7 @@ class ChatroomCard extends ConsumerWidget {
                     ),
                     SizedBox(
                       width: 100,
-                      child: Text("一小時前",
+                      child: Text(duration,
                           textAlign: TextAlign.right,
                           style: TextStyle(
                               color: Colors.grey.shade600,
@@ -102,16 +133,22 @@ class ChatroomCard extends ConsumerWidget {
                     Expanded(
                       child: Container(
                         padding: const EdgeInsets.only(left: 15.0),
-                        child: Text("Hello! blablablablabla",
+                        child: Text(chatroom?.messages?[0]?.content ?? "",
                             style: TextStyle(
                                 color: bluegrey,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w300)),
                       ),
                     ),
-                    const SizedBox(
-                        width: 15,
-                        child: Icon(Icons.circle, color: Colors.red, size: 14)),
+                    (chatroom?.heroRead != true)
+                        ? const SizedBox(
+                            width: 15,
+                            child:
+                                Icon(Icons.circle, color: Colors.red, size: 14))
+                        : const SizedBox(
+                            width: 15,
+                            child: Icon(Icons.circle,
+                                color: Colors.transparent, size: 14))
                   ],
                 ),
               ],

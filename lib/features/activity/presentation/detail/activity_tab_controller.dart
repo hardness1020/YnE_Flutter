@@ -31,6 +31,29 @@ class ActivityTabController extends StateNotifier<AsyncValue<void>> {
       }
     }
   }
+  
+  Future<void> fetchActivity(int pageKey,
+      PagingController<int, Activity> pagingController) async {
+    try {
+      final Tuple2<String, List<Activity>?> response =
+          await activityService.fetchList(
+        page: pageKey.toString()
+      );
+      if (response!.item1 == pageKey.toString()) {
+        pagingController.appendLastPage(response.item2 ?? <Activity>[]);
+      } else {
+        pagingController.appendPage(
+            response.item2 ?? <Activity>[], pageKey + 1);
+      }
+      state = const AsyncValue.data(null);
+    } catch (e) {
+      if (mounted) {
+        state = AsyncValue.error(e, StackTrace.current);
+        pagingController.error = e;
+      }
+    }
+  }
+
 }
 
 final activityTabControllerProvider =

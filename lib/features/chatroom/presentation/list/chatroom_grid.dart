@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/constants/test_data.dart';
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
 import 'package:yne_flutter/features/shared/presentation/localization/string_hardcoded.dart';
@@ -9,10 +10,10 @@ import 'package:yne_flutter/constants/app_sizes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yne_flutter/features/shared/presentation/widgets/async_value_widget.dart';
-import 'package:yne_flutter/features/activity/domain/activity.dart';
+import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
 import 'package:yne_flutter/features/chatroom/presentation/list/chatroom_card.dart';
 import 'package:yne_flutter/routing/app_router.dart';
-import 'package:yne_flutter/features/activity/application/activity_service.dart';
+import 'package:yne_flutter/features/chatroom/application/chatroom_service.dart';
 
 /// A widget that displays the list of products that match the search query.
 class ChatroomGrid extends ConsumerWidget {
@@ -20,19 +21,31 @@ class ChatroomGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final chatroomListFutureValue = ref.watch(activityListFutureProvider('1'));
-    // final chatroomListFutureValue = ref.watch(activityListFutureProvider('1'));
+    final chatroomListFutureValue = ref.watch(chatroomListFutureProvider('1'));
     final userList = fakeOtherUserList;
-    return ChatroomLayoutGrid(
-        itemCount: userList.length,
-        itemBuilder: (_, index) {
-          final user = userList[index];
-          return ChatroomCard(
-              user: user,
-              onPressed: () {
-                context.goNamed(AppRoute.chatroomDetail.name,
-                    params: {'id': '0'}); // temp
-              });
+    return AsyncValueWidget<Tuple2<String, List<ChatRoom>?>>(
+        value: chatroomListFutureValue,
+        data: (pageAndChatrooms) {
+          final chatrooms = pageAndChatrooms.item2;
+          return chatrooms!.isEmpty
+              ? Center(
+                  child: Text(
+                    'No chatrooms found'.hardcoded,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                )
+              : ChatroomLayoutGrid(
+                  itemCount: chatrooms.length,
+                  itemBuilder: (_, index) {
+                    final chatroom = chatrooms[index];
+                    return ChatroomCard(
+                        chatroom: chatroom,
+                        onPressed: () {
+                          ref.read(userReadChatroomProvider(chatroom.id!));
+                          context.goNamed(AppRoute.chatroomDetail.name,
+                              params: {'id': chatroom.id!});
+                        });
+                  });
         });
   }
 }

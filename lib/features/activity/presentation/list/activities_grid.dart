@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
 import 'package:yne_flutter/features/shared/presentation/localization/string_hardcoded.dart';
@@ -18,31 +19,56 @@ import 'package:yne_flutter/features/activity/application/activity_service.dart'
 class ActivitiesGrid extends ConsumerWidget {
   const ActivitiesGrid({super.key});
 
+  // @override
+  // Widget build(BuildContext context, WidgetRef ref) {
+  //   return Container(
+  //       constraints: BoxConstraints(
+  //         minHeight: MediaQuery.of(context).size.height * 0.5,
+  //       ),
+  //       child: PagedListView<int, Activity>(
+  //         physics: const BouncingScrollPhysics(),
+  //         shrinkWrap: true,
+  //         pagingController: _pagingController,
+  //         builderDelegate: PagedChildBuilderDelegate<Activity>(
+  //           itemBuilder: (context, item, index) => ListTile(
+  //             title: Text(item.title!),
+  //             // onTap: () {
+  //             //   context.pushNamed(AppRoute.activityDetail.name, arguments: item.id!);
+  //             // },
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final activityListValue = ref.watch(activitiesSearchResultsProvider);
     final activityListFutureValue = ref.watch(activityListFutureProvider('1'));
     return AsyncValueWidget<Tuple2<String, List<Activity>?>>(
       value: activityListFutureValue,
-      data: (pageAndActivities) => pageAndActivities.item2!.isEmpty
-          ? Center(
-              child: Text(
-                'No activities found'.hardcoded,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            )
-          : ActivitiesLayoutGrid(
-              itemCount: pageAndActivities.item2!.length,
-              itemBuilder: (_, index) {
-                final activity = pageAndActivities.item2![index];
-                return ActivityCard(
-                    activity: activity,
-                    onPressed: () {
-                      context.goNamed(AppRoute.activityDetail.name,
-                          params: {'id': activity.id!});
-                    });
-              },
-            ),
+      data: (pageAndActivities) {
+        final activities = pageAndActivities.item2;
+        return activities!.isEmpty
+            ? Center(
+                child: Text(
+                  'No activities found'.hardcoded,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              )
+            : ActivitiesLayoutGrid(
+                itemCount: activities.length,
+                itemBuilder: (_, index) {
+                  final activity = activities[index];
+                  return ActivityCard(
+                      activity: activity,
+                      onPressed: () {
+                        context.goNamed(AppRoute.activityDetail.name,
+                            params: {'id': activity.id!});
+                      });
+                },
+              );
+      },
     );
   }
 }
