@@ -313,11 +313,65 @@ List<ChatRoom> fakeChatroomList = [
           content: 'And you?',
           time: '2021-5-1 12:02:00',
           type: "received"),
+      Message(
+          chatroomID: '1',
+          heroRead: true,
+          content: 'Hello, how are you?',
+          time: '2021-5-1 12:03:00',
+          type: "sent"),
+      Message(
+          chatroomID: '1',
+          heroRead: false,
+          content: 'I am fine, thank you.',
+          time: '2021-5-1 12:05:00',
+          type: "received"),
+      Message(
+          chatroomID: '1',
+          heroRead: false,
+          content: 'And you?',
+          time: '2021-5-1 12:06:00',
+          type: "received"),
+      Message(
+          chatroomID: '1',
+          heroRead: true,
+          content: 'Hello, how are you?',
+          time: '2021-5-1 12:09:00',
+          type: "sent"),
+      Message(
+          chatroomID: '1',
+          heroRead: false,
+          content: 'I am fine, thank you.',
+          time: '2021-5-1 12:11:00',
+          type: "received"),
+      Message(
+          chatroomID: '1',
+          heroRead: false,
+          content: 'And you?',
+          time: '2021-5-1 12:12:00',
+          type: "received"),
+      Message(
+          chatroomID: '1',
+          heroRead: true,
+          content: 'Hello, how are you?',
+          time: '2021-5-1 12:13:00',
+          type: "sent"),
+      Message(
+          chatroomID: '1',
+          heroRead: false,
+          content: 'I am fine, thank you.',
+          time: '2021-5-1 12:15:00',
+          type: "received"),
+      Message(
+          chatroomID: '1',
+          heroRead: false,
+          content: 'And you?',
+          time: '2021-5-1 12:22:00',
+          type: "received"),
     ],
   ),
-    ChatRoom(
+  ChatRoom(
     id: '2',
-    heroRead: false,
+    heroRead: true,
     chatPartner: fakeOtherUserList[1],
     messages: [
       Message(
