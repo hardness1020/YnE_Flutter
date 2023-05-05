@@ -25,6 +25,7 @@
 - [🏁 Getting Started ](#-getting-started-)
 - [🔔 Features ](#-features-)
 - [✨ Release ](#-release-)
+  - [Android](#android)
 - [🎉 Acknowledgements ](#-acknowledgements-)
   
 <br/>
@@ -88,7 +89,7 @@ flutter run --dart-define=USE_FAKE_REPOSITORY={true|false}
 
 ## ✨ Release <a name = "release"></a>
 
-###Android
+### Android
 - [Official documents](https://docs.flutter.dev/deployment/android)
 - The passwords also store in google secret manager
 - Able to release to local device, but not able to release to play store.

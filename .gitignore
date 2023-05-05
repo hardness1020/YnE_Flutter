@@ -51,3 +51,6 @@ Podfile
 # Android release files
 bundletool-all-1.14.0.jar
 yne.apks
+
+# Ingnore test coverage file
+coverage/lcov.info

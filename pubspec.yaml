@@ -55,6 +55,8 @@ dependencies:
   google_sign_in: 6.0.2
   flutter_facebook_auth: 5.0.8
 
+  mocktail: 0.3.0
+
 flutter_icons:
   android: true
   ios: true
