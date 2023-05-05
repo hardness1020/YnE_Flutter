@@ -6,18 +6,34 @@ import 'package:yne_flutter/utils/delay.dart';
 import 'package:yne_flutter/utils/in_memory_store.dart';
 
 class FakeChatroomRepo extends IntfChatroomRepo {
-  final InMemoryStore<List<ChatRoom>> _chatrooms =
-      InMemoryStore<List<ChatRoom>>(List.from(fakeChatroomList));
-
   final bool addDelay;
+  late List<ChatRoom> lightweightChatroomList;
 
-  FakeChatroomRepo({this.addDelay = true});
+  FakeChatroomRepo({this.addDelay = true}) {
+    lightweightChatroomList = <ChatRoom>[
+      for (ChatRoom chatroom in fakeChatroomList)
+        ChatRoom(
+          id: chatroom.id,
+          heroRead: chatroom.heroRead,
+          chatPartner: chatroom.chatPartner,
+          messages: null,
+          lastMessage: chatroom.lastMessage,
+        )
+    ];
+  }
+
+  late final InMemoryStore<List<ChatRoom>> _chatrooms =
+      InMemoryStore<List<ChatRoom>>(List.from(lightweightChatroomList));
+
+  final Map<String, InMemoryStore<ChatRoom>> _chatroomMap = {
+    for (ChatRoom chatroom in fakeChatroomList)
+      chatroom.id!: InMemoryStore<ChatRoom>(chatroom)
+  };
 
   @override
   Stream<ChatRoom?> watch({required String chatroomID}) {
     try {
-      return watchList().map((chatroomList) =>
-          _get(chatroomList: chatroomList, chatroomID: chatroomID));
+      return _chatroomMap[chatroomID]!.stream;
     } catch (e) {
       rethrow;
     }
@@ -35,7 +51,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   @override
   ChatRoom? get({required String chatroomID}) {
     try {
-      return _get(chatroomList: _chatrooms.value, chatroomID: chatroomID);
+      return _chatroomMap[chatroomID]!.value;
     } catch (e) {
       rethrow;
     }
@@ -55,14 +71,18 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   void set({required ChatRoom chatroom}) {
     try {
       final chatroomList = _chatrooms.value;
+      bool add = true;
       for (int i = 0; i < chatroomList.length; i++) {
         if (chatroomList[i].id == chatroom.id) {
           chatroomList[i] = chatroom;
+          add = false;
           break;
-        } else {
-          chatroomList.add(chatroom);
         }
       }
+      if (add == true) {
+        chatroomList.add(chatroom);
+      }
+      _chatroomMap[chatroom.id!]!.value = chatroom;
       _chatrooms.value = chatroomList;
     } catch (e) {
       rethrow;
@@ -130,23 +150,20 @@ class FakeChatroomRepo extends IntfChatroomRepo {
     try {
       await delay(addDelay);
       final List<ChatRoom> chatroomList = _chatrooms.value;
+      final map = _chatroomMap;
+      ChatRoom completeChatroom;
       final int index = chatroomList.indexWhere((p) => p.id == chatroomID);
       if (index == -1) {
         throw Exception('Chatroom not found');
       } else {
+        completeChatroom = map[chatroomID]!.value;
+        completeChatroom.heroRead = true;
         chatroomList[index].heroRead = true;
       }
+      _chatroomMap[chatroomID]!.value = completeChatroom;
       _chatrooms.value = chatroomList;
-      return _chatrooms.value[index];
-    } catch (e) {
-      rethrow;
-    }
-  }
 
-  static ChatRoom? _get(
-      {required List<ChatRoom>? chatroomList, required String chatroomID}) {
-    try {
-      return chatroomList!.firstWhere((chatroom) => chatroom.id == chatroomID);
+      return _chatroomMap[chatroomID]!.value;
     } catch (e) {
       rethrow;
     }

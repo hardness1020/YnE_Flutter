@@ -40,7 +40,7 @@ class ChatroomCard extends ConsumerWidget {
     final user = chatroom!.chatPartner;
     String duration = "";
     final now = DateTime.now();
-    final lastMsgTime = chatroom?.messages?[0]?.dateTime;
+    final lastMsgTime = chatroom?.lastMessage?.dateTime;
     if (lastMsgTime != null) {
       final dur = now.difference(lastMsgTime);
       if (dur.inDays > 364) {
@@ -147,7 +147,7 @@ class ChatroomCard extends ConsumerWidget {
                     Expanded(
                       child: Container(
                         padding: const EdgeInsets.only(left: 15.0),
-                        child: Text(chatroom?.messages?[0]?.content ?? "",
+                        child: Text(chatroom?.lastMessage?.content ?? "",
                             style: TextStyle(
                                 color: bluegrey,
                                 fontSize: 20,

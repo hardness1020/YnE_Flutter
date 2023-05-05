@@ -5,6 +5,7 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/constants/test_data.dart';
 import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
+import 'package:yne_flutter/features/chatroom/data/interface/intf_chatroom_repo.dart';
 import 'package:yne_flutter/features/shared/presentation/localization/string_hardcoded.dart';
 import 'package:yne_flutter/constants/app_sizes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,12 +22,14 @@ class ChatroomGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final chatroomListFutureValue = ref.watch(chatroomListFutureProvider('1'));
+    final chatroomListFutureValue = ref.watch(chatroomListStreamProvider);
     final userList = fakeOtherUserList;
-    return AsyncValueWidget<Tuple2<String, List<ChatRoom>?>>(
+    // return AsyncValueWidget<Tuple2<String, List<ChatRoom>?>>(
+    return AsyncValueWidget<List<ChatRoom>?>(
         value: chatroomListFutureValue,
         data: (pageAndChatrooms) {
-          final chatrooms = pageAndChatrooms.item2;
+          // final chatrooms = pageAndChatrooms.item2;
+          final chatrooms = pageAndChatrooms;
           return chatrooms!.isEmpty
               ? Center(
                   child: Text(
