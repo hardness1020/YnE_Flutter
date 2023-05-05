@@ -43,7 +43,21 @@ class ChatroomCard extends ConsumerWidget {
     final lastMsgTime = chatroom?.messages?[0]?.dateTime;
     if (lastMsgTime != null) {
       final dur = now.difference(lastMsgTime);
-      if (dur.inDays > 0) {
+      if (dur.inDays > 364) {
+        final year = dur.inDays ~/ 365;
+        if (year == 1) {
+          duration = "1 year ago";
+        } else {
+          duration = "$year years ago";
+        }
+      } else if (dur.inDays > 29) {
+        final month = dur.inDays ~/ 30;
+        if (month == 1) {
+          duration = "1 month ago";
+        } else {
+          duration = "$month months ago";
+        }
+      } else if (dur.inDays > 0) {
         final day = dur.inDays;
         if (day == 1) {
           duration = "1 day ago";

@@ -8,7 +8,7 @@ import 'package:yne_flutter/constants/app_sizes.dart';
 import 'package:yne_flutter/features/activity/presentation/list/activity_card.dart';
 import 'package:yne_flutter/features/chatroom/application/chatroom_service.dart';
 import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
-import 'package:yne_flutter/features/chatroom/presentation/detail/message_model.dart';
+import 'package:yne_flutter/features/chatroom/presentation/detail/tempMessageStore.dart';
 import 'package:yne_flutter/features/shared/presentation/widgets/async_value_widget.dart';
 import 'package:yne_flutter/features/activity/domain/activity.dart';
 import 'package:yne_flutter/features/activity/application/activity_service.dart';
@@ -99,91 +99,122 @@ class _ChatroomDetailPageState extends ConsumerState<ChatroomDetailPage>
                 gapH64,
                 gapH12,
                 Expanded(
-                  child: ListView.builder(
-                    reverse: true,
-                    itemCount: chatroom?.messages?.length,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    itemBuilder: (context, index) {
-                      // cur => F: I send; T: I recieve
-                      // prev, next => T: same with cur, F: not same with cur
-                      bool cur = chatroom!.messages![index]!.type == "received";
-                      bool prev = (index > 0)
-                          ? chatroom.messages![index]!.type ==
-                              chatroom.messages![index - 1]!.type
-                          : false;
-                      bool next = (index < chatroom.messages!.length - 1)
-                          ? chatroom.messages![index]!.type ==
-                              chatroom.messages![index + 1]!.type
-                          : false;
-                      Tuple4<int, int, int, int> round =
-                          getDecor(prev, cur, next);
-                      double curve = 20.0;
-                      final msg = chatroom.messages![index]!;
-                      return Container(
-                        padding: EdgeInsets.only(
-                            left: 14, right: 14, top: prev ? 0 : 15, bottom: 5),
-                        child: Align(
-                          alignment: (msg.type == "received"
-                              ? Alignment.topLeft
-                              : Alignment.topRight),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(curve * round.item1),
-                                bottomLeft:
-                                    Radius.circular(curve * round.item2),
-                                topRight: Radius.circular(curve * round.item3),
-                                bottomRight:
-                                    Radius.circular(curve * round.item4),
-                              ),
-                              color: msg.type == "received"
-                                  ? const Color.fromARGB(255, 241, 241, 245)
-                                  : (msg.type == "sent"
-                                      ? const Color.fromARGB(255, 254, 189, 47)
-                                      : const Color.fromARGB(
-                                          255, 175, 133, 253)),
-                            ), // test 1 test 2 test 3
-                            padding: const EdgeInsets.all(16),
-                            child: Text(
-                              msg.content!,
-                              style: const TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                  child: FutureBuilder<List<String>>(
+                      future: getUnsentMessages(widget.chatroomId),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          List<String> unsentMsgs = snapshot.data!;
+                          int unsentLen = unsentMsgs.length;
+                          return ListView.builder(
+                            reverse: true,
+                            itemCount: unsentLen + chatroom!.messages!.length,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            itemBuilder: (context, index) {
+                              // cur => F: I send; T: I recieve
+                              // prev, next => T: same with cur, F: not same with cur
+                              if (index < unsentLen) {
+                                index = unsentLen - 1 - index;
+
+                                return Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 14, right: 14, top: 0, bottom: 5),
+                                  child: Align(
+                                    alignment: Alignment.topRight,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: const Radius.circular(20.0),
+                                          bottomLeft:
+                                              const Radius.circular(20.0),
+                                          topRight: Radius.circular(
+                                              index == 0 ? 20.0 : 0.0),
+                                          bottomRight: Radius.circular(
+                                              index == unsentLen - 1
+                                                  ? 20.0
+                                                  : 0.0),
+                                        ),
+                                        color: shouldRebuild &&
+                                                index == unsentLen - 1
+                                            ? const Color.fromARGB(
+                                                255, 175, 133, 253)
+                                            : const Color.fromARGB(
+                                                255, 133, 213, 253),
+                                      ), // test 1 test 2 test 3
+                                      padding: const EdgeInsets.all(16),
+                                      child: Text(
+                                        unsentMsgs[index],
+                                        style: const TextStyle(fontSize: 15),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              index = index - unsentLen;
+                              bool cur =
+                                  chatroom.messages![index]!.type == "received";
+                              bool prev = (index > 0)
+                                  ? chatroom.messages![index]!.type ==
+                                      chatroom.messages![index - 1]!.type
+                                  : false;
+                              bool next =
+                                  (index < chatroom.messages!.length - 1)
+                                      ? chatroom.messages![index]!.type ==
+                                          chatroom.messages![index + 1]!.type
+                                      : false;
+                              Tuple4<int, int, int, int> round =
+                                  getDecor(prev, cur, next);
+                              double curve = 20.0;
+                              final msg = chatroom.messages![index]!;
+                              return Container(
+                                padding: EdgeInsets.only(
+                                    left: 14,
+                                    right: 14,
+                                    top: prev ? 0 : 15,
+                                    bottom: 5),
+                                child: Align(
+                                  alignment: (msg.type == "received"
+                                      ? Alignment.topLeft
+                                      : Alignment.topRight),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            curve * round.item1),
+                                        bottomLeft: Radius.circular(
+                                            curve * round.item2),
+                                        topRight: Radius.circular(
+                                            curve * round.item3),
+                                        bottomRight: Radius.circular(
+                                            curve * round.item4),
+                                      ),
+                                      color: msg.type == "received"
+                                          ? const Color.fromARGB(
+                                              255, 241, 241, 245)
+                                          : (msg.type == "sent"
+                                              ? const Color.fromARGB(
+                                                  255, 254, 189, 47)
+                                              : const Color.fromARGB(
+                                                  255, 175, 133, 253)),
+                                    ), // test 1 test 2 test 3
+                                    padding: const EdgeInsets.all(16),
+                                    child: Text(
+                                      msg.content!,
+                                      style: const TextStyle(fontSize: 15),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      }),
                 ),
-                // tempMsg != ""
-                //     ? Container(
-                //         padding: const EdgeInsets.only(
-                //             left: 14, right: 14, top: 15, bottom: 5),
-                //         child: Align(
-                //           alignment: Alignment.topRight,
-                //           child: Container(
-                //             decoration: BoxDecoration(
-                //               borderRadius: const BorderRadius.only(
-                //                 topLeft: Radius.circular(20.0),
-                //                 bottomLeft: Radius.circular(20.0),
-                //                 topRight: Radius.circular(20.0),
-                //                 bottomRight: Radius.circular(0.0),
-                //               ),
-                //               color: status == "sending"
-                //                   ? const Color.fromARGB(255, 175, 133, 253)
-                //                   : (status == "success"
-                //                       ? const Color.fromARGB(255, 254, 189, 47)
-                //                       : const Color.fromARGB(255, 240, 38, 38)),
-                //             ), // test 1 test 2 test 3
-                //             padding: const EdgeInsets.all(16),
-                //             child: Text(
-                //               tempMsg,
-                //               style: const TextStyle(fontSize: 15),
-                //             ),
-                //           ),
-                //         ),
-                //       )
-                //     : const SizedBox(height: 1),
                 const SizedBox(height: 90),
               ],
             ),
@@ -317,6 +348,25 @@ class _ChatroomDetailPageState extends ConsumerState<ChatroomDetailPage>
                 ),
               ),
             ),
+            Positioned(
+              bottom: 70,
+              left: 20,
+              child: SizedBox(
+                width: 25,
+                height: 70,
+                child: Container(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          sendSuccess();
+                        });
+                      },
+                      icon: const Icon(Icons.check),
+                      color: Colors.black),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -344,25 +394,28 @@ class _ChatroomDetailPageState extends ConsumerState<ChatroomDetailPage>
     return Tuple4(tl, bl, tr, br);
   }
 
+  void sendSuccess() {
+    clearUnsentMessages(widget.chatroomId);
+  }
+
   void onSendMessage(String value) {
     if (!shouldRebuild) {
       if (value.trim().isNotEmpty) {
         // final newMessage =
         //     ChatMessage(messageContent: value, messageType: 'sending');
         // messages.add(newMessage);
-        tempMsg = value;
-        status = "sending";
+        saveUnsentMessage(value, widget.chatroomId);
         _textEditingController.clear();
       }
       setState(() {
-        print(status);
+        // print(status);
         shouldRebuild = true;
       });
       Future.delayed(const Duration(seconds: 3), () {
         setState(() {
-          status = "success";
+          // status = "success";
           // messages.last.messageType = 'sender';
-          print(status);
+          // print(status);
           shouldRebuild = false;
         });
       });
