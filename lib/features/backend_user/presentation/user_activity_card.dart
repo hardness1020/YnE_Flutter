@@ -40,7 +40,6 @@ class UserActivityWidget extends ConsumerWidget {
                                   )),
                             ),
                         imageUrl: activity.backGroundLink!,
-                        // imageUrl: 'https://picsum.photos/250?image=9',
                         width: 90,
                         height: 90,
                         fit: BoxFit.cover)
@@ -104,26 +103,6 @@ class UserActivityWidget extends ConsumerWidget {
               child: Column(
                 children: [
                   LikeButton(activity: activity),
-                  // SizedBox(
-                  //   width: 45,
-                  //   height: 45,
-                  //   child: FittedBox(
-                  //     child: FloatingActionButton(
-                  //       heroTag: UniqueKey(),
-                  //       onPressed: () {
-                  //         // setState(() {
-                  //         //   _isLiking = !_isLiking;
-                  //         // });
-                  //         // like(context, _isLiking);
-                  //         print('press on ${activity.title!}\n');
-                  //       },
-                  //       backgroundColor: Color.fromARGB(255, 246, 156, 164),
-                  //       child: //status.isLiked!
-                  //           // ? const Icon(Icons.favorite, size: 30) :
-                  //           const Icon(Icons.favorite_border, size: 38),
-                  //     ),
-                  //   ),
-                  // ),
                   Row(
                     children: [
                       const Icon(

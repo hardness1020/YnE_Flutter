@@ -15,7 +15,6 @@ import 'package:yne_flutter/features/activity/domain/activity.dart';
 import 'package:yne_flutter/features/activity/application/activity_service.dart';
 
 class ActivityDetailPage extends ConsumerStatefulWidget {
-  // const ActivityDetailPage({Key? key}) : super(key: key);
   const ActivityDetailPage({super.key, required this.activityId});
   final String activityId;
 
@@ -49,7 +48,6 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
     final stateLike = ref.watch(likeControllerProvider(widget.activityId));
     final stateJoin = ref.watch(joinControllerProvider);
     return Scaffold(
-      // backgroundColor: Colors.white,
       body: AsyncValueWidget<Activity?>(
           value: activityValue,
           data: (activity) => Stack(children: [
@@ -90,15 +88,12 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                                                     )),
                                               ),
                                           imageUrl: activity.backGroundLink!,
-                                          // imageUrl:
-                                          //     'https://picsum.photos/250?image=9',
                                           width: 500,
                                           height: 350,
                                           fit: BoxFit.cover)
                                       : const Image(
                                           image: AssetImage(
                                               "assets/images/ski.jpg"),
-                                          // width: 360,
                                           height: 350,
                                           fit: BoxFit.cover)),
                               gapH12,
@@ -126,7 +121,7 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                                         child: Text(
                                             activity?.categories![0].name ??
                                                 "Unknown category",
-                                            style: titleMid), // only first
+                                            style: titleMid),
                                       ),
                                     ),
                                     gapH12,
@@ -218,8 +213,6 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                                                               ),
                                                       imageUrl: activity!.host!
                                                           .userHeadShotLink!,
-                                                      // imageUrl:
-                                                      //     'https://picsum.photos/250?image=9',
                                                       width: 60,
                                                       height: 60,
                                                       fit: BoxFit.fill),
@@ -236,10 +229,8 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                                             child: Text(
                                               activity?.host?.name ??
                                                   "Anonymous",
-                                              // style: Theme.of(context).textTheme.titleLarge,
                                               style: TextStyle(
                                                   color: Colors.brown[600],
-                                                  // color: Color.fromARGB(255, 20, 39, 48)
                                                   fontSize: 26,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -252,7 +243,6 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                                       "介紹",
                                       style: TextStyle(
                                           color: bluegrey,
-                                          // color: Color.fromARGB(255, 20, 39, 48)
                                           fontSize: 24,
                                           fontWeight: FontWeight.w800),
                                     ),
@@ -379,87 +369,6 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                   ),
                 ),
               ])),
-      // floatingActionButton: AsyncValueWidget(value: status, data: data),
-      // floatingActionButton: Stack(
-      //   children: [
-      //     Positioned(
-      //       bottom: 15,
-      //       left: 40,
-      //       width: 170,
-      //       height: 40,
-      //       child: ElevatedButton(
-      //         style: ElevatedButton.styleFrom(
-      //           padding: const EdgeInsets.only(left: 20, right: 50),
-      //           backgroundColor: bluegrey,
-      //           shape: const StadiumBorder(),
-      //         ),
-      //         child: const Text('留言', style: TextStyle(fontSize: 22)),
-      //         onPressed: () => comment(context),
-      //       ),
-      //     ),
-      //     Positioned(
-      //       bottom: 15,
-      //       right: 40,
-      //       width: 170,
-      //       height: 40,
-      //       child: ElevatedButton(
-      //         style: ElevatedButton.styleFrom(
-      //           padding: const EdgeInsets.only(left: 60, right: 20),
-      //           backgroundColor: bluegrey,
-      //           shape: const StadiumBorder(),
-      //         ),
-      //         onPressed: () {
-      //           // setState(() {
-      //           //   _isJoining = !_isJoining;
-      //           // });
-      //           // if (!_isJoining!) {
-      //           //   ref.read(userJoinActivityFutureProvider(ids));
-      //           // } else {
-      //           //   ref.read(userUnjoinActivityFutureProvider(ids));
-      //           // }
-      //           if (!activityValue.value!.isJoined!) {
-      //             ref.read(userJoinActivityFutureProvider(ids));
-      //           } else {
-      //             ref.read(userUnjoinActivityFutureProvider(ids));
-      //           }
-      //         },
-      //         child: activityValue.value!.isJoined!
-
-      //             ? const Text('取消參加', style: TextStyle(fontSize: 22))
-      //             : const Text('我想參加', style: TextStyle(fontSize: 22)),
-      //       ),
-      //     ),
-      //     Align(
-      //       alignment: Alignment.bottomCenter,
-      //       child: SizedBox(
-      //         width: 70,
-      //         height: 70,
-      //         child: FittedBox(
-      //           child: FloatingActionButton(
-      //             heroTag: 'likeBtn',
-      //             onPressed: () {
-      //               // setState(() {
-      //               //   _isLiking = !_isLiking;
-      //               // });
-      //               // like(context, _isLiking);
-
-      //               if (!_isLiking!) {
-      //                 ref.read(userLikeActivityFutureProvider(ids));
-      //               } else {
-      //                 ref.read(userUnlikeActivityFutureProvider(ids));
-      //               }
-      //             },
-      //             backgroundColor: const Color.fromARGB(255, 241, 55, 71),
-      //             child: _isLiking!
-      //                 ? const Icon(Icons.favorite, size: 30)
-      //                 : const Icon(Icons.favorite_border, size: 30),
-      //           ),
-      //         ),
-      //       ),
-      //     ),
-      //   ],
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

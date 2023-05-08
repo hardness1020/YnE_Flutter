@@ -19,28 +19,6 @@ import 'package:yne_flutter/features/activity/application/activity_service.dart'
 class ActivitiesGrid extends ConsumerWidget {
   const ActivitiesGrid({super.key});
 
-  // @override
-  // Widget build(BuildContext context, WidgetRef ref) {
-  //   return Container(
-  //       constraints: BoxConstraints(
-  //         minHeight: MediaQuery.of(context).size.height * 0.5,
-  //       ),
-  //       child: PagedListView<int, Activity>(
-  //         physics: const BouncingScrollPhysics(),
-  //         shrinkWrap: true,
-  //         pagingController: _pagingController,
-  //         builderDelegate: PagedChildBuilderDelegate<Activity>(
-  //           itemBuilder: (context, item, index) => ListTile(
-  //             title: Text(item.title!),
-  //             // onTap: () {
-  //             //   context.pushNamed(AppRoute.activityDetail.name, arguments: item.id!);
-  //             // },
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final activityListValue = ref.watch(activitiesSearchResultsProvider);

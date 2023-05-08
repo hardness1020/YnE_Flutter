@@ -2,9 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
-import 'package:tuple/tuple.dart';
-import 'package:yne_flutter/constants/test_data.dart';
-import 'package:yne_flutter/features/activity/data/interface/intf_activity_repo.dart';
 import 'package:yne_flutter/features/chatroom/data/interface/intf_chatroom_repo.dart';
 import 'package:yne_flutter/features/shared/presentation/localization/string_hardcoded.dart';
 import 'package:yne_flutter/constants/app_sizes.dart';
@@ -23,8 +20,6 @@ class ChatroomGrid extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final chatroomListFutureValue = ref.watch(chatroomListStreamProvider);
-    final userList = fakeOtherUserList;
-    // return AsyncValueWidget<Tuple2<String, List<ChatRoom>?>>(
     return AsyncValueWidget<List<ChatRoom>?>(
         value: chatroomListFutureValue,
         data: (pageAndChatrooms) {
@@ -52,30 +47,6 @@ class ChatroomGrid extends ConsumerWidget {
         });
   }
 }
-//     return AsyncValueWidget<List<Activity>?>(
-//       value: chatroomListFutureValue,
-//       data: (activities) => activities!.isEmpty
-//           ? Center(
-//               child: Text(
-//                 'No chat yet'.hardcoded,
-//                 style: Theme.of(context).textTheme.headlineMedium,
-//               ),
-//             )
-//           : ChatroomLayoutGrid(
-//               itemCount: activities.length,
-//               itemBuilder: (_, index) {
-//                 final activity = activities[index];
-//                 return ChatroomCard(
-//                     user: user,
-//                     onPressed: () {
-//                       // context.goNamed(AppRoute.activityDetail.name,
-//                       //     params: {'id': activity.id!});
-//                     });
-//               },
-//             ),
-//     );
-//   }
-// }
 
 /// Grid widget with content-sized items.
 /// See: https://codewithandrea.com/articles/flutter-layout-grid-content-sized-items/

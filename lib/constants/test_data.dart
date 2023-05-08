@@ -5,7 +5,6 @@ import 'package:yne_flutter/features/activity/domain/activity_location.dart';
 import 'package:yne_flutter/features/backend_user/domain/backend_user.dart';
 import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
 import 'package:yne_flutter/features/chatroom/domain/message.dart';
-import 'package:yne_flutter/features/chatroom/presentation/detail/message_model.dart';
 
 List<ActivityCategory> fakeActivityCategoryList = [
   ActivityCategory(id: '1', name: 'Category 1'),

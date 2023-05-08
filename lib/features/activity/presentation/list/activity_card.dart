@@ -71,7 +71,6 @@ class ActivityCard extends ConsumerWidget {
                                         )),
                                   ),
                               imageUrl: activity.backGroundLink!,
-                              // imageUrl: 'https://picsum.photos/250?image=9',
                               width: 360,
                               height: 150,
                               fit: BoxFit.cover)
@@ -88,10 +87,8 @@ class ActivityCard extends ConsumerWidget {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           activity.host?.name ?? "Anonymous",
-                          // style: Theme.of(context).textTheme.titleLarge,
                           style: TextStyle(
                               color: Colors.brown[600],
-                              // color: Color.fromARGB(255, 20, 39, 48)
                               fontSize: 24,
                               fontWeight: FontWeight.bold),
                         ),
@@ -104,8 +101,6 @@ class ActivityCard extends ConsumerWidget {
                               padding: const EdgeInsets.only(left: 30),
                               child: Text(activity.title ?? "Title not found",
                                   style: titleLarge),
-                              // style:
-                              //     Theme.of(context).textTheme.titleLarge),
                             ),
                           ),
                           Padding(
@@ -137,9 +132,6 @@ class ActivityCard extends ConsumerWidget {
                                 Column(
                                   children: [
                                     Text(" ${activity.endDate ?? "XXXX/XX/XX"}",
-                                        // style: Theme.of(context)
-                                        //     .textTheme
-                                        //     .bodySmall),
                                         style: bodySmall),
                                     Text("~${activity.endDate ?? "XXXX/XX/XX"}",
                                         style: bodySmall),
@@ -210,7 +202,6 @@ class ActivityCard extends ConsumerWidget {
                                       )),
                                 ),
                             imageUrl: activity.host!.userHeadShotLink!,
-                            // imageUrl: 'https://picsum.photos/250?image=9',
                             width: 80,
                             height: 80,
                             fit: BoxFit.fill),

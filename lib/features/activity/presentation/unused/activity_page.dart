@@ -5,7 +5,7 @@ import 'package:yne_flutter/constants/app_sizes.dart';
 import 'package:yne_flutter/features/shared/presentation/widgets/async_value_widget.dart';
 import 'package:yne_flutter/features/activity/domain/activity_category.dart';
 import 'package:yne_flutter/features/activity/application/activity_category_service.dart';
-import 'package:yne_flutter/features/activity/presentation/detail/activity_tab_page.dart';
+import 'package:yne_flutter/features/activity/presentation/unused/activity_tab_page.dart';
 
 class ActivityPage extends ConsumerStatefulWidget {
   const ActivityPage({Key? key}) : super(key: key);

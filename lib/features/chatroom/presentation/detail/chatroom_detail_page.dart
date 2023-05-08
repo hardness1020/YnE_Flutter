@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tuple/tuple.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:yne_flutter/constants/app_sizes.dart';
-import 'package:yne_flutter/features/activity/presentation/list/activity_card.dart';
 import 'package:yne_flutter/features/chatroom/application/chatroom_service.dart';
 import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
-import 'package:yne_flutter/features/chatroom/presentation/detail/tempMessageStore.dart';
+import 'package:yne_flutter/features/chatroom/presentation/detail/temp_message_storage.dart';
 import 'package:yne_flutter/features/shared/presentation/widgets/async_value_widget.dart';
-import 'package:yne_flutter/features/activity/domain/activity.dart';
-import 'package:yne_flutter/features/activity/application/activity_service.dart';
 
 class ChatroomDetailPage extends ConsumerStatefulWidget {
-  // const ActivityDetailPage({Key? key}) : super(key: key);
   const ChatroomDetailPage({super.key, required this.chatroomId});
   final String chatroomId;
 
@@ -46,50 +41,6 @@ class _ChatroomDetailPageState extends ConsumerState<ChatroomDetailPage>
     final chatroomValue = ref.watch(chatroomFutureProvider(widget.chatroomId));
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      // appBar: AppBar(
-      //   toolbarHeight: 65,
-      //   elevation: 0,
-      //   backgroundColor: Colors.transparent,
-      //   automaticallyImplyLeading: false,
-      //   title: Row(
-      //     children: [
-      //       IconButton(
-      //         onPressed: () {
-      //           Navigator.pop(context);
-      //         },
-      //         icon: const Icon(
-      //           Icons.arrow_back_ios,
-      //           color: Color.fromRGBO(55, 71, 79, 0.956),
-      //           size: 25,
-      //         ),
-      //       ),
-      //       // const CircleAvatar(
-      //       //   radius: 22,
-      //       //   backgroundImage: AssetImage("assets/images/woman.jpg"),
-      //       // ),
-      //       // gapW16,
-      //       // const Expanded(
-      //       //   child: Text("Amy",
-      //       //       style: TextStyle(
-      //       //           color: Color.fromARGB(255, 39, 42, 80),
-      //       //           fontSize: 20,
-      //       //           fontWeight: FontWeight.w700)),
-      //       // ),
-      //       const SizedBox(width: 210),
-      //       IconButton(
-      //         onPressed: () {},
-      //         icon: const Icon(Icons.phone_outlined,
-      //             color: Color.fromRGBO(55, 71, 79, 0.956), size: 30),
-      //       ),
-      //       IconButton(
-      //         onPressed: () {},
-      //         icon: const Icon(Icons.more_vert,
-      //             color: Color.fromRGBO(55, 71, 79, 0.956), size: 30),
-      //       ),
-      //     ],
-      //   ),
-      // ),
-
       body: AsyncValueWidget<ChatRoom?>(
         value: chatroomValue,
         data: (chatroom) => Stack(
@@ -145,7 +96,7 @@ class _ChatroomDetailPageState extends ConsumerState<ChatroomDetailPage>
                                                 255, 175, 133, 253)
                                             : const Color.fromARGB(
                                                 255, 133, 213, 253),
-                                      ), // test 1 test 2 test 3
+                                      ),
                                       padding: const EdgeInsets.all(16),
                                       child: Text(
                                         unsentMsgs[index],
@@ -201,7 +152,7 @@ class _ChatroomDetailPageState extends ConsumerState<ChatroomDetailPage>
                                                   255, 254, 189, 47)
                                               : const Color.fromARGB(
                                                   255, 175, 133, 253)),
-                                    ), // test 1 test 2 test 3
+                                    ),
                                     padding: const EdgeInsets.all(16),
                                     child: Text(
                                       msg.content!,
@@ -253,7 +204,6 @@ class _ChatroomDetailPageState extends ConsumerState<ChatroomDetailPage>
                                         ),
                                     imageUrl:
                                         chatroom.chatPartner!.userHeadShotLink!,
-                                    // imageUrl: 'https://picsum.photos/250?image=9',
                                     width: 44,
                                     height: 44,
                                     fit: BoxFit.fill),
@@ -420,10 +370,5 @@ class _ChatroomDetailPageState extends ConsumerState<ChatroomDetailPage>
         });
       });
     }
-
-    //else {
-    //   Fluttertoast.showToast(
-    //       msg: 'Nothing to send', backgroundColor: Colors.grey);
-    // }
   }
 }
