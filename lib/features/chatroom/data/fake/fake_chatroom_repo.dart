@@ -64,31 +64,6 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   }
 
   @override
-  void setMessage(
-      {required String chatroomID, required Message message}){
-    try {
-      final List<ChatRoom> chatroomList = _chatrooms.value;
-      final map = _chatroomMap;
-      ChatRoom completeChatroom;
-      final int index = chatroomList.indexWhere((p) => p.id == chatroomID);
-      if (index == -1) {
-        throw Exception('Chatroom not found');
-      } else {
-        completeChatroom = map[chatroomID]!.value;
-        completeChatroom.messages!.insert(0, message);
-        completeChatroom.lastMessage = message;
-        chatroomList[index].messages!.insert(0, message);
-        chatroomList[index].lastMessage = message;
-      }
-      _chatroomMap[chatroomID]!.value = completeChatroom;
-      _chatrooms.value = chatroomList;
-      _sentMessageStream[chatroomID]!.value = message;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
   ChatRoom? get({required String chatroomID}) {
     try {
       return _chatroomMap[chatroomID]!.value;
@@ -102,6 +77,29 @@ class FakeChatroomRepo extends IntfChatroomRepo {
     try {
       // TODO: implement pagenation
       return Tuple2<String, List<ChatRoom>?>(page, _chatrooms.value.toList());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  void setMessage({required String chatroomID, required Message message}) {
+    try {
+      final List<ChatRoom> chatroomList = _chatrooms.value;
+      final map = _chatroomMap;
+      ChatRoom completeChatroom;
+      final int index = chatroomList.indexWhere((p) => p.id == chatroomID);
+      if (index == -1) {
+        throw Exception('Chatroom not found');
+      } else {
+        completeChatroom = map[chatroomID]!.value;
+        completeChatroom.messages!.insert(0, message);
+        completeChatroom.lastMessage = message;
+        chatroomList[index].lastMessage = message;
+      }
+      _chatroomMap[chatroomID]!.value = completeChatroom;
+      _chatrooms.value = chatroomList;
+      _sentMessageStream[chatroomID]!.value = message;
     } catch (e) {
       rethrow;
     }
