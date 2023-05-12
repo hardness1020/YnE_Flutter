@@ -1,4 +1,5 @@
 class Message {
+  String? uuid;
   String? chatroomID;
   bool? heroRead;
   String? content;
@@ -7,6 +8,7 @@ class Message {
   DateTime? dateTime;
 
   Message({
+    this.uuid,
     this.chatroomID,
     this.heroRead,
     this.content,
@@ -16,5 +18,9 @@ class Message {
     if (time != null) {
       dateTime = DateTime.parse(time!);
     }
+  }
+
+  void setUUID(String uuid) {
+    this.uuid = uuid;
   }
 }

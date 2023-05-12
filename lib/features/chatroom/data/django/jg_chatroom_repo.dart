@@ -1,8 +1,9 @@
 import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/features/chatroom/data/interface/intf_chatroom_repo.dart';
 import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
+import 'package:yne_flutter/features/chatroom/domain/message.dart';
 
-class DjangoChatroomRepo extends IntfChatroomRepo{
+class DjangoChatroomRepo extends IntfChatroomRepo {
   @override
   Future<ChatRoom?> fetch({required String chatroomID}) {
     // TODO: implement fetch
@@ -60,4 +61,23 @@ class DjangoChatroomRepo extends IntfChatroomRepo{
     throw UnimplementedError();
   }
 
+  @override
+  Stream<Message> watchSentMessage({required String chatroomID}) {
+    // TODO: implement watchSentMessage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Message?> userSendMessage(
+      {required String chatroomID,
+      required String uuid,
+      required String content}) {
+    // TODO: implement userSendMessage
+    throw UnimplementedError();
+  }
+  
+  @override
+  void setMessage({required String chatroomID, required Message message}) {
+    // TODO: implement setMessage
+  }
 }

@@ -39,6 +39,16 @@ class ChatroomService {
     chatroomRepo.set(chatroom: chatroom!);
     return chatroom;
   }
+
+  Future<void> userSendMessage(
+      {required String chatroomID,
+      required String uuid,
+      required String content}) async {
+    final IntfChatroomRepo chatroomRepo = ref.read(chatroomRepoProvider);
+    final message = await chatroomRepo.userSendMessage(
+        chatroomID: chatroomID, uuid: uuid, content: content);
+    chatroomRepo.setMessage(chatroomID: chatroomID, message: message!);
+  }
 }
 
 final chatroomServiceProvider = Provider<ChatroomService>((ref) {
@@ -73,4 +83,14 @@ final userReadChatroomProvider = FutureProvider.autoDispose
     .family<ChatRoom?, String>((ref, chatroomID) async {
   final chatroomService = ref.watch(chatroomServiceProvider);
   return await chatroomService.userReadChatroom(chatroomID);
+});
+
+final userSendMessageProvider = FutureProvider.autoDispose
+    .family<void, Tuple3<String, String, String>>(
+        (ref, chatroomIDandUUIDandContent) async {
+  final chatroomService = ref.watch(chatroomServiceProvider);
+  return await chatroomService.userSendMessage(
+      chatroomID: chatroomIDandUUIDandContent.item1,
+      uuid: chatroomIDandUUIDandContent.item2,
+      content: chatroomIDandUUIDandContent.item3);
 });

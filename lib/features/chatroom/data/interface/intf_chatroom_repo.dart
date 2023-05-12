@@ -1,15 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/app_config.dart';
-import 'package:yne_flutter/features/activity/domain/activity.dart';
 import 'package:yne_flutter/features/chatroom/data/django/jg_chatroom_repo.dart';
 import 'package:yne_flutter/features/chatroom/data/fake/fake_chatroom_repo.dart';
 import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
+import 'package:yne_flutter/features/chatroom/domain/message.dart';
 
 abstract class IntfChatroomRepo {
   Stream<List<ChatRoom>?> watchList();
 
   Stream<ChatRoom?> watch({required String chatroomID});
+
+  Stream<Message> watchSentMessage({required String chatroomID});
+
+  void setMessage({required String chatroomID, required Message message});
 
   Tuple2<String, List<ChatRoom>?> getList({required String page});
 
@@ -26,6 +30,11 @@ abstract class IntfChatroomRepo {
   Future<ChatRoom?> fetch({required String chatroomID});
 
   Future<ChatRoom?> userReadChatRoom({required String chatroomID});
+
+  Future<Message?> userSendMessage(
+      {required String chatroomID,
+      required String uuid,
+      required String content});
 }
 
 final chatroomRepoProvider = Provider<IntfChatroomRepo>((ref) {
@@ -44,4 +53,10 @@ final chatroomStreamProvider =
     StreamProvider.autoDispose.family<ChatRoom?, String>((ref, chatroomID) {
   final chatroomRepo = ref.watch(chatroomRepoProvider);
   return chatroomRepo.watch(chatroomID: chatroomID);
+});
+
+final sentMessageStreamProvider =
+    StreamProvider.autoDispose.family<Message?, String>((ref, chatroomID) {
+  final chatroomRepo = ref.watch(chatroomRepoProvider);
+  return chatroomRepo.watchSentMessage(chatroomID: chatroomID);
 });
