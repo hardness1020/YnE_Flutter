@@ -13,6 +13,8 @@ abstract class IntfChatroomRepo {
 
   Stream<Message> watchSentMessage({required String chatroomID});
 
+  void handleReceivedMessage({required Message message});
+
   void receiveAndSetSentMessage(
       {required String chatroomID, required Message message});
 

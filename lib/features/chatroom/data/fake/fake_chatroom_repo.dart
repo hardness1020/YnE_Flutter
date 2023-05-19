@@ -23,7 +23,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
     ];
   }
 
-  late final InMemoryStore<List<ChatRoom>> _chatrooms =
+  late final InMemoryStore<List<ChatRoom>> _lightChatrooms =
       InMemoryStore<List<ChatRoom>>(List.from(lightweightChatroomList));
 
   final Map<String, InMemoryStore<ChatRoom>> _chatroomMap = {
@@ -48,7 +48,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   @override
   Stream<List<ChatRoom>?> watchList() {
     try {
-      return _chatrooms.stream;
+      return _lightChatrooms.stream;
     } catch (e) {
       rethrow;
     }
@@ -58,6 +58,32 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   Stream<Message> watchSentMessage({required String chatroomID}) {
     try {
       return _sentMessageStream[chatroomID]!.stream;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  void handleReceivedMessage({required Message message}) {
+    try {
+      String messageChatroomID = message.chatroomID!;
+      ChatRoom completeChatroom = _chatroomMap[messageChatroomID]!.value;
+      completeChatroom.messages!.insert(0, message);
+      completeChatroom.lastMessage = message;
+
+      if (message.type == 'sent') {
+        _sentMessageStream[messageChatroomID]!.value = message;
+      }
+
+      List<ChatRoom> chatroomList = _lightChatrooms.value;
+      for (int i = 0; i < chatroomList.length; i++) {
+        if (chatroomList[i].id == messageChatroomID) {
+          chatroomList[i].lastMessage = message;
+          break;
+        }
+      }
+      _lightChatrooms.value = chatroomList;
+      _chatroomMap[messageChatroomID]!.value = completeChatroom;
     } catch (e) {
       rethrow;
     }
@@ -76,7 +102,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   Tuple2<String, List<ChatRoom>?> getList({required String page}) {
     try {
       // TODO: implement pagenation
-      return Tuple2<String, List<ChatRoom>?>(page, _chatrooms.value.toList());
+      return Tuple2<String, List<ChatRoom>?>(page, _lightChatrooms.value.toList());
     } catch (e) {
       rethrow;
     }
@@ -86,7 +112,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   void receiveAndSetSentMessage(
       {required String chatroomID, required Message message}) {
     try {
-      final List<ChatRoom> chatroomList = _chatrooms.value;
+      final List<ChatRoom> chatroomList = _lightChatrooms.value;
       final map = _chatroomMap;
       ChatRoom completeChatroom;
       final int index = chatroomList.indexWhere((p) => p.id == chatroomID);
@@ -99,7 +125,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
         chatroomList[index].lastMessage = message;
       }
       _chatroomMap[chatroomID]!.value = completeChatroom;
-      _chatrooms.value = chatroomList;
+      _lightChatrooms.value = chatroomList;
       _sentMessageStream[chatroomID]!.value = message;
     } catch (e) {
       rethrow;
@@ -109,7 +135,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   @override
   void set({required ChatRoom chatroom}) {
     try {
-      final chatroomList = _chatrooms.value;
+      final chatroomList = _lightChatrooms.value;
       bool add = true;
       for (int i = 0; i < chatroomList.length; i++) {
         if (chatroomList[i].id == chatroom.id) {
@@ -122,7 +148,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
         chatroomList.insert(0, chatroom);
       }
       _chatroomMap[chatroom.id!]!.value = chatroom;
-      _chatrooms.value = chatroomList;
+      _lightChatrooms.value = chatroomList;
     } catch (e) {
       rethrow;
     }
@@ -131,7 +157,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   @override
   void setList({required List<ChatRoom> chatroomList}) {
     try {
-      _chatrooms.value = chatroomList;
+      _lightChatrooms.value = chatroomList;
     } catch (e) {
       rethrow;
     }
@@ -140,14 +166,14 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   @override
   void unset({required String chatroomID}) {
     try {
-      final chatroomList = _chatrooms.value;
+      final chatroomList = _lightChatrooms.value;
       for (int i = 0; i < chatroomList.length; i++) {
         if (chatroomList[i].id == chatroomID) {
           chatroomList.removeAt(i);
           break;
         }
       }
-      _chatrooms.value = chatroomList;
+      _lightChatrooms.value = chatroomList;
     } catch (e) {
       rethrow;
     }
@@ -188,7 +214,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   Future<ChatRoom?> userReadChatRoom({required String chatroomID}) async {
     try {
       await delay(addDelay);
-      final List<ChatRoom> chatroomList = _chatrooms.value;
+      final List<ChatRoom> chatroomList = _lightChatrooms.value;
       final map = _chatroomMap;
       ChatRoom completeChatroom;
       final int index = chatroomList.indexWhere((p) => p.id == chatroomID);
@@ -200,7 +226,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
         chatroomList[index].heroRead = true;
       }
       _chatroomMap[chatroomID]!.value = completeChatroom;
-      _chatrooms.value = chatroomList;
+      _lightChatrooms.value = chatroomList;
 
       return _chatroomMap[chatroomID]!.value;
     } catch (e) {
