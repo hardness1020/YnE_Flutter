@@ -13,7 +13,8 @@ abstract class IntfChatroomRepo {
 
   Stream<Message> watchSentMessage({required String chatroomID});
 
-  void setMessage({required String chatroomID, required Message message});
+  void receiveAndSetSentMessage(
+      {required String chatroomID, required Message message});
 
   Tuple2<String, List<ChatRoom>?> getList({required String page});
 

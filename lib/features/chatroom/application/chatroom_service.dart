@@ -3,6 +3,7 @@ import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/features/chatroom/data/interface/intf_chatroom_repo.dart';
 import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
 import 'package:yne_flutter/features/chatroom/domain/message.dart';
+import 'package:yne_flutter/utils/delay.dart';
 
 class ChatroomService {
   final Ref ref;
@@ -47,7 +48,9 @@ class ChatroomService {
     final IntfChatroomRepo chatroomRepo = ref.read(chatroomRepoProvider);
     final message = await chatroomRepo.userSendMessage(
         chatroomID: chatroomID, uuid: uuid, content: content);
-    chatroomRepo.setMessage(chatroomID: chatroomID, message: message!);
+    await delay(true, 3000);
+    chatroomRepo.receiveAndSetSentMessage(
+        chatroomID: chatroomID, message: message!);
   }
 }
 

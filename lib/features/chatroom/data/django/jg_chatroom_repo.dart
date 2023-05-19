@@ -75,9 +75,10 @@ class DjangoChatroomRepo extends IntfChatroomRepo {
     // TODO: implement userSendMessage
     throw UnimplementedError();
   }
-  
+
   @override
-  void setMessage({required String chatroomID, required Message message}) {
+  void receiveAndSetSentMessage(
+      {required String chatroomID, required Message message}) {
     // TODO: implement setMessage
   }
 }

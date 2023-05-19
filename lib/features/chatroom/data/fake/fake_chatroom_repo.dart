@@ -83,7 +83,8 @@ class FakeChatroomRepo extends IntfChatroomRepo {
   }
 
   @override
-  void setMessage({required String chatroomID, required Message message}) {
+  void receiveAndSetSentMessage(
+      {required String chatroomID, required Message message}) {
     try {
       final List<ChatRoom> chatroomList = _chatrooms.value;
       final map = _chatroomMap;
