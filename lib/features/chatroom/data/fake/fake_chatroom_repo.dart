@@ -254,13 +254,6 @@ class FakeChatroomRepo extends IntfChatroomRepo {
         time: convertedDateTime,
         type: 'sent',
       );
-      for (int i = 0; i < fakeChatroomList.length; i++) {
-        if (fakeChatroomList[i].id == chatroomID) {
-          fakeChatroomList[i].messages!.insert(0, message);
-          fakeChatroomList[i].lastMessage = message;
-          break;
-        }
-      }
       return message;
     } catch (e) {
       rethrow;
