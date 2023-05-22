@@ -1,5 +1,6 @@
 class Message {
   String? uuid;
+  String? senderUserID;
   String? chatroomID;
   bool? heroRead;
   String? content;
@@ -9,6 +10,7 @@ class Message {
 
   Message({
     this.uuid,
+    this.senderUserID,
     this.chatroomID,
     this.heroRead,
     this.content,

@@ -1,5 +1,6 @@
 import 'package:tuple/tuple.dart';
 import 'package:yne_flutter/constants/test_data.dart';
+import 'package:yne_flutter/features/backend_user/application/backend_user_service.dart';
 import 'package:yne_flutter/features/chatroom/data/interface/intf_chatroom_repo.dart';
 import 'package:yne_flutter/features/chatroom/domain/chatroom.dart';
 import 'package:yne_flutter/features/chatroom/domain/message.dart';
@@ -71,7 +72,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
       completeChatroom.messages!.insert(0, message);
       completeChatroom.lastMessage = message;
 
-      if (message.type == 'sent') {
+      if (message.senderUserID == fakeHeroUser.id) {
         _sentMessageStream[messageChatroomID]!.value = message;
       }
 
@@ -246,6 +247,7 @@ class FakeChatroomRepo extends IntfChatroomRepo {
           "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
       final Message message = Message(
         uuid: uuid,
+        senderUserID: fakeHeroUser.id,
         chatroomID: chatroomID,
         heroRead: true,
         content: content,
