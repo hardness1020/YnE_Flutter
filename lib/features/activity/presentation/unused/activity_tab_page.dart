@@ -25,7 +25,7 @@ class _ActivityTabPageState extends ConsumerState<ActivityTabPage> {
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
       ref
-          .read(activityTabControllerProvider.notifier)
+          .watch(activityTabControllerProvider.notifier)
           .fetchActivityFromCategoryID(
               widget.categoryID, pageKey, _pagingController);
     });

@@ -10,37 +10,37 @@ class ActivityCategoryService {
   ActivityCategoryService(this.ref);
 
   ActivityCategory? get({required String activityCategoryID}) {
-    final activityCategoryRepo = ref.read(activityCategoryRepoProvider);
+    final activityCategoryRepo = ref.watch(activityCategoryRepoProvider);
     return activityCategoryRepo.get(activityCategoryID: activityCategoryID);
   }
 
   List<ActivityCategory>? getlist() {
-    final activityCategoryRepo = ref.read(activityCategoryRepoProvider);
+    final activityCategoryRepo = ref.watch(activityCategoryRepoProvider);
     return activityCategoryRepo.getList();
   }
 
   Future<ActivityCategory?> fetch({required String activityCategoryID}) async {
-    final activityCategoryRepo = ref.read(activityCategoryRepoProvider);
+    final activityCategoryRepo = ref.watch(activityCategoryRepoProvider);
     return await activityCategoryRepo.fetch(
         activityCategoryID: activityCategoryID);
   }
 
   Future<List<ActivityCategory>?> fetchList() async {
-    final activityCategoryRepo = ref.read(activityCategoryRepoProvider);
+    final activityCategoryRepo = ref.watch(activityCategoryRepoProvider);
     return await activityCategoryRepo.fetchList();
   }
 
   Future<void> create(
       {required ActivityCategory activityCategory,
       required String userID}) async {
-    final activityCategoryRepo = ref.read(activityCategoryRepoProvider);
+    final activityCategoryRepo = ref.watch(activityCategoryRepoProvider);
     await activityCategoryRepo.create(
         activityCategory: activityCategory, userID: userID);
   }
 
   Future<void> delete(
       {required String activityCategoryID, required String userID}) async {
-    final activityCategoryRepo = ref.read(activityCategoryRepoProvider);
+    final activityCategoryRepo = ref.watch(activityCategoryRepoProvider);
     await activityCategoryRepo.delete(
         activityCategoryID: activityCategoryID, userID: userID);
   }

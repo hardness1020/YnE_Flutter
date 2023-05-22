@@ -11,30 +11,30 @@ class ChatroomService {
   ChatroomService(this.ref);
 
   Tuple2<String, List<ChatRoom>?> getList(String page) {
-    final IntfChatroomRepo chatroomRepo = ref.read(chatroomRepoProvider);
+    final IntfChatroomRepo chatroomRepo = ref.watch(chatroomRepoProvider);
     final pageAndChatroomList = chatroomRepo.getList(page: page);
     return pageAndChatroomList;
   }
 
   ChatRoom? get(String chatroomID) {
-    final IntfChatroomRepo chatroomRepo = ref.read(chatroomRepoProvider);
+    final IntfChatroomRepo chatroomRepo = ref.watch(chatroomRepoProvider);
     return chatroomRepo.get(chatroomID: chatroomID);
   }
 
   Future<Tuple2<String, List<ChatRoom>?>> fetchList(String page) async {
-    final IntfChatroomRepo chatroomRepo = ref.read(chatroomRepoProvider);
+    final IntfChatroomRepo chatroomRepo = ref.watch(chatroomRepoProvider);
     final pageAndChatroomList = await chatroomRepo.fetchList(page: page);
     return pageAndChatroomList;
   }
 
   Future<ChatRoom?> fetch(String chatroomID) async {
-    final IntfChatroomRepo chatroomRepo = ref.read(chatroomRepoProvider);
+    final IntfChatroomRepo chatroomRepo = ref.watch(chatroomRepoProvider);
     final chatroom = await chatroomRepo.fetch(chatroomID: chatroomID);
     return chatroom;
   }
 
   Future<ChatRoom?> userReadChatroom(String chatroomID) async {
-    final IntfChatroomRepo chatroomRepo = ref.read(chatroomRepoProvider);
+    final IntfChatroomRepo chatroomRepo = ref.watch(chatroomRepoProvider);
     final chatroom =
         await chatroomRepo.userReadChatRoom(chatroomID: chatroomID);
     chatroomRepo.set(chatroom: chatroom!);
@@ -45,7 +45,7 @@ class ChatroomService {
       {required String chatroomID,
       required String uuid,
       required String content}) async {
-    final IntfChatroomRepo chatroomRepo = ref.read(chatroomRepoProvider);
+    final IntfChatroomRepo chatroomRepo = ref.watch(chatroomRepoProvider);
     final message = await chatroomRepo.userSendMessage(
         chatroomID: chatroomID, uuid: uuid, content: content);
     await delay(true, 3000);
@@ -60,13 +60,13 @@ final chatroomServiceProvider = Provider<ChatroomService>((ref) {
 });
 
 final chatroomProvider = Provider.family<ChatRoom?, String>((ref, id) {
-  final chatroomService = ref.read(chatroomServiceProvider);
+  final chatroomService = ref.watch(chatroomServiceProvider);
   return chatroomService.get(id);
 });
 
 final chatroomListProvider =
     Provider.family<Tuple2<String, List<ChatRoom>?>, String>((ref, page) {
-  final chatroomService = ref.read(chatroomServiceProvider);
+  final chatroomService = ref.watch(chatroomServiceProvider);
   return chatroomService.getList(page);
 });
 

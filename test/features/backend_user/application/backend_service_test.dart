@@ -1,8 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:yne_flutter/app_config.dart';
 import 'package:yne_flutter/features/backend_user/application/backend_user_service.dart';
 
 void main() {
+  kUseFakeRepos = true;
   BackendUserService makeService() {
     final container = ProviderContainer(
       overrides: [],

@@ -60,8 +60,7 @@ void main() {
 
     test("update user avatar", () async {
       String token = await user.getIdToken();
-      final heroUser =
-          await backendUserRepo.fetchByToken(token: token);
+      final heroUser = await backendUserRepo.fetchByToken(token: token);
       final oldId = heroUser.id;
       final oldLink = heroUser.userHeadShotLink;
       final updatedHeroUser = await backendUserRepo.updateHeadShot(
