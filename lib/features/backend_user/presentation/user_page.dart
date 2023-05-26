@@ -185,19 +185,16 @@ class _UserPageState extends ConsumerState<UserPage>
           ],
         ),
       ),
-      floatingActionButton: SizedBox(
+      floatingActionButton: Ink(
         width: 105,
         height: 70,
-        child: FittedBox(
-          child: FloatingActionButton(
+        child: FloatingActionButton(
             heroTag: 'nextBtn',
             onPressed: () {
               userValue = ref.refresh(randomNextBackendUserFutureProvider);
             },
             backgroundColor: const Color.fromARGB(255, 225, 216, 217),
-            child: const Icon(Icons.arrow_forward_ios, size: 30),
-          ),
-        ),
+            child: const Icon(Icons.arrow_forward_ios, size: 30)),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

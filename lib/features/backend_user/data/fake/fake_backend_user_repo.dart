@@ -53,7 +53,7 @@ class FakeBackendUserRepo extends IntfBackendUserRepo {
   @override
   Future<BackendUser?> fetchRandomNextUser() async {
     try {
-      delay(addDelay);
+     await delay(addDelay);
       if (fakeOtherUserList.isEmpty) {
         throw Exception('No other users');
       }

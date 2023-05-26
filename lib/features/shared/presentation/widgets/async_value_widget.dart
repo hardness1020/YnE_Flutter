@@ -18,6 +18,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     log.d(value);
     return value.when(
+      skipLoadingOnRefresh: false,
       data: data,
       error: (e, st) => Center(child: ErrorMessageWidget(e.toString())),
       loading: () => loading,
