@@ -68,7 +68,7 @@ class _UserPageState extends ConsumerState<UserPage>
                                 height: 350,
                                 fit: BoxFit.cover)
                             : const Image(
-                                image: AssetImage("assets/images/woman.jpg"),
+                                image: AssetImage("assets/images/user.jpg"),
                                 height: 350,
                                 fit: BoxFit.cover),
                       ),
@@ -116,24 +116,24 @@ class _UserPageState extends ConsumerState<UserPage>
                                 gapH8,
                               ],
                               gapH16,
-                              Text("我的興趣",
-                                  style: TextStyle(
-                                      color: bluegrey,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w600)),
-                              if (user.hobbies != null) ...[
-                                Wrap(
-                                    alignment: WrapAlignment.start,
-                                    spacing: 8.0, // space between adjacent tags
-                                    runSpacing:
-                                        4.0, // space between rows of tags
-                                    children: user.hobbies!.map((e) {
-                                      return Chip(
-                                        label: Text(e.name!),
-                                        backgroundColor: Colors.grey[300],
-                                      );
-                                    }).toList()),
-                              ],
+                              // Text("我的興趣",
+                              //     style: TextStyle(
+                              //         color: bluegrey,
+                              //         fontSize: 22,
+                              //         fontWeight: FontWeight.w600)),
+                              // if (user.hobbies != null) ...[
+                              //   Wrap(
+                              //       alignment: WrapAlignment.start,
+                              //       spacing: 8.0, // space between adjacent tags
+                              //       runSpacing:
+                              //           4.0, // space between rows of tags
+                              //       children: user.hobbies!.map((e) {
+                              //         return Chip(
+                              //           label: Text(e.name!),
+                              //           backgroundColor: Colors.grey[300],
+                              //         );
+                              //       }).toList()),
+                              // ],
                               gapH16,
                               Text("關於我",
                                   style: TextStyle(
@@ -143,7 +143,7 @@ class _UserPageState extends ConsumerState<UserPage>
                               Text(user.introduction ?? '',
                                   style: TextStyle(
                                       color: bluegrey,
-                                      fontSize: 22,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.normal,
                                       height: 1.5)),
                               gapH32,

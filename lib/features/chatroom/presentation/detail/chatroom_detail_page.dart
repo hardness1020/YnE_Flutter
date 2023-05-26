@@ -211,7 +211,7 @@ class _ChatroomDetailPageState extends ConsumerState<ChatroomDetailPage>
                             : const CircleAvatar(
                                 radius: 22,
                                 backgroundImage:
-                                    AssetImage("assets/images/woman.jpg"),
+                                    AssetImage("assets/images/user.jpg"),
                               ),
                         gapW16,
                         Expanded(

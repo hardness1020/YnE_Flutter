@@ -44,7 +44,7 @@ class UserActivityWidget extends ConsumerWidget {
                         height: 90,
                         fit: BoxFit.cover)
                     : const Image(
-                        image: AssetImage("assets/images/ski.jpg"),
+                        image: AssetImage("assets/images/activity.png"),
                         width: 90,
                         height: 90,
                         fit: BoxFit.cover),
@@ -55,7 +55,7 @@ class UserActivityWidget extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Text(activity.title ?? "Title not found",
-                        style: titleLarge),
+                                style: titleLarge),
                   ),
                   gapH8,
                   Row(

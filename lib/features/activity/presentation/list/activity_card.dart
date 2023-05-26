@@ -16,11 +16,11 @@ TextStyle bodyMid =
 TextStyle bodyLarge =
     TextStyle(color: bluegrey, fontSize: 16, fontWeight: FontWeight.normal);
 TextStyle titleSmall =
-    TextStyle(color: bluegrey, fontSize: 20, fontWeight: FontWeight.normal);
+    TextStyle(color: bluegrey, fontSize: 18, fontWeight: FontWeight.normal);
 TextStyle titleMid =
     TextStyle(color: bluegrey, fontSize: 22, fontWeight: FontWeight.normal);
 TextStyle titleLarge =
-    TextStyle(color: bluegrey, fontSize: 24, fontWeight: FontWeight.w500);
+    TextStyle(color: bluegrey, fontSize: 24, fontWeight: FontWeight.w600);
 TextStyle displaySmall =
     TextStyle(color: bluegrey, fontSize: 28, fontWeight: FontWeight.w600);
 TextStyle displayMid =
@@ -75,7 +75,7 @@ class ActivityCard extends ConsumerWidget {
                               height: 150,
                               fit: BoxFit.cover)
                           : const Image(
-                              image: AssetImage("assets/images/ski.jpg"),
+                              image: AssetImage("assets/images/activity.png"),
                               width: 360,
                               height: 150,
                               fit: BoxFit.cover),
@@ -98,7 +98,7 @@ class ActivityCard extends ConsumerWidget {
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 30),
+                              padding: const EdgeInsets.only(left: 20),
                               child: Text(activity.title ?? "Title not found",
                                   style: titleLarge),
                             ),
@@ -106,16 +106,19 @@ class ActivityCard extends ConsumerWidget {
                           Padding(
                             padding: const EdgeInsets.only(right: 15),
                             child: Container(
+                              width: 80,
                               clipBehavior: Clip.hardEdge,
                               decoration: BoxDecoration(
                                   color: Colors.grey.shade300,
                                   border: Border.all(
                                       color: Colors.grey.shade300, width: 3),
-                                  borderRadius: BorderRadius.circular(12.0)),
-                              child: Text(
-                                  activity.categories![0].name ??
-                                      "Unknown category",
-                                  style: titleSmall),
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              child: Center(
+                                child: Text(
+                                    activity.categories![0].name ??
+                                        "Unknown category",
+                                    style: titleSmall),
+                              ),
                             ),
                           ) // only first
                         ],
@@ -208,7 +211,7 @@ class ActivityCard extends ConsumerWidget {
                       )
                     : const CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage("assets/images/woman.jpg"),
+                        backgroundImage: AssetImage("assets/images/user.jpg"),
                       ),
               ),
             ],

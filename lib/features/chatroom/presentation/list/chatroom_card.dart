@@ -109,10 +109,10 @@ class ChatroomCard extends ConsumerWidget {
                   )
                 : const CircleAvatar(
                     radius: 30,
-                    backgroundImage: AssetImage("assets/images/woman.jpg"),
+                    backgroundImage: AssetImage("assets/images/user.jpg"),
                   ),
           ),
-          Container(
+          SizedBox(
             width: 300,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,7 +127,7 @@ class ChatroomCard extends ConsumerWidget {
                             style: TextStyle(
                                 color: bluegrey,
                                 fontSize: 20,
-                                fontWeight: FontWeight.w500)),
+                                fontWeight: FontWeight.w600)),
                       ),
                     ),
                     SizedBox(
@@ -150,7 +150,7 @@ class ChatroomCard extends ConsumerWidget {
                         child: Text(chatroom?.lastMessage?.content ?? "",
                             style: TextStyle(
                                 color: bluegrey,
-                                fontSize: 20,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w300)),
                       ),
                     ),

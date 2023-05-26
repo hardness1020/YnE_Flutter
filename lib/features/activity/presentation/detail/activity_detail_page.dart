@@ -93,7 +93,7 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                                           fit: BoxFit.cover)
                                       : const Image(
                                           image: AssetImage(
-                                              "assets/images/ski.jpg"),
+                                              "assets/images/activity.png"),
                                           height: 350,
                                           fit: BoxFit.cover)),
                               gapH12,
@@ -220,7 +220,7 @@ class _ActivityDetailPageState extends ConsumerState<ActivityDetailPage>
                                               : const CircleAvatar(
                                                   radius: 30,
                                                   backgroundImage: AssetImage(
-                                                      "assets/images/woman.jpg"),
+                                                      "assets/images/user.jpg"),
                                                 ),
                                           Container(
                                             margin:

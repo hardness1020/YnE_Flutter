@@ -72,7 +72,7 @@ class _ActivitiesListScreenState extends ConsumerState<ActivitiesListScreen> {
               child: TextField(
                 textAlignVertical: TextAlignVertical.top,
                 cursorHeight: 25.0,
-                cursorColor: Colors.grey.shade800,
+                cursorColor: Colors.grey.shade700,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.search,
                       color: Color.fromRGBO(55, 71, 79, 0.756)),
@@ -81,7 +81,7 @@ class _ActivitiesListScreenState extends ConsumerState<ActivitiesListScreen> {
                     borderSide: BorderSide.none,
                   ),
                   filled: true,
-                  fillColor: Color.fromRGBO(195, 195, 195, 1),
+                  fillColor: Color.fromRGBO(210, 210, 210, 1),
                 ),
               ),
             ),
